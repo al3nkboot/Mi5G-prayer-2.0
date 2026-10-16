@@ -13,7 +13,7 @@ object Sounds {
     /** what will actually play for [choice] given whether the custom file is readable */
     fun effective(choice: SoundChoice, customReadable: Boolean) = if (choice == SoundChoice.CUSTOM && !customReadable) SoundChoice.CHIME else choice
 
-    fun rawFor(c: SoundChoice) = if (c == SoundChoice.ADHAN) R.raw.adhan_hargeisa else R.raw.prayer_chime
+    fun rawFor(c: SoundChoice) = if (c == SoundChoice.ADHAN) R.raw.adhan_default else R.raw.prayer_chime
 
     /** true if the persisted SAF uri can still be opened */
     fun customReadable(ctx: Context, uri: String?): Boolean = uri != null &&

@@ -72,7 +72,7 @@ class WidgetAndSoundTest {
         assertEquals(SoundChoice.CHIME, Sounds.effective(SoundChoice.CUSTOM, false))
         assertEquals(SoundChoice.CUSTOM, Sounds.effective(SoundChoice.CUSTOM, true))
         assertEquals(SoundChoice.ADHAN, Sounds.effective(SoundChoice.ADHAN, false))
-        assertEquals(R.raw.adhan_hargeisa, Sounds.rawFor(SoundChoice.ADHAN)); assertEquals(R.raw.prayer_chime, Sounds.rawFor(SoundChoice.CHIME))
+        assertEquals(R.raw.adhan_default, Sounds.rawFor(SoundChoice.ADHAN)); assertEquals(R.raw.prayer_chime, Sounds.rawFor(SoundChoice.CHIME))
     }
 
     @Test fun hamraUsesRealCoordinates() {

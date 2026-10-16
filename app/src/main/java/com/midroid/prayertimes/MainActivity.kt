@@ -14,7 +14,7 @@ import com.midroid.prayertimes.notify.Alarms
 import com.midroid.prayertimes.notify.Notifier
 import com.midroid.prayertimes.ui.ExactAlarmScreen
 import com.midroid.prayertimes.ui.Perms
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -37,7 +37,7 @@ import java.time.ZonedDateTime
 
 enum class Screen { HOME, CITY, SETTINGS, EXACT, QIBLA, ABOUT }
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -76,7 +76,7 @@ class MainActivity : ComponentActivity() {
                     BackHandler(screen != Screen.HOME) { screen = Screen.HOME }
                     when (screen) {
                         Screen.HOME -> HomeScreen(s, now, perms, onCity = { screen = Screen.CITY }, onSettings = { screen = Screen.SETTINGS },
-                            onExact = { screen = Screen.EXACT }, onGrantNotif = askNotif, onQibla = { screen = Screen.QIBLA })
+                            onExact = openExact, onGrantNotif = askNotif, onQibla = { screen = Screen.QIBLA })
                         Screen.SETTINGS -> SettingsScreen(s, perms, repo::update, onExact = { screen = Screen.EXACT }, onGrantNotif = askNotif, onAbout = { screen = Screen.ABOUT }) { screen = Screen.HOME }
                         Screen.ABOUT -> com.midroid.prayertimes.ui.AboutScreen(BuildConfig.VERSION_NAME) { screen = Screen.SETTINGS }
                         Screen.QIBLA -> com.midroid.prayertimes.ui.QiblaScreen(s.place) { screen = Screen.HOME }

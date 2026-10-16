@@ -20,8 +20,8 @@ android {
         applicationId = "com.midroid.prayertimes"
         minSdk = 26
         targetSdk = 35
-        versionCode = 10
-        versionName = "1.0.0"
+        versionCode = 11
+        versionName = "1.0.1"
     }
     signingConfigs {
         if (signingProps != null) create("app") {
@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons)
     implementation(libs.adhan)
+    implementation(libs.androidx.appcompat)
     implementation(libs.glance.appwidget)
     implementation(libs.glance.material3)
     debugImplementation(libs.androidx.ui.tooling)

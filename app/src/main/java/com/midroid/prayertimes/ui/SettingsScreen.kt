@@ -75,6 +75,14 @@ fun SettingsScreen(s: AppSettings, perms: Perms, update: ((AppSettings) -> AppSe
             Stepper("", stringResource(R.string.days_fmt, s.hijriAdjust),
                 { update { it.copy(hijriAdjust = (it.hijriAdjust - 1).coerceAtLeast(-2)) } },
                 { update { it.copy(hijriAdjust = (it.hijriAdjust + 1).coerceAtMost(2)) } })
+            Section(stringResource(R.string.language))
+            val cur = androidx.appcompat.app.AppCompatDelegate.getApplicationLocales().toLanguageTags().substringBefore('-').substringBefore(',')
+            listOf("" to R.string.lang_system, "ar" to R.string.lang_ar, "en" to R.string.lang_en).forEach { (tag, r) ->
+                Choice(stringResource(r), cur == tag) {
+                    androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(
+                        if (tag.isEmpty()) androidx.core.os.LocaleListCompat.getEmptyLocaleList() else androidx.core.os.LocaleListCompat.forLanguageTags(tag))
+                }
+            }
             Section(stringResource(R.string.theme))
             listOf(ThemeMode.SYSTEM to R.string.theme_system, ThemeMode.LIGHT to R.string.theme_light, ThemeMode.DARK to R.string.theme_dark)
                 .forEach { (t, r) -> Choice(stringResource(r), s.theme == t) { update { it.copy(theme = t) } } }

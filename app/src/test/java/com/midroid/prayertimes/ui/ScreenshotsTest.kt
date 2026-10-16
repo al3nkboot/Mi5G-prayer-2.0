@@ -53,6 +53,7 @@ class ScreenshotsArTest : ShotsBase() {
         rule.onNodeWithTag("city").performClick(); shot("03_city_picker_ar")
         rule.activity.runOnUiThread { rule.activity.onBackPressedDispatcher.onBackPressed() }
         rule.onNodeWithTag("settings").performClick(); shot("04_settings_notifications_ar")
+        rule.onNodeWithText("English").performScrollTo(); shot("18_settings_language_ar")
         rule.onNodeWithTag("choose_file").performScrollTo(); shot("15_settings_sound_ar")
         rule.onNodeWithTag("about").performScrollTo().performClick(); shot("16_about_ar")
         rule.activity.runOnUiThread { rule.activity.onBackPressedDispatcher.onBackPressed() }

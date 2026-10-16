@@ -51,7 +51,7 @@ Mi5G Prayer is a calm, simple prayer-times app built for Oman and the Gulf. It w
 
 Privacy: no ads, no tracking, and no internet permission. Everything is calculated on your device.
 
-Bundled adhan: recorded by Gerard van de Bruinhorst (African Studies Centre Leiden), Ali Matan Mosque, Hargeisa 2019, CC BY-SA 4.0, noise-reduced.
+Bundled adhan (1.0.1): from the YouTube channel "بيت المسلم - Muslim House" (youtube.com/watch?v=rp1FyMSxehE), standard YouTube licence, uploader states "بدون حقوق" (no rights).
 ```
 
 ## Graphics (in `/workspace/pr/mi5g-prayer-assets/`, also `docs/store/` in repo)

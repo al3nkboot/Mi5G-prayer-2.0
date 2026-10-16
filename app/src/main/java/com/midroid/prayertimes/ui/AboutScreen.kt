@@ -17,8 +17,8 @@ import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import com.midroid.prayertimes.R
 
-const val COMMONS_URL = "https://commons.wikimedia.org/wiki/File:ASC_Leiden_-_van_de_Bruinhorst_Collection_-_Somaliland_2019_-_4412_-_Oriental_Hotel._Adhan_(call_to_prayer)_from_the_Ali_Matan_Mosque,_Hargeisa.webm"
-const val CC_BY_SA_URL = "https://creativecommons.org/licenses/by-sa/4.0/"
+const val ADHAN_URL = "https://www.youtube.com/watch?v=rp1FyMSxehE"
+const val CHANNEL_URL = "https://www.youtube.com/channel/UCox8SYPdFsv-ClZoyzIJR1w"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,8 +39,8 @@ fun AboutScreen(version: String, onBack: () -> Unit) {
             }
             Head(stringResource(R.string.privacy_title)); Body(stringResource(R.string.privacy_body))
             Head(stringResource(R.string.adhan_attr_title)); Body(stringResource(R.string.adhan_attr_body))
-            Link("CC BY-SA 4.0 — $CC_BY_SA_URL") { uri.openUri(CC_BY_SA_URL) }
-            Link(stringResource(R.string.source_link)) { uri.openUri(COMMONS_URL) }
+            Link(stringResource(R.string.source_link)) { uri.openUri(ADHAN_URL) }
+            Link("بيت المسلم - Muslim House — $CHANNEL_URL") { uri.openUri(CHANNEL_URL) }
             Head(stringResource(R.string.other_credits)); Body(stringResource(R.string.other_credits_body))
             Link("adhan-java — MIT — github.com/batoulapps/adhan-java") { uri.openUri("https://github.com/batoulapps/adhan-java") }
             Link("GeoNames — CC BY 4.0 — geonames.org") { uri.openUri("https://www.geonames.org/") }

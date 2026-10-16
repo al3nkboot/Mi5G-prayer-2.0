@@ -14,7 +14,8 @@
     <uses-feature android:name="android.hardware.location" android:required="false" />
     <application
         android:name=".PrayerApp"
-        android:allowBackup="true"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -28,6 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- AppCompat per-app language: persists the choice on API < 33 -->
+        <service android:name="androidx.appcompat.app.AppLocalesMetadataHolderService" android:enabled="false" android:exported="false">
+            <meta-data android:name="autoStoreLocales" android:value="true" />
+        </service>
         <receiver android:name=".notify.AlarmReceiver" android:exported="false" />
         <receiver android:name=".notify.SystemReceiver" android:exported="true">
             <intent-filter>

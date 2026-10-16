@@ -23,13 +23,14 @@ data class AppSettings(
     /** index = Prayer.ordinal; sunrise off by default */
     val alerts: List<AlertMode> = DEFAULT_ALERTS,
     val reminderMinutes: Int = 0,
-    val sounds: List<SoundChoice> = List(6) { SoundChoice.CHIME },
+    val sounds: List<SoundChoice> = List(6) { SoundChoice.ADHAN },
     val customUri: String? = null,
     val customName: String? = null,
 ) { companion object { val DEFAULT_ALERTS = listOf(AlertMode.ADHAN, AlertMode.OFF, AlertMode.ADHAN, AlertMode.ADHAN, AlertMode.ADHAN, AlertMode.ADHAN) } }
 
 class SettingsRepo(context: Context) {
     private val sp = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+    init { migrate() }
     private val _state = MutableStateFlow(load())
     val state: StateFlow<AppSettings> = _state
     /** called after every persisted change (used to re-arm alarms) */
@@ -37,6 +38,18 @@ class SettingsRepo(context: Context) {
 
     private inline fun <reified E : Enum<E>> enumOr(key: String, def: E): E =
         sp.getString(key, null)?.let { v -> enumValues<E>().firstOrNull { it.name == v } } ?: def
+
+    /**
+     * Schema 2 (1.0.1): alert/sound prefs written by earlier installs (incl. ones restored by Android
+     * auto-backup from a previous install) are reset once to the defaults: Fajr..Isha = adhan sound, Sunrise off.
+     */
+    private fun migrate() {
+        if (sp.getInt("schema", 0) >= SCHEMA) return
+        sp.edit().apply {
+            for (i in 0 until 6) { remove("alert_$i"); remove("sound_$i") }
+            putInt("schema", SCHEMA)
+        }.commit()
+    }
 
     private fun load(): AppSettings {
         val place = sp.getString("place_id", null)?.let { id ->
@@ -52,10 +65,12 @@ class SettingsRepo(context: Context) {
             place = place, hijriAdjust = sp.getInt("hijri_adj", 0), theme = enumOr("theme", ThemeMode.SYSTEM),
             alerts = List(6) { i -> sp.getString("alert_$i", null)?.let { v -> AlertMode.entries.firstOrNull { it.name == v } } ?: AppSettings.DEFAULT_ALERTS[i] },
             reminderMinutes = sp.getInt("reminder_min", 0),
-            sounds = List(6) { i -> enumOr("sound_$i", SoundChoice.CHIME) },
+            sounds = List(6) { i -> enumOr("sound_$i", SoundChoice.ADHAN) },
             customUri = sp.getString("custom_uri", null), customName = sp.getString("custom_name", null),
         )
     }
+
+    companion object { const val SCHEMA = 2 }
 
     fun update(f: (AppSettings) -> AppSettings) {
         val n = f(_state.value)

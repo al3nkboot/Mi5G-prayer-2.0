@@ -93,15 +93,19 @@
     <string name="file_lost">تعذّر الوصول إلى ملفك الصوتي، سيُستخدم صوت النغمة بدلاً منه.</string>
     <string name="reset_adj">تصفير التعديلات</string>
     <string name="widget_hint">أضف أداة «مواقيتي» من شاشة الهاتف الرئيسية (اضغط مطولاً ← الأدوات).</string>
-    <string name="adhan_note">الأذان المرفق: تسجيل ميداني من مسجد علي مطن، هرجيسا (2019) قد يتضمن ضجيجاً خلفياً.</string>
-    <string name="credits_body">• الحساب: adhan-java 1.2.1 (Batoul Apps) — MIT.\n• الإحداثيات: GeoNames — CC BY 4.0.\n• التحقق: تقويم وزارة الأوقاف والشؤون الدينية (mara.gov.om) 2026.\n• النغمة: مولّدة من هذا المشروع — CC0.\n• الأذان: «Adhan (call to prayer) from the Ali Matan Mosque, Hargeisa»، تصوير Gerard van de Bruinhorst، مجموعة مركز الدراسات الأفريقية بلايدن (ASC Leiden)، ويكيميديا كومنز، ترخيص CC BY-SA 4.0 (إذن VRT رقم 2019092710004895). الصوت مستخرج من الفيديو ومحوّل إلى أحادي.</string>
+    <string name="adhan_note">الأذان الافتراضي: من قناة «بيت المسلم - Muslim House» على يوتيوب.</string>
+    <string name="credits_body">• حساب المواقيت: adhan-java 1.2.1 (Batoul Apps) — ترخيص MIT.\n• إحداثيات المدن العُمانية: GeoNames — CC BY 4.0.\n• التحقق من الأوقات: تقويم وزارة الأوقاف والشؤون الدينية (mara.gov.om).\n• النغمة: مولّدة من هذا المشروع — CC0.</string>
     <string name="about_title">حول</string>
     <string name="version_fmt">الإصدار %1$s</string>
     <string name="privacy_title">الخصوصية</string>
     <string name="privacy_body">لا يجمع التطبيق أي بيانات ولا يرسلها. لا يملك إذن الإنترنت، ولا إعلانات ولا تحليلات. الموقع التقريبي (إن سمحت به) يُستخدم على جهازك فقط لاختيار المدينة ولا يُحفظ إلا كإحداثيات في إعدادات التطبيق. ملفك الصوتي يُقرأ من جهازك فقط.</string>
     <string name="adhan_attr_title">تسجيل الأذان</string>
-    <string name="adhan_attr_body">الأذان من مسجد علي مطن، هرجيسا، أرض الصومال (يوليو 2019).\nالتسجيل: Gerard van de Bruinhorst — مجموعة مركز الدراسات الأفريقية بلايدن (ASC Leiden)، رقم 4412.\nالترخيص: CC BY-SA 4.0 (إذن VRT رقم 2019092710004895).\nمُعدَّل: استُخرج الصوت من الفيديو، وحُوِّل إلى أحادي، وخُفِّض الضجيج. النسخة المعدلة مرخّصة بالترخيص نفسه.</string>
-    <string name="source_link">المصدر: ويكيميديا كومنز</string>
+    <string name="adhan_attr_body">الأذان الافتراضي: «أجمل صوت الآذان بدون حقوق» من قناة «بيت المسلم - Muslim House» على يوتيوب (نُشر 2022-03-27).\nالترخيص: ترخيص يوتيوب القياسي؛ ذكر الناشر في الوصف أنه «بدون حقوق» و«جميع الحقوق محفوظة لكل مسلم». أُدرج بناءً على اختيار صاحب التطبيق.\nمُعدَّل: استُخرج الصوت، وقُصّ الصمت، وضُبطت شدة الصوت.</string>
+    <string name="source_link">المصدر: https://www.youtube.com/watch?v=rp1FyMSxehE</string>
     <string name="other_credits">مصادر أخرى</string>
     <string name="other_credits_body">• حساب المواقيت: adhan-java 1.2.1 (Batoul Apps) — ترخيص MIT.\n• إحداثيات المدن العُمانية: GeoNames — CC BY 4.0.\n• التحقق من الأوقات: تقويم وزارة الأوقاف والشؤون الدينية (mara.gov.om).\n• النغمة: مولّدة من هذا المشروع — CC0.</string>
+    <string name="language">اللغة</string>
+    <string name="lang_system">حسب النظام</string>
+    <string name="lang_ar">العربية</string>
+    <string name="lang_en">English</string>
 </resources>
