@@ -44,7 +44,7 @@ class AdhanService : Service() {
             MediaPlayer().apply {
                 setAudioAttributes(attrs)
                 setWakeMode(this@AdhanService, PowerManager.PARTIAL_WAKE_LOCK)
-                resources.openRawResourceFd(R.raw.adhan).use { setDataSource(it.fileDescriptor, it.startOffset, it.length) }
+                resources.openRawResourceFd(R.raw.prayer_chime).use { setDataSource(it.fileDescriptor, it.startOffset, it.length) }
                 setOnCompletionListener { stopAll() }
                 prepare(); start()
             }

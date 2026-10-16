@@ -40,7 +40,7 @@ fun NoticeCard(text: String, action: String, onClick: () -> Unit, modifier: Modi
     Card(modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)) {
         Row(Modifier.padding(start = 14.dp, end = 6.dp, top = 6.dp, bottom = 6.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(text, Modifier.weight(1f), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSecondaryContainer)
-            TextButton(onClick = onClick) { Text(action) }
+            if (action.isNotEmpty()) TextButton(onClick = onClick) { Text(action) } else Spacer(Modifier.height(40.dp))
         }
     }
 }

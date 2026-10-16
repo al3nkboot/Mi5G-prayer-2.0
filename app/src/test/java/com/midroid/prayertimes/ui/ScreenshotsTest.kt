@@ -74,3 +74,25 @@ class ScreenshotsExactTest : ShotsBase() {
 class ScreenshotsEnTest : ShotsBase() {
     @Test fun render() { theme(ThemeMode.LIGHT); shot("05_home_en_light") }
 }
+
+@RunWith(AndroidJUnit4::class) @GraphicsMode(GraphicsMode.Mode.NATIVE)
+@Config(sdk = [35], qualifiers = "ar-w393dp-h852dp-xhdpi")
+class ScreenshotsQiblaTest : ShotsBase() {
+    @Test fun render() {
+        theme(ThemeMode.LIGHT)
+        QiblaSensorOverride.heading = Heading(220.0, lowAccuracy = true)
+        rule.onNodeWithTag("qibla").performClick(); shot("08_qibla_turn_lowaccuracy_ar")
+        rule.activity.runOnUiThread { rule.activity.onBackPressedDispatcher.onBackPressed() }
+        QiblaSensorOverride.heading = Heading(261.0, lowAccuracy = false)
+        rule.onNodeWithTag("qibla").performClick(); shot("09_qibla_facing_ar")
+        rule.activity.runOnUiThread { rule.activity.onBackPressedDispatcher.onBackPressed() }
+        QiblaSensorOverride.heading = null; QiblaSensorOverride.forceNoSensor = true
+        rule.onNodeWithTag("qibla").performClick(); shot("10_qibla_no_sensor_ar")
+        QiblaSensorOverride.forceNoSensor = false
+        rule.activity.runOnUiThread { rule.activity.onBackPressedDispatcher.onBackPressed() }
+        theme(ThemeMode.DARK)
+        QiblaSensorOverride.heading = Heading(261.0, lowAccuracy = false)
+        rule.onNodeWithTag("qibla").performClick(); shot("11_qibla_facing_ar_dark")
+        QiblaSensorOverride.heading = null
+    }
+}

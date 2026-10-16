@@ -120,8 +120,6 @@ class PrayerEngineTest {
 
     /** Jun + Dec 2026 for each Omani wilayat the Ministry publishes, using GeoNames coordinates. */
     @Test fun wilayatsVsMinistry() {
-        // Ministry's reference point for these differs from the GeoNames town/centroid by a few km
-        val loose = setOf("hamra", "rakhyut", "jazer", "mahout")
         for ((id, rows) in ministry().filter { it[0] != "buraimi" }.groupBy { it[0] }) {
             val place = Cities.byId(id)!!
             for (r in rows) {
@@ -129,10 +127,23 @@ class PrayerEngineTest {
                 Prayer.entries.forEachIndexed { i, p ->
                     val (h, m) = r[2 + i].split(":").map(String::toInt)
                     val diff = abs(hm(d[p]) - (h * 60 + m))
-                    assertTrue("$id ${r[1]} $p diff $diff", diff <= if (id in loose) 3 else 1)
+                    assertTrue("$id ${r[1]} $p diff $diff", diff <= 1)
                 }
             }
         }
+    }
+
+    @Test fun ministryFitsOnlyWithOmanMethod() {
+        val rak = Cities.byId("rakhyut")!!; val date = LocalDate.of(2026, 6, 1)
+        val oman = PrayerEngine.day(rak, date, CalcSettings())
+        val omanNoFit = PrayerEngine.day(rak.copy(id = "x"), date, CalcSettings())
+        assertEquals(omanNoFit[Prayer.FAJR].minusMinutes(2), oman[Prayer.FAJR])
+        val mwl = PrayerEngine.day(rak, date, CalcSettings(method = Method.MWL))
+        val mwlNoFit = PrayerEngine.day(rak.copy(id = "x"), date, CalcSettings(method = Method.MWL))
+        assertEquals(mwlNoFit.times, mwl.times)
+        // user adjustments still stack on top
+        val adj = PrayerEngine.day(rak, date, CalcSettings(adjustments = listOf(3, 0, 0, 0, 0, 0)))
+        assertEquals(oman[Prayer.FAJR].plusMinutes(3), adj[Prayer.FAJR])
     }
 
     @Test fun hijriChangesAtMaghrib() {

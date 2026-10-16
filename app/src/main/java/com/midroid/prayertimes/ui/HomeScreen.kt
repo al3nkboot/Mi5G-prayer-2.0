@@ -46,7 +46,7 @@ import kotlin.math.sin
 data class Perms(val notifications: Boolean, val exact: Boolean)
 
 @Composable
-fun HomeScreen(s: AppSettings, now: ZonedDateTime, perms: Perms, onCity: () -> Unit, onSettings: () -> Unit, onExact: () -> Unit, onGrantNotif: () -> Unit) {
+fun HomeScreen(s: AppSettings, now: ZonedDateTime, perms: Perms, onCity: () -> Unit, onSettings: () -> Unit, onExact: () -> Unit, onGrantNotif: () -> Unit, onQibla: () -> Unit = {}) {
     val st = remember(s, now.withSecond(0).withNano(0)) { PrayerEngine.now(s.place, now, s.calc) }
     val remaining = Duration.between(now, st.nextAt)
     val ar = isArabic()
@@ -61,6 +61,7 @@ fun HomeScreen(s: AppSettings, now: ZonedDateTime, perms: Perms, onCity: () -> U
                     if (countryName(s.place).isNotEmpty()) Text(countryName(s.place), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
+            IconButton(onClick = onQibla, modifier = Modifier.testTag("qibla")) { Icon(androidx.compose.ui.res.painterResource(R.drawable.ic_qibla), stringResource(R.string.qibla)) }
             IconButton(onClick = onSettings, modifier = Modifier.testTag("settings")) { Icon(Icons.Filled.Settings, stringResource(R.string.settings)) }
         }
         val anyAlert = s.alerts.any { it != com.midroid.prayertimes.domain.AlertMode.OFF }

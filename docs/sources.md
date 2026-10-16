@@ -1,10 +1,7 @@
 # Data & asset sources
 
-## Adhan audio — `app/src/main/res/raw/adhan.ogg`
-- "Beautiful adhan.ogg" by Wikimedia Commons user **Adam-synagda**, "Own work", 2022-04-29
-- https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg
-- License: **CC0 1.0 Public Domain Dedication** (https://creativecommons.org/publicdomain/zero/1.0/)
-- Unmodified, 2:34, Vorbis. SHA-256 `35fe06b08fe80505c550c33fed8a783fa9901ddc81ac884958b4be048f5b2a79`
+## Alert sound
+See `CREDITS.md` (generated chime, CC0). The 0.2.0 adhan recording was removed in 0.3.0 (licence not verifiable).
 
 ## Prayer-time calculation
 - adhan-java 1.2.1, Batoul Apps, MIT License (https://github.com/batoulapps/adhan-java)

@@ -16,8 +16,11 @@ Fajr **18°**, Isha **18°**, Asr Shafi'i (shadow 1), then **+5 min** to Dhuhr, 
   Buraimi data shows Sunrise +0 is right (v0.1 was 1 min late on 350/365 days) → fixed in 0.2.0. Fajr unchanged.
 - Al Buraimi, all 365 days × 6 times: **every value within ±1 min, 77.8 % exact** (Fajr 93 % exact). The ±1 residuals are
   symmetric (rounding/their exact solar model), so no extra offset helps.
-- 52 other wilayats (Jun+Dec): all within ±1 min except Al Hamra, Rakhyut, Al Jazir, Mahout (≤3 min) whose
-  Ministry reference point differs from the GeoNames town. **No per-region offsets are needed.**
+- 52 other wilayats (Jun+Dec): all within ±1 min. Four needed per-wilayat corrections (0.3.0, `MinistryFits`, Oman method only):
+  - Rakhyut: all times −2 min; Al Jazir: all −1; Mahout: Fajr +1, Asr +1.
+  - Al Hamra: error flips sign June vs December (a latitude effect), so no constant offset fits. The Ministry's Al Hamra
+    table is reproduced (±1 min) by computing at 23.765 N 57.291 E, ≈72 km north of the town (GeoNames 23.115 N) —
+    likely a Ministry-side reference-point issue; flagged as unverified.
 
 ## Al Buraimi: ours vs Ministry vs Salatuk
 | Date | Source | Fajr | Sunrise | Dhuhr | Asr | Maghrib | Isha |

@@ -74,8 +74,9 @@ fun SettingsScreen(s: AppSettings, perms: Perms, update: ((AppSettings) -> AppSe
                 .forEach { (t, r) -> Choice(stringResource(r), s.theme == t) { update { it.copy(theme = t) } } }
             Spacer(Modifier.height(16.dp))
             Text(stringResource(R.string.about), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text(stringResource(R.string.adhan_credit), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text("v0.2.0", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Section(stringResource(R.string.credits))
+            Text(stringResource(R.string.credits_body), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("v0.3.0", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(24.dp))
         }
     }

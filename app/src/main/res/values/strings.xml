@@ -52,12 +52,12 @@
     <string name="ch_reminder">تذكير قبل الصلاة</string>
     <string name="reminder_title">%1$s بعد %2$d دقيقة</string>
     <string name="time_for">حان الآن موعد صلاة %1$s</string>
-    <string name="adhan_playing">يُرفع الأذان… اضغط إيقاف لإسكاته</string>
+    <string name="adhan_playing">اضغط إيقاف لإسكات التنبيه</string>
     <string name="stop">إيقاف</string>
     <string name="notifications">التنبيهات</string>
     <string name="mode_off">إيقاف</string>
     <string name="mode_silent">صامت</string>
-    <string name="mode_adhan">أذان</string>
+    <string name="mode_adhan">صوت</string>
     <string name="reminder_before">تذكير قبل الصلاة</string>
     <string name="minutes_fmt">%1$d د</string>
     <string name="off">بدون</string>
@@ -66,14 +66,22 @@
     <string name="exact_off">المنبّهات الدقيقة غير مفعّلة: قد يتأخر الأذان بضع دقائق.</string>
     <string name="fix">تفعيل</string>
     <string name="exact_title">المنبّهات الدقيقة</string>
-    <string name="exact_body">ليصدح الأذان في وقته تماماً، يحتاج التطبيق إذن «المنبّهات والتذكيرات» من إعدادات النظام.
-
-بدون هذا الإذن سيستخدم التطبيق منبّهات تقريبية قد يؤخرها النظام عدة دقائق لتوفير البطارية.
-
-لا يستخدم التطبيق الإنترنت ولا يجمع أي بيانات.</string>
+    <string name="exact_body">ليصلك التنبيه في وقته تماماً، يحتاج التطبيق إذن «المنبّهات والتذكيرات» من إعدادات النظام.\n\nبدون هذا الإذن سيستخدم التطبيق منبّهات تقريبية قد يؤخرها النظام عدة دقائق لتوفير البطارية.\n\nلا يستخدم التطبيق الإنترنت ولا يجمع أي بيانات.</string>
     <string name="exact_open">افتح إعدادات المنبّهات</string>
     <string name="exact_later">لاحقاً</string>
     <string name="exact_ok">المنبّهات الدقيقة مفعّلة ✓</string>
-    <string name="audio_note">يُكتم صوت الأذان تلقائياً عند الوضع الصامت أو «عدم الإزعاج» ويظهر إشعار صامت بدلاً منه.</string>
-    <string name="adhan_credit">تسجيل الأذان: «Beautiful adhan» من ويكيميديا كومنز، ملكية عامة (CC0).</string>
+    <string name="audio_note">يُكتم صوت التنبيه تلقائياً عند الوضع الصامت أو «عدم الإزعاج» ويظهر إشعار صامت بدلاً منه.</string>
+        <string name="qibla">القبلة</string>
+    <string name="qibla_bearing">اتجاه القبلة %1$d° من الشمال الحقيقي · %2$d كم إلى مكة</string>
+    <string name="qibla_no_sensor">لا يحتوي جهازك على مستشعر بوصلة. اتجاه القبلة %1$d° من الشمال الحقيقي — استعن ببوصلة أو بمعالم معروفة.</string>
+    <string name="qibla_waiting">جارٍ قراءة البوصلة…</string>
+    <string name="qibla_facing">أنت باتجاه القبلة</string>
+    <string name="qibla_turn">استدر %1$d°</string>
+    <string name="qibla_calibrate">دقة البوصلة منخفضة: حرّك الهاتف على شكل الرقم 8 عدة مرات وابتعد عن المعادن والمغناطيس.</string>
+    <string name="qibla_tip">ضع الهاتف مستوياً. يُصحَّح الانحراف المغناطيسي تلقائياً.</string>
+    <string name="credits">المصادر والتراخيص</string>
+    <string name="credits_body">• الحساب: مكتبة adhan-java 1.2.1 (Batoul Apps) — ترخيص MIT.
+• الإحداثيات: GeoNames — CC BY 4.0.
+• التحقق: تقويم وزارة الأوقاف والشؤون الدينية (mara.gov.om) 2026.
+• صوت التنبيه: نغمة مولّدة من هذا المشروع — CC0. صوت الأذان سيُضاف لاحقاً بعد التحقق من ترخيصه.</string>
 </resources>
