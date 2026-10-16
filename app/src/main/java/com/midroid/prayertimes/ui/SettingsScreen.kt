@@ -1,0 +1,79 @@
+package com.midroid.prayertimes.ui
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.midroid.prayertimes.R
+import com.midroid.prayertimes.data.AppSettings
+import com.midroid.prayertimes.data.ThemeMode
+import com.midroid.prayertimes.domain.Asr
+import com.midroid.prayertimes.domain.HighLat
+import com.midroid.prayertimes.domain.Method
+import com.midroid.prayertimes.domain.Prayer
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SettingsScreen(s: AppSettings, update: ((AppSettings) -> AppSettings) -> Unit, onBack: () -> Unit) {
+    Scaffold(topBar = {
+        TopAppBar(title = { Text(stringResource(R.string.settings)) },
+            navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back)) } })
+    }) { pad ->
+        Column(Modifier.padding(pad).fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp)) {
+            Section(stringResource(R.string.calc_method))
+            Method.entries.forEach { m -> Choice(methodName(m), s.calc.method == m) { update { it.copy(calc = it.calc.copy(method = m)) } } }
+            Section(stringResource(R.string.asr_method))
+            Choice(stringResource(R.string.asr_shafi), s.calc.asr == Asr.SHAFI) { update { it.copy(calc = it.calc.copy(asr = Asr.SHAFI)) } }
+            Choice(stringResource(R.string.asr_hanafi), s.calc.asr == Asr.HANAFI) { update { it.copy(calc = it.calc.copy(asr = Asr.HANAFI)) } }
+            Section(stringResource(R.string.high_lat))
+            listOf(HighLat.NONE to R.string.hl_none, HighLat.MIDDLE_OF_NIGHT to R.string.hl_middle, HighLat.SEVENTH_OF_NIGHT to R.string.hl_seventh, HighLat.TWILIGHT_ANGLE to R.string.hl_twilight)
+                .forEach { (h, r) -> Choice(stringResource(r), s.calc.highLat == h) { update { it.copy(calc = it.calc.copy(highLat = h)) } } }
+            Section(stringResource(R.string.adjustments))
+            Prayer.entries.forEach { p ->
+                Stepper(prayerName(p), s.calc.adjustments[p.ordinal].let { "%+d".format(java.util.Locale.ROOT, it) },
+                    { update { st -> st.copy(calc = st.calc.copy(adjustments = st.calc.adjustments.toMutableList().also { it[p.ordinal] = (it[p.ordinal] - 1).coerceAtLeast(-60) })) } },
+                    { update { st -> st.copy(calc = st.calc.copy(adjustments = st.calc.adjustments.toMutableList().also { it[p.ordinal] = (it[p.ordinal] + 1).coerceAtMost(60) })) } })
+            }
+            Section(stringResource(R.string.hijri_adjust))
+            Stepper("", stringResource(R.string.days_fmt, s.hijriAdjust),
+                { update { it.copy(hijriAdjust = (it.hijriAdjust - 1).coerceAtLeast(-2)) } },
+                { update { it.copy(hijriAdjust = (it.hijriAdjust + 1).coerceAtMost(2)) } })
+            Section(stringResource(R.string.theme))
+            listOf(ThemeMode.SYSTEM to R.string.theme_system, ThemeMode.LIGHT to R.string.theme_light, ThemeMode.DARK to R.string.theme_dark)
+                .forEach { (t, r) -> Choice(stringResource(r), s.theme == t) { update { it.copy(theme = t) } } }
+            Spacer(Modifier.height(16.dp))
+            Text(stringResource(R.string.about), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("v0.1.0", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Spacer(Modifier.height(24.dp))
+        }
+    }
+}
+
+@Composable private fun Section(t: String) {
+    Text(t, Modifier.padding(top = 18.dp, bottom = 4.dp), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+}
+
+@Composable private fun Choice(label: String, selected: Boolean, onClick: () -> Unit) {
+    Row(Modifier.fillMaxWidth().selectable(selected, onClick = onClick, role = Role.RadioButton).padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+        RadioButton(selected, null); Spacer(Modifier.width(10.dp)); Text(label, style = MaterialTheme.typography.bodyLarge)
+    }
+}
+
+@Composable private fun Stepper(label: String, value: String, minus: () -> Unit, plus: () -> Unit) {
+    Row(Modifier.fillMaxWidth().padding(vertical = 2.dp), verticalAlignment = Alignment.CenterVertically) {
+        Text(label, Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge)
+        OutlinedIconButton(onClick = minus) { Text("−") }
+        Text(value, Modifier.widthIn(min = 72.dp).padding(horizontal = 8.dp), style = MaterialTheme.typography.titleMedium, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+        OutlinedIconButton(onClick = plus) { Text("+") }
+    }
+}
