@@ -1,6 +1,7 @@
 package com.midroid.prayertimes.data
 
 import android.content.Context
+import com.midroid.prayertimes.domain.AlertMode
 import com.midroid.prayertimes.domain.Asr
 import com.midroid.prayertimes.domain.CalcSettings
 import com.midroid.prayertimes.domain.HighLat
@@ -16,12 +17,17 @@ data class AppSettings(
     val place: Place = Cities.default,
     val hijriAdjust: Int = 0,
     val theme: ThemeMode = ThemeMode.SYSTEM,
-)
+    /** index = Prayer.ordinal; sunrise off by default */
+    val alerts: List<AlertMode> = DEFAULT_ALERTS,
+    val reminderMinutes: Int = 0,
+) { companion object { val DEFAULT_ALERTS = listOf(AlertMode.ADHAN, AlertMode.OFF, AlertMode.ADHAN, AlertMode.ADHAN, AlertMode.ADHAN, AlertMode.ADHAN) } }
 
 class SettingsRepo(context: Context) {
     private val sp = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
     private val _state = MutableStateFlow(load())
     val state: StateFlow<AppSettings> = _state
+    /** called after every persisted change (used to re-arm alarms) */
+    var onChange: ((AppSettings) -> Unit)? = null
 
     private inline fun <reified E : Enum<E>> enumOr(key: String, def: E): E =
         sp.getString(key, null)?.let { v -> enumValues<E>().firstOrNull { it.name == v } } ?: def
@@ -38,6 +44,8 @@ class SettingsRepo(context: Context) {
                 adjustments = List(6) { sp.getInt("adj_$it", 0) },
             ),
             place = place, hijriAdjust = sp.getInt("hijri_adj", 0), theme = enumOr("theme", ThemeMode.SYSTEM),
+            alerts = List(6) { i -> sp.getString("alert_$i", null)?.let { v -> AlertMode.entries.firstOrNull { it.name == v } } ?: AppSettings.DEFAULT_ALERTS[i] },
+            reminderMinutes = sp.getInt("reminder_min", 0),
         )
     }
 
@@ -48,11 +56,14 @@ class SettingsRepo(context: Context) {
             n.calc.adjustments.forEachIndexed { i, v -> putInt("adj_$i", v) }
             putInt("hijri_adj", n.hijriAdjust); putString("theme", n.theme.name)
             putString("place_id", n.place.id)
+            n.alerts.forEachIndexed { i, v -> putString("alert_$i", v.name) }
+            putInt("reminder_min", n.reminderMinutes)
             if (n.place.id == "gps") {
                 putString("gps_ar", n.place.nameAr); putString("gps_en", n.place.nameEn)
                 putFloat("gps_lat", n.place.lat.toFloat()); putFloat("gps_lon", n.place.lon.toFloat()); putString("gps_zone", n.place.zone)
             }
         }.apply()
         _state.value = n
+        onChange?.invoke(n)
     }
 }

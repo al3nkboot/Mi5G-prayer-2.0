@@ -43,8 +43,10 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
+data class Perms(val notifications: Boolean, val exact: Boolean)
+
 @Composable
-fun HomeScreen(s: AppSettings, now: ZonedDateTime, onCity: () -> Unit, onSettings: () -> Unit) {
+fun HomeScreen(s: AppSettings, now: ZonedDateTime, perms: Perms, onCity: () -> Unit, onSettings: () -> Unit, onExact: () -> Unit, onGrantNotif: () -> Unit) {
     val st = remember(s, now.withSecond(0).withNano(0)) { PrayerEngine.now(s.place, now, s.calc) }
     val remaining = Duration.between(now, st.nextAt)
     val ar = isArabic()
@@ -61,11 +63,14 @@ fun HomeScreen(s: AppSettings, now: ZonedDateTime, onCity: () -> Unit, onSetting
             }
             IconButton(onClick = onSettings, modifier = Modifier.testTag("settings")) { Icon(Icons.Filled.Settings, stringResource(R.string.settings)) }
         }
+        val anyAlert = s.alerts.any { it != com.midroid.prayertimes.domain.AlertMode.OFF }
+        if (anyAlert && !perms.notifications) { NoticeCard(stringResource(R.string.notif_perm_off), stringResource(R.string.grant), onGrantNotif); Spacer(Modifier.height(8.dp)) }
+        else if (anyAlert && !perms.exact) { NoticeCard(stringResource(R.string.exact_off), stringResource(R.string.fix), onExact, Modifier.testTag("exact_note")); Spacer(Modifier.height(8.dp)) }
         HeroCard(st, remaining, local)
         Spacer(Modifier.height(14.dp))
         Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(formatGregorian(local.toLocalDate(), ar), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text(Hijri.format(Hijri.of(local.toLocalDate(), s.hijriAdjust), ar), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold)
+            Text(Hijri.format(Hijri.at(s.place, now, s.calc, s.hijriAdjust), ar), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold)
         }
         Spacer(Modifier.height(10.dp))
         Prayer.entries.forEach { p -> PrayerRow(p, st, ar) }

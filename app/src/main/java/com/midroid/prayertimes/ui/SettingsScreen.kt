@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.midroid.prayertimes.R
 import com.midroid.prayertimes.data.AppSettings
 import com.midroid.prayertimes.data.ThemeMode
+import com.midroid.prayertimes.domain.AlertMode
 import com.midroid.prayertimes.domain.Asr
 import com.midroid.prayertimes.domain.HighLat
 import com.midroid.prayertimes.domain.Method
@@ -24,12 +26,31 @@ import com.midroid.prayertimes.domain.Prayer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(s: AppSettings, update: ((AppSettings) -> AppSettings) -> Unit, onBack: () -> Unit) {
+fun SettingsScreen(s: AppSettings, perms: Perms, update: ((AppSettings) -> AppSettings) -> Unit, onExact: () -> Unit, onGrantNotif: () -> Unit, onBack: () -> Unit) {
     Scaffold(topBar = {
         TopAppBar(title = { Text(stringResource(R.string.settings)) },
             navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back)) } })
     }) { pad ->
         Column(Modifier.padding(pad).fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp)) {
+            Section(stringResource(R.string.notifications))
+            if (!perms.notifications) NoticeCard(stringResource(R.string.notif_perm_off), stringResource(R.string.grant), onGrantNotif)
+            else if (!perms.exact) NoticeCard(stringResource(R.string.exact_off), stringResource(R.string.fix), onExact)
+            Prayer.entries.forEach { p ->
+                Row(Modifier.fillMaxWidth().padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text(prayerName(p), Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge)
+                    SingleChoiceSegmentedButtonRow(Modifier.testTag("alert_${p.name}")) {
+                        listOf(AlertMode.OFF to R.string.mode_off, AlertMode.SILENT to R.string.mode_silent, AlertMode.ADHAN to R.string.mode_adhan).forEachIndexed { i, (m, r) ->
+                            SegmentedButton(selected = s.alerts[p.ordinal] == m, onClick = { update { st -> st.copy(alerts = st.alerts.toMutableList().also { it[p.ordinal] = m }) } },
+                                shape = SegmentedButtonDefaults.itemShape(i, 3), icon = {}) { Text(stringResource(r), style = MaterialTheme.typography.labelMedium) }
+                        }
+                    }
+                }
+            }
+            val opts = listOf(0, 5, 10, 15, 20, 30)
+            Stepper(stringResource(R.string.reminder_before), if (s.reminderMinutes == 0) stringResource(R.string.off) else stringResource(R.string.minutes_fmt, s.reminderMinutes),
+                { update { it.copy(reminderMinutes = opts[(opts.indexOf(it.reminderMinutes) - 1).coerceAtLeast(0)]) } },
+                { update { it.copy(reminderMinutes = opts[(opts.indexOf(it.reminderMinutes) + 1).coerceAtMost(opts.size - 1)]) } })
+            Text(stringResource(R.string.audio_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Section(stringResource(R.string.calc_method))
             Method.entries.forEach { m -> Choice(methodName(m), s.calc.method == m) { update { it.copy(calc = it.calc.copy(method = m)) } } }
             Section(stringResource(R.string.asr_method))
@@ -53,7 +74,8 @@ fun SettingsScreen(s: AppSettings, update: ((AppSettings) -> AppSettings) -> Uni
                 .forEach { (t, r) -> Choice(stringResource(r), s.theme == t) { update { it.copy(theme = t) } } }
             Spacer(Modifier.height(16.dp))
             Text(stringResource(R.string.about), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text("v0.1.0", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(stringResource(R.string.adhan_credit), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("v0.2.0", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(24.dp))
         }
     }

@@ -47,4 +47,33 @@
     <string name="about">No ads, no tracking, no internet. Times are calculated on your device.</string>
     <string name="oman">Oman</string>
     <string name="reset">Reset</string>
+    <string name="ch_adhan">Adhan</string>
+    <string name="ch_silent">Silent prayer alert</string>
+    <string name="ch_reminder">Pre-prayer reminder</string>
+    <string name="reminder_title">%1$s in %2$d min</string>
+    <string name="time_for">Time for %1$s</string>
+    <string name="adhan_playing">Adhan playing… tap Stop to silence</string>
+    <string name="stop">Stop</string>
+    <string name="notifications">Notifications</string>
+    <string name="mode_off">Off</string>
+    <string name="mode_silent">Silent</string>
+    <string name="mode_adhan">Adhan</string>
+    <string name="reminder_before">Reminder before prayer</string>
+    <string name="minutes_fmt">%1$d min</string>
+    <string name="off">None</string>
+    <string name="notif_perm_off">Notification permission is off; alerts won\'t show.</string>
+    <string name="grant">Allow</string>
+    <string name="exact_off">Exact alarms are off: the adhan may be a few minutes late.</string>
+    <string name="fix">Fix</string>
+    <string name="exact_title">Exact alarms</string>
+    <string name="exact_body">To play the adhan exactly on time, the app needs the "Alarms &amp; reminders" permission in system settings.
+
+Without it the app falls back to approximate alarms, which the system may delay by several minutes to save battery.
+
+The app uses no internet and collects no data.</string>
+    <string name="exact_open">Open alarm settings</string>
+    <string name="exact_later">Later</string>
+    <string name="exact_ok">Exact alarms are enabled ✓</string>
+    <string name="audio_note">Adhan audio is muted automatically in silent / Do Not Disturb mode; a silent notification is shown instead.</string>
+    <string name="adhan_credit">Adhan recording: "Beautiful adhan", Wikimedia Commons, public domain (CC0).</string>
 </resources>

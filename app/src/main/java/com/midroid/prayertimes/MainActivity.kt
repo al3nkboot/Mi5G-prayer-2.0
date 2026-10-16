@@ -2,7 +2,18 @@ package com.midroid.prayertimes
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import com.midroid.prayertimes.notify.Alarms
+import com.midroid.prayertimes.notify.Notifier
+import com.midroid.prayertimes.ui.ExactAlarmScreen
+import com.midroid.prayertimes.ui.Perms
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -24,7 +35,7 @@ import com.midroid.prayertimes.ui.SettingsScreen
 import kotlinx.coroutines.delay
 import java.time.ZonedDateTime
 
-enum class Screen { HOME, CITY, SETTINGS }
+enum class Screen { HOME, CITY, SETTINGS, EXACT }
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,12 +49,36 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(Unit) {
                 while (ticking) { now = ZonedDateTime.now(PrayerApp.clock); delay(1000L - System.currentTimeMillis() % 1000L) }
             }
+            val ctx = LocalContext.current
+            fun readPerms() = Perms(Notifier.canPost(ctx), Alarms.canExact(ctx))
+            var perms by remember { mutableStateOf(readPerms()) }
+            val owner = LocalLifecycleOwner.current
+            DisposableEffect(owner) {
+                val obs = LifecycleEventObserver { _, e -> if (e == Lifecycle.Event.ON_RESUME) { perms = readPerms(); runCatching { Alarms.reschedule(ctx) } } }
+                owner.lifecycle.addObserver(obs); onDispose { owner.lifecycle.removeObserver(obs) }
+            }
+            val notifLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { perms = readPerms(); runCatching { Alarms.reschedule(ctx) } }
+            val askNotif = { if (Build.VERSION.SDK_INT >= 33) notifLauncher.launch(Manifest.permission.POST_NOTIFICATIONS) }
+            val prefs = remember { ctx.getSharedPreferences("ui", MODE_PRIVATE) }
+            LaunchedEffect(Unit) {
+                if (askOnStart && !prefs.getBoolean("asked_notif", false) && !perms.notifications && Build.VERSION.SDK_INT >= 33) {
+                    prefs.edit().putBoolean("asked_notif", true).apply(); askNotif()
+                }
+            }
+            val openExact = {
+                if (Build.VERSION.SDK_INT >= 31) runCatching {
+                    startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, Uri.parse("package:$packageName")))
+                }
+                Unit
+            }
             PrayerTheme(s.theme) {
                 Surface {
                     BackHandler(screen != Screen.HOME) { screen = Screen.HOME }
                     when (screen) {
-                        Screen.HOME -> HomeScreen(s, now, onCity = { screen = Screen.CITY }, onSettings = { screen = Screen.SETTINGS })
-                        Screen.SETTINGS -> SettingsScreen(s, repo::update) { screen = Screen.HOME }
+                        Screen.HOME -> HomeScreen(s, now, perms, onCity = { screen = Screen.CITY }, onSettings = { screen = Screen.SETTINGS },
+                            onExact = { screen = Screen.EXACT }, onGrantNotif = askNotif)
+                        Screen.SETTINGS -> SettingsScreen(s, perms, repo::update, onExact = { screen = Screen.EXACT }, onGrantNotif = askNotif) { screen = Screen.HOME }
+                        Screen.EXACT -> ExactAlarmScreen(perms.exact, onOpenSettings = openExact) { screen = Screen.HOME }
                         Screen.CITY -> CityRoute(s.place, onDone = { screen = Screen.HOME }, pick = { p -> repo.update { it.copy(place = p) } })
                     }
                 }
@@ -51,7 +86,10 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    companion object { /** disabled in screenshot tests to keep the composition idle */ @Volatile var ticking = true }
+    companion object {
+        /** disabled in screenshot tests to keep the composition idle */ @Volatile var ticking = true
+        @Volatile var askOnStart = true
+    }
 }
 
 @Composable

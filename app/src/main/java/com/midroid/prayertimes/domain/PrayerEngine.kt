@@ -17,12 +17,12 @@ enum class Prayer { FAJR, SUNRISE, DHUHR, ASR, MAGHRIB, ISHA }
 
 /**
  * Calculation methods offered. OMAN is the default:
- * Fajr 18°, Isha 18° + Awqaf-style precaution minutes (sunrise +1, dhuhr/asr/maghrib +5),
- * fitted against the Ministry of Endowments & Religious Affairs (mara.gov.om) published Muscat times.
+ * Fajr 18°, Isha 18° + precaution minutes (Dhuhr/Asr/Maghrib +5), reproducing the Ministry of Endowments &
+ * Religious Affairs (mara.gov.om) calendar: Al Buraimi 2026 full year, every day within 1 min (see docs/accuracy.md).
  */
 enum class Method(val fajr: Double, val isha: Double, val ishaInterval: Int = 0, val base: CalculationMethod = CalculationMethod.OTHER,
                   val methodAdj: IntArray = IntArray(6)) {
-    OMAN(18.0, 18.0, methodAdj = intArrayOf(0, 1, 5, 5, 5, 0)),
+    OMAN(18.0, 18.0, methodAdj = intArrayOf(0, 0, 5, 5, 5, 0)),
     UMM_AL_QURA(18.5, 0.0, 90, CalculationMethod.UMM_AL_QURA),
     MWL(18.0, 17.0, base = CalculationMethod.MUSLIM_WORLD_LEAGUE),
     DUBAI(18.2, 18.2, base = CalculationMethod.DUBAI),

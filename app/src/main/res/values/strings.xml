@@ -47,4 +47,33 @@
     <string name="about">بدون إعلانات، بدون تتبع، بدون إنترنت. تُحسب الأوقات على جهازك.</string>
     <string name="oman">عُمان</string>
     <string name="reset">إعادة الضبط</string>
+    <string name="ch_adhan">الأذان</string>
+    <string name="ch_silent">تنبيه صامت بوقت الصلاة</string>
+    <string name="ch_reminder">تذكير قبل الصلاة</string>
+    <string name="reminder_title">%1$s بعد %2$d دقيقة</string>
+    <string name="time_for">حان الآن موعد صلاة %1$s</string>
+    <string name="adhan_playing">يُرفع الأذان… اضغط إيقاف لإسكاته</string>
+    <string name="stop">إيقاف</string>
+    <string name="notifications">التنبيهات</string>
+    <string name="mode_off">إيقاف</string>
+    <string name="mode_silent">صامت</string>
+    <string name="mode_adhan">أذان</string>
+    <string name="reminder_before">تذكير قبل الصلاة</string>
+    <string name="minutes_fmt">%1$d د</string>
+    <string name="off">بدون</string>
+    <string name="notif_perm_off">إذن الإشعارات غير مفعّل، لن تظهر التنبيهات.</string>
+    <string name="grant">السماح</string>
+    <string name="exact_off">المنبّهات الدقيقة غير مفعّلة: قد يتأخر الأذان بضع دقائق.</string>
+    <string name="fix">تفعيل</string>
+    <string name="exact_title">المنبّهات الدقيقة</string>
+    <string name="exact_body">ليصدح الأذان في وقته تماماً، يحتاج التطبيق إذن «المنبّهات والتذكيرات» من إعدادات النظام.
+
+بدون هذا الإذن سيستخدم التطبيق منبّهات تقريبية قد يؤخرها النظام عدة دقائق لتوفير البطارية.
+
+لا يستخدم التطبيق الإنترنت ولا يجمع أي بيانات.</string>
+    <string name="exact_open">افتح إعدادات المنبّهات</string>
+    <string name="exact_later">لاحقاً</string>
+    <string name="exact_ok">المنبّهات الدقيقة مفعّلة ✓</string>
+    <string name="audio_note">يُكتم صوت الأذان تلقائياً عند الوضع الصامت أو «عدم الإزعاج» ويظهر إشعار صامت بدلاً منه.</string>
+    <string name="adhan_credit">تسجيل الأذان: «Beautiful adhan» من ويكيميديا كومنز، ملكية عامة (CC0).</string>
 </resources>
