@@ -35,7 +35,7 @@ import com.midroid.prayertimes.ui.SettingsScreen
 import kotlinx.coroutines.delay
 import java.time.ZonedDateTime
 
-enum class Screen { HOME, CITY, SETTINGS, EXACT, QIBLA }
+enum class Screen { HOME, CITY, SETTINGS, EXACT, QIBLA, ABOUT }
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,7 +77,8 @@ class MainActivity : ComponentActivity() {
                     when (screen) {
                         Screen.HOME -> HomeScreen(s, now, perms, onCity = { screen = Screen.CITY }, onSettings = { screen = Screen.SETTINGS },
                             onExact = { screen = Screen.EXACT }, onGrantNotif = askNotif, onQibla = { screen = Screen.QIBLA })
-                        Screen.SETTINGS -> SettingsScreen(s, perms, repo::update, onExact = { screen = Screen.EXACT }, onGrantNotif = askNotif) { screen = Screen.HOME }
+                        Screen.SETTINGS -> SettingsScreen(s, perms, repo::update, onExact = { screen = Screen.EXACT }, onGrantNotif = askNotif, onAbout = { screen = Screen.ABOUT }) { screen = Screen.HOME }
+                        Screen.ABOUT -> com.midroid.prayertimes.ui.AboutScreen(BuildConfig.VERSION_NAME) { screen = Screen.SETTINGS }
                         Screen.QIBLA -> com.midroid.prayertimes.ui.QiblaScreen(s.place) { screen = Screen.HOME }
                         Screen.EXACT -> ExactAlarmScreen(perms.exact, onOpenSettings = openExact) { screen = Screen.HOME }
                         Screen.CITY -> CityRoute(s.place, onDone = { screen = Screen.HOME }, pick = { p -> repo.update { it.copy(place = p) } })

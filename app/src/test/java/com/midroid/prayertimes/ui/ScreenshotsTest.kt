@@ -54,6 +54,8 @@ class ScreenshotsArTest : ShotsBase() {
         rule.activity.runOnUiThread { rule.activity.onBackPressedDispatcher.onBackPressed() }
         rule.onNodeWithTag("settings").performClick(); shot("04_settings_notifications_ar")
         rule.onNodeWithTag("choose_file").performScrollTo(); shot("15_settings_sound_ar")
+        rule.onNodeWithTag("about").performScrollTo().performClick(); shot("16_about_ar")
+        rule.activity.runOnUiThread { rule.activity.onBackPressedDispatcher.onBackPressed() }
         rule.activity.runOnUiThread { rule.activity.onBackPressedDispatcher.onBackPressed() }
     }
 }
@@ -74,7 +76,11 @@ class ScreenshotsExactTest : ShotsBase() {
 @RunWith(AndroidJUnit4::class) @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(sdk = [35], qualifiers = "en-w393dp-h852dp-xhdpi")
 class ScreenshotsEnTest : ShotsBase() {
-    @Test fun render() { theme(ThemeMode.LIGHT); shot("05_home_en_light") }
+    @Test fun render() {
+        theme(ThemeMode.LIGHT); shot("05_home_en_light")
+        rule.onNodeWithTag("settings").performClick()
+        rule.onNodeWithTag("about").performScrollTo().performClick(); shot("17_about_en")
+    }
 }
 
 @RunWith(AndroidJUnit4::class) @GraphicsMode(GraphicsMode.Mode.NATIVE)

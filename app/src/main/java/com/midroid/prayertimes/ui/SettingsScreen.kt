@@ -28,7 +28,7 @@ import com.midroid.prayertimes.domain.Prayer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(s: AppSettings, perms: Perms, update: ((AppSettings) -> AppSettings) -> Unit, onExact: () -> Unit, onGrantNotif: () -> Unit, onBack: () -> Unit) {
+fun SettingsScreen(s: AppSettings, perms: Perms, update: ((AppSettings) -> AppSettings) -> Unit, onExact: () -> Unit, onGrantNotif: () -> Unit, onAbout: () -> Unit = {}, onBack: () -> Unit) {
     Scaffold(topBar = {
         TopAppBar(title = { Text(stringResource(R.string.settings)) },
             navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back)) } })
@@ -82,9 +82,7 @@ fun SettingsScreen(s: AppSettings, perms: Perms, update: ((AppSettings) -> AppSe
             Text(stringResource(R.string.about), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Text(stringResource(R.string.widget_hint), Modifier.padding(top = 12.dp), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             HorizontalDivider(Modifier.padding(top = 12.dp))
-            Section(stringResource(R.string.credits))
-            Text(stringResource(R.string.credits_body), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text("v0.4.0", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            OutlinedButton(onClick = onAbout, modifier = Modifier.fillMaxWidth().padding(top = 12.dp).testTag("about")) { Text(stringResource(R.string.about_title)) }
             Spacer(Modifier.height(24.dp))
         }
     }

@@ -22,3 +22,9 @@ Build: `./gradlew --no-daemon testDebugUnitTest assembleDebug` (JDK 17). The deb
 - M4 (0.4.0): Glance widget (responsive small/large; next prayer + live Chronometer countdown, today's times, city, Hijri;
   day/night; refreshed by an alarm at each prayer boundary/midnight, no polling). Per-prayer sound: chime / bundled adhan /
   your own file (SAF, no storage permission) with preview and chime fallback. Al Hamra monthly Ministry fit.
+
+## 1.0.0 release prep
+- Release build: R8 + resource shrinking, signed with the release key in `../prayer-times-release-keystore/` (outside repo).
+- About screen with privacy note and full attribution; bundled adhan is noise-reduced (modified, CC BY-SA 4.0).
+- Store/Play docs: `docs/privacy-policy.{md,html}`, `docs/play-data-safety.md`, `docs/content-rating.md`,
+  `docs/play-permission-declarations.md`, `docs/store/` (listing, icon, feature graphic, phone screenshots).

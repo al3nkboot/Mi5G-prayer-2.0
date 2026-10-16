@@ -1,0 +1,55 @@
+package com.midroid.prayertimes.ui
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDirection
+import androidx.compose.ui.unit.dp
+import com.midroid.prayertimes.R
+
+const val COMMONS_URL = "https://commons.wikimedia.org/wiki/File:ASC_Leiden_-_van_de_Bruinhorst_Collection_-_Somaliland_2019_-_4412_-_Oriental_Hotel._Adhan_(call_to_prayer)_from_the_Ali_Matan_Mosque,_Hargeisa.webm"
+const val CC_BY_SA_URL = "https://creativecommons.org/licenses/by-sa/4.0/"
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AboutScreen(version: String, onBack: () -> Unit) {
+    val uri = LocalUriHandler.current
+    Scaffold(topBar = {
+        TopAppBar(title = { Text(stringResource(R.string.about_title)) },
+            navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back)) } })
+    }) { pad ->
+        Column(Modifier.padding(pad).fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(painterResource(R.drawable.ic_qibla), null, tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(40.dp))
+                Spacer(Modifier.width(12.dp))
+                Column {
+                    Text(stringResource(R.string.app_name), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.version_fmt, version), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+            Head(stringResource(R.string.privacy_title)); Body(stringResource(R.string.privacy_body))
+            Head(stringResource(R.string.adhan_attr_title)); Body(stringResource(R.string.adhan_attr_body))
+            Link("CC BY-SA 4.0 — $CC_BY_SA_URL") { uri.openUri(CC_BY_SA_URL) }
+            Link(stringResource(R.string.source_link)) { uri.openUri(COMMONS_URL) }
+            Head(stringResource(R.string.other_credits)); Body(stringResource(R.string.other_credits_body))
+            Link("adhan-java — MIT — github.com/batoulapps/adhan-java") { uri.openUri("https://github.com/batoulapps/adhan-java") }
+            Link("GeoNames — CC BY 4.0 — geonames.org") { uri.openUri("https://www.geonames.org/") }
+        }
+    }
+}
+
+@Composable private fun Head(t: String) = Text(t, Modifier.padding(top = 20.dp, bottom = 6.dp), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+@Composable private fun Body(t: String) = Text(t, style = MaterialTheme.typography.bodyMedium)
+@Composable private fun Link(t: String, onClick: () -> Unit) = TextButton(onClick = onClick, contentPadding = PaddingValues(0.dp)) {
+    Text(t, style = MaterialTheme.typography.bodySmall.copy(textDirection = TextDirection.Content))
+}

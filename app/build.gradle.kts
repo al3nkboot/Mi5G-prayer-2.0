@@ -7,8 +7,11 @@ plugins {
 }
 
 /** Debug key lives OUTSIDE the repo (never commit): ../prayer-times-keystore/signing.properties */
-val signingProps: Properties? = rootProject.file("../prayer-times-keystore/signing.properties").takeIf { it.isFile }
+fun loadProps(path: String): Properties? = rootProject.file(path).takeIf { it.isFile }
     ?.let { f -> Properties().apply { f.inputStream().use { load(it) } } }
+val signingProps: Properties? = loadProps("../prayer-times-keystore/signing.properties")
+/** Release (Play upload) key, also outside the repo: ../prayer-times-release-keystore/signing.properties */
+val releaseProps: Properties? = loadProps("../prayer-times-release-keystore/signing.properties")
 
 android {
     namespace = "com.midroid.prayertimes"
@@ -17,8 +20,8 @@ android {
         applicationId = "com.midroid.prayertimes"
         minSdk = 26
         targetSdk = 35
-        versionCode = 4
-        versionName = "0.4.0"
+        versionCode = 10
+        versionName = "1.0.0"
     }
     signingConfigs {
         if (signingProps != null) create("app") {
@@ -27,15 +30,28 @@ android {
             keyAlias = signingProps.getProperty("keyAlias")
             keyPassword = signingProps.getProperty("keyPassword")
         }
+        if (releaseProps != null) create("release") {
+            storeFile = file(releaseProps.getProperty("storeFile"))
+            storePassword = releaseProps.getProperty("storePassword")
+            keyAlias = releaseProps.getProperty("keyAlias")
+            keyPassword = releaseProps.getProperty("keyPassword")
+        }
     }
     buildTypes {
         debug { signingConfigs.findByName("app")?.let { signingConfig = it } }
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.findByName("release")
+            if (releaseProps == null) logger.warn("Mi5G Prayer: no release signing.properties - release output will be UNSIGNED")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    buildFeatures { compose = true }
+    buildFeatures { compose = true; buildConfig = true }
     testOptions {
         unitTests.isReturnDefaultValues = true
         unitTests.isIncludeAndroidResources = true
