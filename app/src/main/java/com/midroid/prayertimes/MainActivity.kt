@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
             var perms by remember { mutableStateOf(readPerms()) }
             val owner = LocalLifecycleOwner.current
             DisposableEffect(owner) {
-                val obs = LifecycleEventObserver { _, e -> if (e == Lifecycle.Event.ON_RESUME) { perms = readPerms(); runCatching { Alarms.reschedule(ctx) } } }
+                val obs = LifecycleEventObserver { _, e -> if (e == Lifecycle.Event.ON_RESUME) { perms = readPerms(); runCatching { Alarms.reschedule(ctx) }; com.midroid.prayertimes.widget.Widgets.refresh(ctx) } }
                 owner.lifecycle.addObserver(obs); onDispose { owner.lifecycle.removeObserver(obs) }
             }
             val notifLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { perms = readPerms(); runCatching { Alarms.reschedule(ctx) } }

@@ -18,9 +18,10 @@ Fajr **18°**, Isha **18°**, Asr Shafi'i (shadow 1), then **+5 min** to Dhuhr, 
   symmetric (rounding/their exact solar model), so no extra offset helps.
 - 52 other wilayats (Jun+Dec): all within ±1 min. Four needed per-wilayat corrections (0.3.0, `MinistryFits`, Oman method only):
   - Rakhyut: all times −2 min; Al Jazir: all −1; Mahout: Fajr +1, Asr +1.
-  - Al Hamra: error flips sign June vs December (a latitude effect), so no constant offset fits. The Ministry's Al Hamra
-    table is reproduced (±1 min) by computing at 23.765 N 57.291 E, ≈72 km north of the town (GeoNames 23.115 N) —
-    likely a Ministry-side reference-point issue; flagged as unverified.
+  - Al Hamra (0.4.0): real GeoNames coordinates (23.11519 N, 57.29143 E) for location/qibla/distance; times get a
+    per-month, per-prayer offset table fitted to the Ministry's full 2026 Al Hamra calendar (365 days, all within ±1 min,
+    ~76 % exact). The error pattern (Fajr −2 in summer, +1 in winter; Isha +2 summer, −1 winter) looks like the Ministry
+    computes Al Hamra for a point further north; reason unconfirmed. The 0.3.0 "fake point" was removed.
 
 ## Al Buraimi: ours vs Ministry vs Salatuk
 | Date | Source | Fajr | Sunrise | Dhuhr | Asr | Maghrib | Isha |

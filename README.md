@@ -19,4 +19,6 @@ No ads, no analytics, **no INTERNET permission**. Optional approximate location 
 
 Build: `./gradlew --no-daemon testDebugUnitTest assembleDebug` (JDK 17). The debug signing key lives outside the repo in `../prayer-times-keystore/`.
 
-Roadmap: M4 widget + settings polish.
+- M4 (0.4.0): Glance widget (responsive small/large; next prayer + live Chronometer countdown, today's times, city, Hijri;
+  day/night; refreshed by an alarm at each prayer boundary/midnight, no polling). Per-prayer sound: chime / bundled adhan /
+  your own file (SAF, no storage permission) with preview and chime fallback. Al Hamra monthly Ministry fit.

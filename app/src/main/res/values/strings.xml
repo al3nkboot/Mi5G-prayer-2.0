@@ -80,8 +80,19 @@
     <string name="qibla_calibrate">دقة البوصلة منخفضة: حرّك الهاتف على شكل الرقم 8 عدة مرات وابتعد عن المعادن والمغناطيس.</string>
     <string name="qibla_tip">ضع الهاتف مستوياً. يُصحَّح الانحراف المغناطيسي تلقائياً.</string>
     <string name="credits">المصادر والتراخيص</string>
-    <string name="credits_body">• الحساب: مكتبة adhan-java 1.2.1 (Batoul Apps) — ترخيص MIT.
-• الإحداثيات: GeoNames — CC BY 4.0.
-• التحقق: تقويم وزارة الأوقاف والشؤون الدينية (mara.gov.om) 2026.
-• صوت التنبيه: نغمة مولّدة من هذا المشروع — CC0. صوت الأذان سيُضاف لاحقاً بعد التحقق من ترخيصه.</string>
+        <string name="widget_desc">الصلاة القادمة مع عدّاد تنازلي ومواقيت اليوم</string>
+    <string name="sound">الصوت</string>
+    <string name="snd_chime">نغمة</string>
+    <string name="snd_adhan">أذان</string>
+    <string name="snd_custom">ملفي</string>
+    <string name="my_file">ملفي الصوتي: %1$s</string>
+    <string name="no_file">لم يُختر ملف</string>
+    <string name="choose_file">اختر ملفاً صوتياً</string>
+    <string name="preview">استماع</string>
+    <string name="stop_preview">إيقاف</string>
+    <string name="file_lost">تعذّر الوصول إلى ملفك الصوتي، سيُستخدم صوت النغمة بدلاً منه.</string>
+    <string name="reset_adj">تصفير التعديلات</string>
+    <string name="widget_hint">أضف أداة «مواقيتي» من شاشة الهاتف الرئيسية (اضغط مطولاً ← الأدوات).</string>
+    <string name="adhan_note">الأذان المرفق: تسجيل ميداني من مسجد علي مطن، هرجيسا (2019) قد يتضمن ضجيجاً خلفياً.</string>
+    <string name="credits_body">• الحساب: adhan-java 1.2.1 (Batoul Apps) — MIT.\n• الإحداثيات: GeoNames — CC BY 4.0.\n• التحقق: تقويم وزارة الأوقاف والشؤون الدينية (mara.gov.om) 2026.\n• النغمة: مولّدة من هذا المشروع — CC0.\n• الأذان: «Adhan (call to prayer) from the Ali Matan Mosque, Hargeisa»، تصوير Gerard van de Bruinhorst، مجموعة مركز الدراسات الأفريقية بلايدن (ASC Leiden)، ويكيميديا كومنز، ترخيص CC BY-SA 4.0 (إذن VRT رقم 2019092710004895). الصوت مستخرج من الفيديو ومحوّل إلى أحادي.</string>
 </resources>

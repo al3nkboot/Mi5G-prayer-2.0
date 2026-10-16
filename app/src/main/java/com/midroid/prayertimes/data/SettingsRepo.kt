@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.StateFlow
 
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
 
+/** Sound for an audible alert: bundled chime, bundled adhan recording, or the user's own file (SAF uri). */
+enum class SoundChoice { CHIME, ADHAN, CUSTOM }
+
 data class AppSettings(
     val calc: CalcSettings = CalcSettings(),
     val place: Place = Cities.default,
@@ -20,6 +23,9 @@ data class AppSettings(
     /** index = Prayer.ordinal; sunrise off by default */
     val alerts: List<AlertMode> = DEFAULT_ALERTS,
     val reminderMinutes: Int = 0,
+    val sounds: List<SoundChoice> = List(6) { SoundChoice.CHIME },
+    val customUri: String? = null,
+    val customName: String? = null,
 ) { companion object { val DEFAULT_ALERTS = listOf(AlertMode.ADHAN, AlertMode.OFF, AlertMode.ADHAN, AlertMode.ADHAN, AlertMode.ADHAN, AlertMode.ADHAN) } }
 
 class SettingsRepo(context: Context) {
@@ -46,6 +52,8 @@ class SettingsRepo(context: Context) {
             place = place, hijriAdjust = sp.getInt("hijri_adj", 0), theme = enumOr("theme", ThemeMode.SYSTEM),
             alerts = List(6) { i -> sp.getString("alert_$i", null)?.let { v -> AlertMode.entries.firstOrNull { it.name == v } } ?: AppSettings.DEFAULT_ALERTS[i] },
             reminderMinutes = sp.getInt("reminder_min", 0),
+            sounds = List(6) { i -> enumOr("sound_$i", SoundChoice.CHIME) },
+            customUri = sp.getString("custom_uri", null), customName = sp.getString("custom_name", null),
         )
     }
 
@@ -58,6 +66,8 @@ class SettingsRepo(context: Context) {
             putString("place_id", n.place.id)
             n.alerts.forEachIndexed { i, v -> putString("alert_$i", v.name) }
             putInt("reminder_min", n.reminderMinutes)
+            n.sounds.forEachIndexed { i, v -> putString("sound_$i", v.name) }
+            putString("custom_uri", n.customUri); putString("custom_name", n.customName)
             if (n.place.id == "gps") {
                 putString("gps_ar", n.place.nameAr); putString("gps_en", n.place.nameEn)
                 putFloat("gps_lat", n.place.lat.toFloat()); putFloat("gps_lon", n.place.lon.toFloat()); putString("gps_zone", n.place.zone)

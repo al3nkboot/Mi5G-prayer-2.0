@@ -14,11 +14,13 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 import android.app.PendingIntent
 import com.midroid.prayertimes.R
+import com.midroid.prayertimes.data.SoundChoice
 
 /** Plays the bundled adhan once, with a Stop action. Stops on completion, on Stop, or when audio focus is lost (e.g. a call). */
 class AdhanService : Service() {
     private var player: MediaPlayer? = null
     private var focus: AudioFocusRequest? = null
+    private var soundName: String? = null
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -29,6 +31,7 @@ class AdhanService : Service() {
             .addAction(0, getString(R.string.stop), stop).setDeleteIntent(stop).setOngoing(false)
             .setPriority(NotificationCompat.PRIORITY_HIGH).build()
         ServiceCompat.startForeground(this, Notifier.ID_ADHAN, n, if (Build.VERSION.SDK_INT >= 29) ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK else 0)
+        soundName = intent?.getStringExtra(EXTRA_SOUND)
         play()
         return START_NOT_STICKY
     }
@@ -40,15 +43,14 @@ class AdhanService : Service() {
         focus = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT).setAudioAttributes(attrs)
             .setOnAudioFocusChangeListener { if (it == AudioManager.AUDIOFOCUS_LOSS || it == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) stopAll() }.build()
         am.requestAudioFocus(focus!!)
-        player = runCatching {
-            MediaPlayer().apply {
-                setAudioAttributes(attrs)
-                setWakeMode(this@AdhanService, PowerManager.PARTIAL_WAKE_LOCK)
-                resources.openRawResourceFd(R.raw.prayer_chime).use { setDataSource(it.fileDescriptor, it.startOffset, it.length) }
-                setOnCompletionListener { stopAll() }
-                prepare(); start()
-            }
-        }.getOrElse { stopAll(); null }
+        val choice = SoundChoice.entries.firstOrNull { it.name == soundName } ?: SoundChoice.CHIME
+        val s = (application as com.midroid.prayertimes.PrayerApp).settings.state.value
+        player = Sounds.prepare(this, choice, s.customUri, attrs)?.second?.apply {
+            setWakeMode(this@AdhanService, PowerManager.PARTIAL_WAKE_LOCK)
+            setOnCompletionListener { stopAll() }
+            start()
+        }
+        if (player == null) stopAll()
     }
 
     private fun stopAll() {
@@ -59,5 +61,5 @@ class AdhanService : Service() {
 
     override fun onDestroy() { player?.runCatching { release() }; player = null; super.onDestroy() }
 
-    companion object { const val ACTION_STOP = "com.midroid.prayertimes.STOP_ADHAN"; const val EXTRA_TITLE = "title" }
+    companion object { const val ACTION_STOP = "com.midroid.prayertimes.STOP_ADHAN"; const val EXTRA_TITLE = "title"; const val EXTRA_SOUND = "sound" }
 }

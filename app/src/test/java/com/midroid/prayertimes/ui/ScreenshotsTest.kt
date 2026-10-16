@@ -6,6 +6,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.midroid.prayertimes.MainActivity
 import com.midroid.prayertimes.PrayerApp
@@ -52,6 +53,7 @@ class ScreenshotsArTest : ShotsBase() {
         rule.onNodeWithTag("city").performClick(); shot("03_city_picker_ar")
         rule.activity.runOnUiThread { rule.activity.onBackPressedDispatcher.onBackPressed() }
         rule.onNodeWithTag("settings").performClick(); shot("04_settings_notifications_ar")
+        rule.onNodeWithTag("choose_file").performScrollTo(); shot("15_settings_sound_ar")
         rule.activity.runOnUiThread { rule.activity.onBackPressedDispatcher.onBackPressed() }
     }
 }

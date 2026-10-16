@@ -30,7 +30,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 AlertMode.OFF -> Unit
                 AlertMode.ADHAN -> if (Notifier.audioAllowed(ctx) && Notifier.canPost(ctx)) {
                     val ok = runCatching {
-                        ContextCompat.startForegroundService(ctx, Intent(ctx, AdhanService::class.java).putExtra(AdhanService.EXTRA_TITLE, ctx.getString(R.string.time_for, name)))
+                        ContextCompat.startForegroundService(ctx, Intent(ctx, AdhanService::class.java).putExtra(AdhanService.EXTRA_TITLE, ctx.getString(R.string.time_for, name)).putExtra(AdhanService.EXTRA_SOUND, s.sounds[p.ordinal].name))
                     }.onFailure { Log.w("Mi5GPrayer", "adhan service not allowed, falling back to silent", it) }.isSuccess
                     if (!ok) silent(ctx, p, name)
                 } else silent(ctx, p, name)
@@ -38,6 +38,7 @@ class AlarmReceiver : BroadcastReceiver() {
             }
         }
         Alarms.reschedule(ctx)
+        com.midroid.prayertimes.widget.Widgets.refresh(ctx)
     }
 
     private fun silent(ctx: Context, p: Prayer, name: String) =
@@ -46,5 +47,5 @@ class AlarmReceiver : BroadcastReceiver() {
 
 /** BOOT_COMPLETED, TIME_SET, TIMEZONE_CHANGED, MY_PACKAGE_REPLACED, exact-alarm permission changes. */
 class SystemReceiver : BroadcastReceiver() {
-    override fun onReceive(ctx: Context, intent: Intent) { Alarms.reschedule(ctx) }
+    override fun onReceive(ctx: Context, intent: Intent) { Alarms.reschedule(ctx); com.midroid.prayertimes.widget.Widgets.refresh(ctx) }
 }

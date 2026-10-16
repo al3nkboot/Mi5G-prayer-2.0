@@ -10,7 +10,7 @@ class PrayerApp : Application() {
         super.onCreate()
         settings = SettingsRepo(this)
         com.midroid.prayertimes.notify.Notifier.channels(this)
-        settings.onChange = { runCatching { com.midroid.prayertimes.notify.Alarms.reschedule(this, it) } }
+        settings.onChange = { runCatching { com.midroid.prayertimes.notify.Alarms.reschedule(this, it) }; com.midroid.prayertimes.widget.Widgets.refresh(this) }
         runCatching { com.midroid.prayertimes.notify.Alarms.reschedule(this) }
     }
     companion object { /** swappable for deterministic tests/screenshots */ @Volatile var clock: Clock = Clock.systemDefaultZone() }

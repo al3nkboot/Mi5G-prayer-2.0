@@ -73,9 +73,9 @@ object PrayerEngine {
             HighLat.TWILIGHT_ANGLE -> p.highLatitudeRule = HighLatitudeRule.TWILIGHT_ANGLE
         }
         val fit = if (s.method == Method.OMAN) MinistryFits.byPlace[place.id] else null
-        val a = s.adjustments.mapIndexed { i, v -> v + (fit?.offsets?.get(i) ?: 0) }
+        val a = s.adjustments.mapIndexed { i, v -> v + (fit?.offsetsFor(date.monthValue)?.get(i) ?: 0) }
         p.adjustments = PrayerAdjustments(a[0], a[1], a[2], a[3], a[4], a[5])
-        val t = PrayerTimes(Coordinates(fit?.calcLat ?: place.lat, fit?.calcLon ?: place.lon), DateComponents(date.year, date.monthValue, date.dayOfMonth), p)
+        val t = PrayerTimes(Coordinates(place.lat, place.lon), DateComponents(date.year, date.monthValue, date.dayOfMonth), p)
         val z = place.zoneId
         fun c(d: java.util.Date) = d.toInstant().atZone(z).truncatedTo(java.time.temporal.ChronoUnit.MINUTES)
         return DayTimes(date, linkedMapOf(
