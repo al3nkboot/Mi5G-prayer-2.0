@@ -54,7 +54,7 @@ class AlarmReceiver : BroadcastReceiver() {
         Notifier.post(ctx, 1100 + p.ordinal, Notifier.base(ctx, Notifier.CH_SILENT, ctx.getString(R.string.time_for, name), ctx.getString(R.string.app_name)))
 }
 
-/** BOOT_COMPLETED, TIME_SET, TIMEZONE_CHANGED, MY_PACKAGE_REPLACED, exact-alarm permission changes. */
+/** BOOT_COMPLETED, TIME_SET, TIMEZONE_CHANGED, LOCALE_CHANGED, MY_PACKAGE_REPLACED, exact-alarm permission changes. */
 class SystemReceiver : BroadcastReceiver() {
-    override fun onReceive(ctx: Context, intent: Intent) { Alarms.reschedule(ctx); com.midroid.prayertimes.widget.Widgets.refresh(ctx) }
+    override fun onReceive(ctx: Context, intent: Intent) { Alarms.reschedule(ctx); com.midroid.prayertimes.widget.Widgets.refreshAsync(this, ctx) }
 }

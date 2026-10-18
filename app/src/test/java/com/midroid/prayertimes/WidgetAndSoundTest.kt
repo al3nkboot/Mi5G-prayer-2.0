@@ -49,13 +49,26 @@ class WidgetAndSoundTest {
         assertEquals(asr, d.refreshAt)
         assertEquals(java.time.Duration.between(now, asr).toMillis(), d.remainingMs)
         assertEquals("العصر", d.next)
-        assertEquals(6, d.rows.size); assertTrue(d.rows[Prayer.ASR.ordinal].third)
-        assertEquals("الجمعة", d.rows[Prayer.DHUHR.ordinal].first) // Friday
+        assertEquals(5, d.rows.size); assertEquals(listOf(false, false, true, false, false), d.rows.map { it.third })
+        assertEquals("الجمعة", d.rows[1].first) // Friday
+        assertTrue(d.rtl)
         // after Isha: refresh at local midnight, next = tomorrow's Fajr
         val late = WidgetModel.build(ctx, s, ZonedDateTime.of(2026, 10, 16, 22, 0, 0, 0, z))
         assertEquals(ZonedDateTime.of(2026, 10, 17, 0, 0, 0, 0, z), late.refreshAt)
         assertEquals("الفجر", late.next)
-        assertTrue(late.rows.none { it.third })
+        assertTrue(late.rows.last().third) // after Isha: Isha stays highlighted
+        assertEquals(1, late.rows.count { it.third })
+        // between Fajr and sunrise: header counts to sunrise, list highlights Dhuhr
+        val day = PrayerEngine.day(s.place, now.toLocalDate(), s.calc)
+        val dawn = WidgetModel.build(ctx, s, day[Prayer.FAJR].plusMinutes(5))
+        assertEquals(day[Prayer.SUNRISE], dawn.refreshAt)
+        assertTrue(dawn.rows[1].third)
+    }
+
+    @Test @Config(qualifiers = "en-w393dp-h852dp-xhdpi") fun widgetEnglishIsLtr() {
+        val d = WidgetModel.build(ctx, ctx.settings.state.value, now)
+        assertFalse(d.rtl); assertEquals("Asr", d.next)
+        renderWidget("w_4x2_en_light", 300, 130, false)
     }
 
     @Test fun boundaryAlarmOnlyWhenWidgetsExist() {
@@ -100,8 +113,11 @@ class WidgetAndSoundTest {
     }
 
     @Test fun widgetScreenshots() {
-        renderWidget("12_widget_large_ar_light", 300, 260, false)
-        renderWidget("13_widget_large_ar_dark", 300, 260, true)
-        renderWidget("14_widget_small_ar_light", 180, 90, false)
+        renderWidget("w_2x1_ar_light", 130, 60, false)
+        renderWidget("w_2x1_ar_dark", 130, 60, true)
+        renderWidget("w_4x2_ar_light", 300, 130, false)
+        renderWidget("w_4x2_ar_dark", 300, 130, true)
+        renderWidget("w_4x3_ar_light", 300, 260, false)
+        renderWidget("w_4x3_ar_dark", 300, 260, true)
     }
 }
