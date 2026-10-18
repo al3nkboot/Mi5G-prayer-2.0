@@ -14,7 +14,7 @@ import java.time.ZonedDateTime
 /** Arms a rolling window of alarms (next [Schedule.WINDOW_DAYS] days). Re-armed whenever an alarm fires, settings
  *  change, the device boots, or time/zone changes. */
 object Alarms {
-    const val EXTRA_PRAYER = "prayer"; const val EXTRA_REMINDER = "reminder"; const val EXTRA_AT = "at"
+    const val EXTRA_PRAYER = "prayer"; const val EXTRA_KIND = "kind"; const val EXTRA_AT = "at"
 
     fun canExact(ctx: Context): Boolean {
         if (Build.VERSION.SDK_INT < 31) return true
@@ -23,7 +23,7 @@ object Alarms {
 
     private fun pending(ctx: Context, code: Int, a: Alert?, flags: Int): PendingIntent? {
         val i = Intent(ctx, AlarmReceiver::class.java).setAction("com.midroid.prayertimes.ALARM_$code")
-        if (a != null) i.putExtra(EXTRA_PRAYER, a.prayer.name).putExtra(EXTRA_REMINDER, a.reminder).putExtra(EXTRA_AT, a.at.toInstant().toEpochMilli())
+        if (a != null) i.putExtra(EXTRA_PRAYER, a.prayer.name).putExtra(EXTRA_KIND, a.kind.name).putExtra(EXTRA_AT, a.at.toInstant().toEpochMilli())
         return PendingIntent.getBroadcast(ctx, code, i, flags or PendingIntent.FLAG_IMMUTABLE)
     }
 
@@ -32,7 +32,8 @@ object Alarms {
                    now: ZonedDateTime = ZonedDateTime.now(PrayerApp.clock)): List<Alert> {
         val am = ctx.getSystemService(AlarmManager::class.java)
         for (c in 0 until Schedule.MAX_CODES) pending(ctx, c, null, PendingIntent.FLAG_NO_CREATE)?.let { am.cancel(it); it.cancel() }
-        val list = Schedule.upcoming(s.place, now, s.calc, s.alerts, s.reminderMinutes)
+        val list = Schedule.upcoming(s.place, now, s.calc, s.alerts, s.reminderMinutes, silence = s.autoSilent,
+            adhkarAm = s.adhkarAmOffset.takeIf { s.adhkarAm }, adhkarPm = s.adhkarPmOffset.takeIf { s.adhkarPm })
         val exact = canExact(ctx)
         for (a in list) {
             val pi = pending(ctx, a.requestCode, a, PendingIntent.FLAG_UPDATE_CURRENT)!!
@@ -40,6 +41,7 @@ object Alarms {
             if (exact) am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, t, pi)
             else am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, t, pi) // inexact fallback (may be late)
         }
+        Silencer.arm(ctx)
         return list
     }
 }

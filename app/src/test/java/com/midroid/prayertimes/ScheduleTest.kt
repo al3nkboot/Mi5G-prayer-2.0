@@ -47,4 +47,29 @@ class ScheduleTest {
         val list = Schedule.upcoming(p, fajr.minusMinutes(3), s, defaults, 10)
         assertEquals(Prayer.FAJR, list.first().prayer); assertFalse(list.first().reminder)
     }
+
+    @Test fun adhkarReminderTimes() {
+        val now = ZonedDateTime.of(2026, 10, 16, 3, 0, 0, 0, z)
+        val day = PrayerEngine.day(p, now.toLocalDate(), s)
+        val list = Schedule.upcoming(p, now, s, List(6) { AlertMode.OFF }, 0, adhkarAm = 30, adhkarPm = 45)
+        assertTrue(list.all { it.kind == Kind.ADHKAR })
+        assertEquals(day[Prayer.FAJR].plusMinutes(30), list[0].at); assertEquals(Prayer.FAJR, list[0].prayer)
+        assertEquals(day[Prayer.ASR].plusMinutes(45), list[1].at); assertEquals(Prayer.ASR, list[1].prayer)
+        // morning off: only evening ones
+        assertTrue(Schedule.upcoming(p, now, s, List(6) { AlertMode.OFF }, 0, adhkarPm = 0).all { it.prayer == Prayer.ASR })
+        // past today's Fajr+30 -> first morning reminder is tomorrow
+        val later = Schedule.upcoming(p, day[Prayer.FAJR].plusMinutes(31), s, List(6) { AlertMode.OFF }, 0, adhkarAm = 30)
+        assertEquals(17, later.first().at.dayOfMonth)
+    }
+
+    @Test fun silenceForFivePrayersWithUniqueCodes() {
+        val now = ZonedDateTime.of(2026, 10, 16, 3, 0, 0, 0, z)
+        val list = Schedule.upcoming(p, now, s, defaults, 10, silence = true, adhkarAm = 30, adhkarPm = 30)
+        val sil = list.filter { it.kind == Kind.SILENCE }
+        assertTrue(sil.none { it.prayer == Prayer.SUNRISE })
+        val day = PrayerEngine.day(p, now.toLocalDate(), s)
+        assertEquals(day[Prayer.DHUHR].plusMinutes(Schedule.SILENCE_DELAY_MIN), sil.first { it.prayer == Prayer.DHUHR }.at)
+        assertEquals(list.size, list.map { it.requestCode }.toSet().size)
+        assertTrue(list.all { it.requestCode in 0 until Schedule.MAX_CODES })
+    }
 }

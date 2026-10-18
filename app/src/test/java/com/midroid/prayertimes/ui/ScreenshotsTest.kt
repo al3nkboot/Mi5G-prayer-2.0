@@ -105,3 +105,21 @@ class ScreenshotsQiblaTest : ShotsBase() {
         QiblaSensorOverride.heading = null
     }
 }
+
+@RunWith(AndroidJUnit4::class) @GraphicsMode(GraphicsMode.Mode.NATIVE)
+@Config(sdk = [35], qualifiers = "ar-w393dp-h852dp-xhdpi")
+class ScreenshotsAdhkarTest : ShotsBase() {
+    @Test fun render() {
+        theme(ThemeMode.LIGHT)
+        rule.onNodeWithTag("adhkar").performScrollTo(); shot("22_home_adhkar_button_ar")
+        rule.onNodeWithTag("adhkar").performClick()
+        rule.onNodeWithTag("count_76").performClick(); shot("19_adhkar_morning_ar")
+        rule.onNodeWithTag("tab_1").performClick(); shot("20_adhkar_evening_ar")
+        rule.activity.runOnUiThread { rule.activity.onBackPressedDispatcher.onBackPressed() }
+        rule.onNodeWithTag("settings").performClick()
+        rule.onNodeWithTag("auto_silent").performScrollTo().performClick()
+        rule.onNodeWithTag("adhkar_am").performScrollTo().performClick()
+        rule.onNodeWithTag("adhkar_pm").performScrollTo().performClick()
+        rule.onNodeWithTag("auto_silent").performScrollTo(); shot("21_settings_auto_silent_ar")
+    }
+}

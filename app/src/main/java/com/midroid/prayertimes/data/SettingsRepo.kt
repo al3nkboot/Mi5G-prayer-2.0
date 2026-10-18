@@ -26,6 +26,16 @@ data class AppSettings(
     val sounds: List<SoundChoice> = List(6) { SoundChoice.ADHAN },
     val customUri: String? = null,
     val customName: String? = null,
+    val autoSilent: Boolean = false,
+    val silentMinutes: Int = 20,
+    /** true = vibrate, false = silent */
+    val silentVibrate: Boolean = true,
+    val adhkarAm: Boolean = false,
+    /** minutes after Fajr */
+    val adhkarAmOffset: Int = 30,
+    val adhkarPm: Boolean = false,
+    /** minutes after Asr */
+    val adhkarPmOffset: Int = 30,
 ) { companion object { val DEFAULT_ALERTS = listOf(AlertMode.ADHAN, AlertMode.OFF, AlertMode.ADHAN, AlertMode.ADHAN, AlertMode.ADHAN, AlertMode.ADHAN) } }
 
 class SettingsRepo(context: Context) {
@@ -67,6 +77,9 @@ class SettingsRepo(context: Context) {
             reminderMinutes = sp.getInt("reminder_min", 0),
             sounds = List(6) { i -> enumOr("sound_$i", SoundChoice.ADHAN) },
             customUri = sp.getString("custom_uri", null), customName = sp.getString("custom_name", null),
+            autoSilent = sp.getBoolean("auto_silent", false), silentMinutes = sp.getInt("silent_min", 20), silentVibrate = sp.getBoolean("silent_vibrate", true),
+            adhkarAm = sp.getBoolean("adhkar_am", false), adhkarAmOffset = sp.getInt("adhkar_am_off", 30),
+            adhkarPm = sp.getBoolean("adhkar_pm", false), adhkarPmOffset = sp.getInt("adhkar_pm_off", 30),
         )
     }
 
@@ -83,6 +96,8 @@ class SettingsRepo(context: Context) {
             putInt("reminder_min", n.reminderMinutes)
             n.sounds.forEachIndexed { i, v -> putString("sound_$i", v.name) }
             putString("custom_uri", n.customUri); putString("custom_name", n.customName)
+            putBoolean("auto_silent", n.autoSilent); putInt("silent_min", n.silentMinutes); putBoolean("silent_vibrate", n.silentVibrate)
+            putBoolean("adhkar_am", n.adhkarAm); putInt("adhkar_am_off", n.adhkarAmOffset); putBoolean("adhkar_pm", n.adhkarPm); putInt("adhkar_pm_off", n.adhkarPmOffset)
             if (n.place.id == "gps") {
                 putString("gps_ar", n.place.nameAr); putString("gps_en", n.place.nameEn)
                 putFloat("gps_lat", n.place.lat.toFloat()); putFloat("gps_lon", n.place.lon.toFloat()); putString("gps_zone", n.place.zone)

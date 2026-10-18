@@ -3,6 +3,7 @@ package com.midroid.prayertimes.ui
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -28,7 +29,7 @@ import com.midroid.prayertimes.domain.Prayer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(s: AppSettings, perms: Perms, update: ((AppSettings) -> AppSettings) -> Unit, onExact: () -> Unit, onGrantNotif: () -> Unit, onAbout: () -> Unit = {}, onBack: () -> Unit) {
+fun SettingsScreen(s: AppSettings, perms: Perms, update: ((AppSettings) -> AppSettings) -> Unit, onExact: () -> Unit, onGrantNotif: () -> Unit, onAbout: () -> Unit = {}, onDnd: () -> Unit = {}, onBack: () -> Unit) {
     Scaffold(topBar = {
         TopAppBar(title = { Text(stringResource(R.string.settings)) },
             navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back)) } })
@@ -53,6 +54,33 @@ fun SettingsScreen(s: AppSettings, perms: Perms, update: ((AppSettings) -> AppSe
                 { update { it.copy(reminderMinutes = opts[(opts.indexOf(it.reminderMinutes) - 1).coerceAtLeast(0)]) } },
                 { update { it.copy(reminderMinutes = opts[(opts.indexOf(it.reminderMinutes) + 1).coerceAtMost(opts.size - 1)]) } })
             Text(stringResource(R.string.audio_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            HorizontalDivider(Modifier.padding(top = 12.dp))
+            Section(stringResource(R.string.auto_silent))
+            Toggle(stringResource(R.string.auto_silent_toggle), s.autoSilent, "auto_silent") { v -> update { it.copy(autoSilent = v) } }
+            if (s.autoSilent) {
+                if (!perms.dnd) NoticeCard(stringResource(R.string.dnd_needed), stringResource(R.string.open_settings), onDnd, Modifier.testTag("dnd_note"))
+                val mins = (10..40 step 5).toList()
+                Stepper(stringResource(R.string.silent_duration), stringResource(R.string.minutes_fmt, s.silentMinutes),
+                    { update { it.copy(silentMinutes = mins[(mins.indexOf(it.silentMinutes) - 1).coerceAtLeast(0)]) } },
+                    { update { it.copy(silentMinutes = mins[(mins.indexOf(it.silentMinutes) + 1).coerceIn(0, mins.size - 1)]) } })
+                SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
+                    listOf(true to R.string.vibrate, false to R.string.mode_silent).forEachIndexed { i, (v, r) ->
+                        SegmentedButton(selected = s.silentVibrate == v, onClick = { update { it.copy(silentVibrate = v) } }, shape = SegmentedButtonDefaults.itemShape(i, 2), icon = {}) { Text(stringResource(r)) }
+                    }
+                }
+                Text(stringResource(R.string.auto_silent_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            HorizontalDivider(Modifier.padding(top = 12.dp))
+            Section(stringResource(R.string.adhkar_title))
+            val offs = listOf(0, 15, 30, 45, 60, 90, 120)
+            Toggle(stringResource(R.string.adhkar_am_toggle), s.adhkarAm, "adhkar_am") { v -> update { it.copy(adhkarAm = v) } }
+            if (s.adhkarAm) Stepper(stringResource(R.string.after_fajr), stringResource(R.string.minutes_fmt, s.adhkarAmOffset),
+                { update { it.copy(adhkarAmOffset = offs[(offs.indexOf(it.adhkarAmOffset) - 1).coerceAtLeast(0)]) } },
+                { update { it.copy(adhkarAmOffset = offs[(offs.indexOf(it.adhkarAmOffset) + 1).coerceIn(0, offs.size - 1)]) } })
+            Toggle(stringResource(R.string.adhkar_pm_toggle), s.adhkarPm, "adhkar_pm") { v -> update { it.copy(adhkarPm = v) } }
+            if (s.adhkarPm) Stepper(stringResource(R.string.after_asr), stringResource(R.string.minutes_fmt, s.adhkarPmOffset),
+                { update { it.copy(adhkarPmOffset = offs[(offs.indexOf(it.adhkarPmOffset) - 1).coerceAtLeast(0)]) } },
+                { update { it.copy(adhkarPmOffset = offs[(offs.indexOf(it.adhkarPmOffset) + 1).coerceIn(0, offs.size - 1)]) } })
             HorizontalDivider(Modifier.padding(top = 12.dp))
             SoundSection(s, update)
             HorizontalDivider(Modifier.padding(top = 12.dp))
@@ -103,6 +131,12 @@ fun SettingsScreen(s: AppSettings, perms: Perms, update: ((AppSettings) -> AppSe
 @Composable private fun Choice(label: String, selected: Boolean, onClick: () -> Unit) {
     Row(Modifier.fillMaxWidth().selectable(selected, onClick = onClick, role = Role.RadioButton).padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
         RadioButton(selected, null); Spacer(Modifier.width(10.dp)); Text(label, style = MaterialTheme.typography.bodyLarge)
+    }
+}
+
+@Composable private fun Toggle(label: String, checked: Boolean, tag: String, onChange: (Boolean) -> Unit) {
+    Row(Modifier.fillMaxWidth().toggleable(checked, onValueChange = onChange, role = Role.Switch).padding(vertical = 6.dp).testTag(tag), verticalAlignment = Alignment.CenterVertically) {
+        Text(label, Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge); Switch(checked, null)
     }
 }
 

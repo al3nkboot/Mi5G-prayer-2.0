@@ -43,10 +43,10 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-data class Perms(val notifications: Boolean, val exact: Boolean)
+data class Perms(val notifications: Boolean, val exact: Boolean, val dnd: Boolean = true)
 
 @Composable
-fun HomeScreen(s: AppSettings, now: ZonedDateTime, perms: Perms, onCity: () -> Unit, onSettings: () -> Unit, onExact: () -> Unit, onGrantNotif: () -> Unit, onQibla: () -> Unit = {}) {
+fun HomeScreen(s: AppSettings, now: ZonedDateTime, perms: Perms, onCity: () -> Unit, onSettings: () -> Unit, onExact: () -> Unit, onGrantNotif: () -> Unit, onQibla: () -> Unit = {}, onAdhkar: () -> Unit = {}) {
     val st = remember(s, now.withSecond(0).withNano(0)) { PrayerEngine.now(s.place, now, s.calc) }
     val remaining = Duration.between(now, st.nextAt)
     val ar = isArabic()
@@ -75,6 +75,7 @@ fun HomeScreen(s: AppSettings, now: ZonedDateTime, perms: Perms, onCity: () -> U
         }
         Spacer(Modifier.height(10.dp))
         Prayer.entries.forEach { p -> PrayerRow(p, st, ar) }
+        OutlinedButton(onClick = onAdhkar, modifier = Modifier.fillMaxWidth().padding(top = 10.dp).testTag("adhkar")) { Text(stringResource(R.string.adhkar_title)) }
         Spacer(Modifier.height(12.dp))
         Text(methodName(s.calc.method), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.align(Alignment.CenterHorizontally))
         Spacer(Modifier.height(16.dp))

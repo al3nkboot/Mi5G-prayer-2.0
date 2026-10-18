@@ -39,8 +39,10 @@ object Notifier {
         Prayer.FAJR -> R.string.fajr; Prayer.SUNRISE -> R.string.sunrise; Prayer.DHUHR -> if (friday) R.string.jumuah else R.string.dhuhr
         Prayer.ASR -> R.string.asr; Prayer.MAGHRIB -> R.string.maghrib; Prayer.ISHA -> R.string.isha })
 
-    fun contentIntent(ctx: Context): PendingIntent = PendingIntent.getActivity(ctx, 0,
-        Intent(ctx, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), PendingIntent.FLAG_IMMUTABLE)
+    /** @param adhkarTab null = home, 0 = morning, 1 = evening adhkar tab */
+    fun contentIntent(ctx: Context, adhkarTab: Int? = null): PendingIntent = PendingIntent.getActivity(ctx, 1 + (adhkarTab ?: -1),
+        Intent(ctx, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP).apply { adhkarTab?.let { putExtra(MainActivity.EXTRA_ADHKAR_TAB, it) } },
+        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
     fun base(ctx: Context, channel: String, title: String, text: String) = NotificationCompat.Builder(ctx, channel)
         .setSmallIcon(R.drawable.ic_stat_prayer).setContentTitle(title).setContentText(text)

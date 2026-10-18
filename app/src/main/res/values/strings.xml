@@ -108,4 +108,25 @@
     <string name="lang_system">حسب النظام</string>
     <string name="lang_ar">العربية</string>
     <string name="lang_en">English</string>
+    <string name="adhkar_title">أذكار الصباح والمساء</string>
+    <string name="morning">الصباح</string>
+    <string name="evening">المساء</string>
+    <string name="repeat_fmt">التكرار: %1$d</string>
+    <string name="count_tap">عدّ</string>
+    <string name="dhikr_source">حصن المسلم، رقم %1$d. التخريج: %2$s</string>
+    <string name="adhkar_credit">المصدر: «حصن المسلم من أذكار الكتاب والسنة» لسعيد بن علي بن وهف القحطاني، باب ٢٧ (أذكار الصباح والمساء). النص من hisnmuslim.com والتخريج من حواشي الكتاب (المكتبة الشاملة).</string>
+    <string name="adhkar_am_toggle">تذكير بأذكار الصباح</string>
+    <string name="adhkar_pm_toggle">تذكير بأذكار المساء</string>
+    <string name="after_fajr">بعد الفجر</string>
+    <string name="after_asr">بعد العصر</string>
+    <string name="adhkar_am_notif">حان وقت أذكار الصباح</string>
+    <string name="adhkar_pm_notif">حان وقت أذكار المساء</string>
+    <string name="auto_silent">الصمت أثناء الصلاة</string>
+    <string name="auto_silent_toggle">تحويل الهاتف للصامت تلقائياً بعد الأذان</string>
+    <string name="silent_duration">المدة</string>
+    <string name="vibrate">اهتزاز</string>
+    <string name="dnd_needed">يحتاج التطبيق إذن «الوصول إلى عدم الإزعاج» ليغيّر وضع الرنين. بدونه لن يتحوّل الهاتف للصامت.</string>
+    <string name="open_settings">فتح الإعدادات</string>
+    <string name="auto_silent_note">يبدأ بعد دقيقة من وقت الصلاة للفجر والظهر والعصر والمغرب والعشاء، ثم يعود الرنين كما كان. إن غيّرت وضع الرنين بنفسك خلال المدة فلن يغيّره التطبيق.</string>
+    <string name="count_fmt">%1$d من %2$d</string>
 </resources>

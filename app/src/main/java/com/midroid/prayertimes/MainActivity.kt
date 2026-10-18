@@ -35,22 +35,30 @@ import com.midroid.prayertimes.ui.SettingsScreen
 import kotlinx.coroutines.delay
 import java.time.ZonedDateTime
 
-enum class Screen { HOME, CITY, SETTINGS, EXACT, QIBLA, ABOUT }
+enum class Screen { HOME, CITY, SETTINGS, EXACT, QIBLA, ABOUT, ADHKAR }
 
 class MainActivity : AppCompatActivity() {
+    /** adhkar tab requested by a reminder notification, consumed by the composition */
+    private val openTab = mutableStateOf<Int?>(null)
+    override fun onNewIntent(intent: Intent) { super.onNewIntent(intent); setIntent(intent); readTab(intent) }
+    private fun readTab(i: Intent?) { i?.getIntExtra(EXTRA_ADHKAR_TAB, -1)?.takeIf { it >= 0 }?.let { openTab.value = it; i.removeExtra(EXTRA_ADHKAR_TAB) } }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (savedInstanceState == null) readTab(intent)
         enableEdgeToEdge()
         val repo = (application as PrayerApp).settings
         setContent {
             val s by repo.state.collectAsStateWithLifecycle()
             var screen by rememberSaveable { mutableStateOf(Screen.HOME) }
+            var adhkarTab by rememberSaveable { mutableStateOf(0) }
+            LaunchedEffect(openTab.value) { openTab.value?.let { adhkarTab = it; screen = Screen.ADHKAR; openTab.value = null } }
             var now by remember { mutableStateOf(ZonedDateTime.now(PrayerApp.clock)) }
             LaunchedEffect(Unit) {
                 while (ticking) { now = ZonedDateTime.now(PrayerApp.clock); delay(1000L - System.currentTimeMillis() % 1000L) }
             }
             val ctx = LocalContext.current
-            fun readPerms() = Perms(Notifier.canPost(ctx), Alarms.canExact(ctx))
+            fun readPerms() = Perms(Notifier.canPost(ctx), Alarms.canExact(ctx), com.midroid.prayertimes.notify.Silencer.allowed(ctx))
             var perms by remember { mutableStateOf(readPerms()) }
             val owner = LocalLifecycleOwner.current
             DisposableEffect(owner) {
@@ -71,13 +79,15 @@ class MainActivity : AppCompatActivity() {
                 }
                 Unit
             }
+            val openDnd = { runCatching { startActivity(Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)) }; Unit }
             PrayerTheme(s.theme) {
                 Surface {
                     BackHandler(screen != Screen.HOME) { screen = Screen.HOME }
                     when (screen) {
                         Screen.HOME -> HomeScreen(s, now, perms, onCity = { screen = Screen.CITY }, onSettings = { screen = Screen.SETTINGS },
-                            onExact = openExact, onGrantNotif = askNotif, onQibla = { screen = Screen.QIBLA })
-                        Screen.SETTINGS -> SettingsScreen(s, perms, repo::update, onExact = { screen = Screen.EXACT }, onGrantNotif = askNotif, onAbout = { screen = Screen.ABOUT }) { screen = Screen.HOME }
+                            onExact = openExact, onGrantNotif = askNotif, onQibla = { screen = Screen.QIBLA }, onAdhkar = { screen = Screen.ADHKAR })
+                        Screen.SETTINGS -> SettingsScreen(s, perms, repo::update, onExact = { screen = Screen.EXACT }, onGrantNotif = askNotif, onAbout = { screen = Screen.ABOUT }, onDnd = openDnd) { screen = Screen.HOME }
+                        Screen.ADHKAR -> com.midroid.prayertimes.ui.AdhkarScreen(adhkarTab, { adhkarTab = it }) { screen = Screen.HOME }
                         Screen.ABOUT -> com.midroid.prayertimes.ui.AboutScreen(BuildConfig.VERSION_NAME) { screen = Screen.SETTINGS }
                         Screen.QIBLA -> com.midroid.prayertimes.ui.QiblaScreen(s.place) { screen = Screen.HOME }
                         Screen.EXACT -> ExactAlarmScreen(perms.exact, onOpenSettings = openExact) { screen = Screen.HOME }
@@ -91,6 +101,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         /** disabled in screenshot tests to keep the composition idle */ @Volatile var ticking = true
         @Volatile var askOnStart = true
+        const val EXTRA_ADHKAR_TAB = "adhkar_tab"
     }
 }
 

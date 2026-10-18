@@ -108,4 +108,25 @@
     <string name="lang_system">System</string>
     <string name="lang_ar">العربية</string>
     <string name="lang_en">English</string>
+    <string name="adhkar_title">Morning &amp; evening adhkar</string>
+    <string name="morning">Morning</string>
+    <string name="evening">Evening</string>
+    <string name="repeat_fmt">Repeat: %1$d</string>
+    <string name="count_tap">Count</string>
+    <string name="dhikr_source">Hisn al-Muslim no. %1$d. Reference: %2$s</string>
+    <string name="adhkar_credit">Source: “Hisn al-Muslim” by Sa‘id ibn Ali ibn Wahf al-Qahtani, chapter 27 (morning &amp; evening adhkar). Text from hisnmuslim.com, references from the book\'s footnotes (al-Maktaba al-Shamela).</string>
+    <string name="adhkar_am_toggle">Morning adhkar reminder</string>
+    <string name="adhkar_pm_toggle">Evening adhkar reminder</string>
+    <string name="after_fajr">After Fajr</string>
+    <string name="after_asr">After Asr</string>
+    <string name="adhkar_am_notif">Time for the morning adhkar</string>
+    <string name="adhkar_pm_notif">Time for the evening adhkar</string>
+    <string name="auto_silent">Silent during prayer</string>
+    <string name="auto_silent_toggle">Silence the phone automatically after the adhan</string>
+    <string name="silent_duration">Duration</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="dnd_needed">The app needs “Do Not Disturb access” to change the ringer mode. Without it the phone won\'t be silenced.</string>
+    <string name="open_settings">Open settings</string>
+    <string name="auto_silent_note">Starts one minute after Fajr, Dhuhr, Asr, Maghrib and Isha, then restores the ringer as it was. If you change the ringer yourself meanwhile, the app leaves it alone.</string>
+    <string name="count_fmt">%1$d of %2$d</string>
 </resources>

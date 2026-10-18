@@ -35,3 +35,12 @@ Centre Leiden. A/B previews (not in the app): `adhan_original_preview.m4a`, `adh
 ## 1.0.1 change
 The ASC Leiden / van de Bruinhorst Hargeisa recording (CC BY-SA 4.0, VRT 2019092710004895) used in 0.4.0–1.0.0
 was **removed** from the app in 1.0.1 and replaced by the default adhan above. It remains in git history only.
+
+## Morning & evening adhkar (1.1.0) — `app/src/main/assets/adhkar.json`
+| Item | Source | Notes |
+|---|---|---|
+| Book | «حصن المسلم من أذكار الكتاب والسنة» (Hisn al-Muslim), Sa‘id ibn Ali ibn Wahf al-Qahtani, chapter 27 «أذكار الصباح والمساء», items 75–98 | The book's own numbering is shown in the app for every dhikr. |
+| Arabic text | Official site API https://www.hisnmuslim.com/api/ar/27.json (fetched 2026-10-18) | Copied verbatim (`ARABIC_TEXT`), including the book's bracketed evening wording, e.g. «[وإذا أمسى قال: …]». Nothing paraphrased or re-worded. |
+| Reference (تخريج) per dhikr | The book's footnotes as published in al-Maktaba al-Shamela, book 31307, pages 54–67 (https://shamela.ws/book/31307/54 …/67, fetched 2026-10-18) | Footnote copied verbatim; where the footnote also states the virtue, it is kept as in the book. No. 92 has two footnotes (ten times / once when lazy), both kept. |
+| Repeat counts | From the counts written in the text («ثلاث مرات»، «سبع مرات»، «مائة مرة»…) | The API's `REPEAT` field says 1 for no. 83 although the text says «سبع مرات»; the app uses 7. |
+| Morning/evening split | Per the book's own notes | Morning tab omits no. 97 («إذا أمسى»); evening tab omits nos. 93, 94, 95 («إذا أصبح»). |
