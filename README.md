@@ -4,7 +4,7 @@
 
 # مواقيتي · Mi5G Prayer
 
-**تطبيق مواقيت صلاة دقيق لعُمان، يعمل بدون إنترنت، بلا إعلانات ولا تتبع.**
+**تطبيق مواقيت صلاة مع القبلة والأذكار والودجت والصامت التلقائي، يعمل بدون إنترنت، بلا إعلانات ولا تتبع. مع دقة خاصة لعُمان.**
 
 [![Release](https://img.shields.io/github/v/release/al3nkboot/prayer-times)](https://github.com/al3nkboot/prayer-times/releases/latest)
 ![Android 8.0+](https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white)
@@ -24,7 +24,9 @@
 
 ## المميزات
 
-- **مواقيت وزارة الأوقاف العُمانية:** مطابقة لتقويم الوزارة لعام 2026 بفارق لا يتجاوز دقيقة واحدة، مع تعديلات خاصة لعدد من الولايات.
+- **طرق حساب متعددة:** أم القرى، رابطة العالم الإسلامي، الهيئة المصرية، أمريكا الشمالية (ISNA)، كراتشي، دبي، قطر، الكويت، وطريقة عُمان (الافتراضية)، مع اختيار المذهب في العصر وتعديل الدقائق لكل صلاة.
+- **المدن والموقع:** قائمة مدن مدمجة تعمل بدون إنترنت لعُمان والخليج وعدد من العواصم العربية، أو تحديد موقعك تلقائيًا.
+- **دقة خاصة لعُمان:** طريقة وزارة الأوقاف العُمانية مطابقة لتقويم الوزارة لعام 2026 بفارق لا يتجاوز دقيقة واحدة.
 - **الأذان والتنبيهات:** أذان أو تنبيه أو صامت لكل صلاة، وتذكير قبل الأذان، وإمكانية اختيار صوت أذان من جهازك.
 - **صامت تلقائي وقت الصلاة:** يحوّل الجوال إلى صامت أو اهتزاز لمدة تختارها، ثم يعيده إلى وضعه السابق.
 - **أذكار الصباح والمساء:** من «حصن المسلم» مع عدّاد للتكرار وتذكير اختياري.
@@ -32,6 +34,7 @@
 - **ودجت للشاشة الرئيسية:** بثلاثة أحجام، مع عدّاد تنازلي للصلاة القادمة.
 - **التاريخ الهجري** مع إمكانية تعديله.
 - **عربي وإنجليزي** مع وضع فاتح وداكن.
+- **ملاحظة حالية:** المنطقة الزمنية تؤخذ من أقرب مدينة في القائمة المدمجة (الخليج والعالم العربي)، لذلك قد تظهر الأوقات بتوقيت خاطئ خارج هذه المنطقة إلى أن تُضاف مدن أكثر.
 - **خصوصية تامة:** لا يطلب إذن الإنترنت، وتُحسب الأوقات على جهازك.
 
 ## التثبيت
@@ -48,9 +51,12 @@
 
 ## English
 
-**Mi5G Prayer** is an accurate, fully offline prayer-times app for Oman: no ads, no tracking, no internet permission.
+**Mi5G Prayer** is a fully offline prayer-times app with a Qibla compass, adhkar, a home-screen widget and auto-silent: no ads, no tracking, no internet permission.
 
-- Oman Ministry of Awqaf method, matching the Ministry's 2026 calendar within ±1 minute ([accuracy](docs/accuracy.md)); other methods available.
+- Calculation methods: Umm al-Qura, Muslim World League, Egyptian, ISNA, Karachi, Dubai, Qatar, Kuwait and Oman (default), with Shafi/Hanafi Asr and per-prayer minute offsets.
+- Bundled offline city list for Oman, the Gulf and several Arab capitals, or automatic location.
+- **Extra accuracy for Oman:** the Oman Ministry of Awqaf method matches the Ministry's 2026 calendar within ±1 minute ([accuracy](docs/accuracy.md)).
+- **Current limitation:** the time zone is taken from the nearest bundled city (Gulf / Arab world), so outside that region times may show in the wrong time zone until more cities are added.
 - Adhan, alerts and pre-prayer reminders per prayer; custom adhan sound.
 - Auto-silent during prayer, restoring your previous ringer mode afterwards.
 - Morning and evening adhkar from Hisn al-Muslim with counters and reminders.
