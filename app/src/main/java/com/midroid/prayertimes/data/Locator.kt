@@ -29,11 +29,12 @@ object Locator {
         } else onResult(last)
     }
 
-    /** Turn coordinates into a Place: named after the nearest bundled city (timezone taken from it). */
-    fun toPlace(lat: Double, lon: Double): Place {
+    /** Turn coordinates into a Place in the device's time zone; the nearest bundled city only names it when it is within 75 km. */
+    fun toPlace(lat: Double, lon: Double, zone: String = java.time.ZoneId.systemDefault().id): Place {
         val (near, km) = Cities.nearest(lat, lon)
+        if (km > 75) return Place("gps", "موقعي الحالي", "My location", lat, lon, zone)
         val ar = if (km < 25) near.nameAr else "قرب ${near.nameAr}"
         val en = if (km < 25) near.nameEn else "Near ${near.nameEn}"
-        return Place("gps", ar, en, lat, lon, near.zone, near.countryAr, near.countryEn)
+        return Place("gps", ar, en, lat, lon, zone, near.countryAr, near.countryEn)
     }
 }

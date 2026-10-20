@@ -56,5 +56,5 @@ class AlarmReceiver : BroadcastReceiver() {
 
 /** BOOT_COMPLETED, TIME_SET, TIMEZONE_CHANGED, LOCALE_CHANGED, MY_PACKAGE_REPLACED, exact-alarm permission changes. */
 class SystemReceiver : BroadcastReceiver() {
-    override fun onReceive(ctx: Context, intent: Intent) { Alarms.reschedule(ctx); com.midroid.prayertimes.widget.Widgets.refreshAsync(this, ctx) }
+    override fun onReceive(ctx: Context, intent: Intent) { (ctx.applicationContext as com.midroid.prayertimes.PrayerApp).settings.syncGpsZone(); Alarms.reschedule(ctx); com.midroid.prayertimes.widget.Widgets.refreshAsync(this, ctx) }
 }

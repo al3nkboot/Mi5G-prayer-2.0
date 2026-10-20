@@ -34,7 +34,7 @@
 - **ودجت للشاشة الرئيسية:** بثلاثة أحجام، مع عدّاد تنازلي للصلاة القادمة.
 - **التاريخ الهجري** مع إمكانية تعديله.
 - **عربي وإنجليزي** مع وضع فاتح وداكن.
-- **ملاحظة حالية:** المنطقة الزمنية تؤخذ من أقرب مدينة في القائمة المدمجة (الخليج والعالم العربي)، لذلك قد تظهر الأوقات بتوقيت خاطئ خارج هذه المنطقة إلى أن تُضاف مدن أكثر.
+- **المنطقة الزمنية:** مع الموقع التلقائي تُستخدم المنطقة الزمنية للجهاز وتتحدّث تلقائياً عند تغيّرها؛ المدن المختارة يدوياً تحتفظ بمنطقتها الزمنية.
 - **خصوصية تامة:** لا يطلب إذن الإنترنت، وتُحسب الأوقات على جهازك.
 
 ## التثبيت
@@ -56,7 +56,7 @@
 - Calculation methods: Umm al-Qura, Muslim World League, Egyptian, ISNA, Karachi, Dubai, Qatar, Kuwait and Oman (default), with Shafi/Hanafi Asr and per-prayer minute offsets.
 - Bundled offline city list for Oman, the Gulf and several Arab capitals, or automatic location.
 - **Extra accuracy for Oman:** the Oman Ministry of Awqaf method matches the Ministry's 2026 calendar within ±1 minute ([accuracy](docs/accuracy.md)).
-- **Current limitation:** the time zone is taken from the nearest bundled city (Gulf / Arab world), so outside that region times may show in the wrong time zone until more cities are added.
+- **Time zone:** with automatic location the device time zone is used and follows changes automatically; cities picked manually keep their own zone.
 - Adhan, alerts and pre-prayer reminders per prayer; custom adhan sound.
 - Auto-silent during prayer, restoring your previous ringer mode afterwards.
 - Morning and evening adhkar from Hisn al-Muslim with counters and reminders.

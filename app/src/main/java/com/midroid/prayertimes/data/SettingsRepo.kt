@@ -64,7 +64,7 @@ class SettingsRepo(context: Context) {
     private fun load(): AppSettings {
         val place = sp.getString("place_id", null)?.let { id ->
             if (id == "gps") Place("gps", sp.getString("gps_ar", "")!!, sp.getString("gps_en", "")!!,
-                sp.getFloat("gps_lat", 0f).toDouble(), sp.getFloat("gps_lon", 0f).toDouble(), sp.getString("gps_zone", "Asia/Muscat")!!)
+                sp.getFloat("gps_lat", 0f).toDouble(), sp.getFloat("gps_lon", 0f).toDouble(), java.time.ZoneId.systemDefault().id)
             else Cities.byId(id)
         } ?: Cities.default
         return AppSettings(
@@ -105,5 +105,11 @@ class SettingsRepo(context: Context) {
         }.apply()
         _state.value = n
         onChange?.invoke(n)
+    }
+
+    /** GPS place follows the device time zone (called on TIMEZONE_CHANGED); manual cities keep their own zone. */
+    fun syncGpsZone() {
+        val z = java.time.ZoneId.systemDefault().id
+        if (_state.value.place.id == "gps" && _state.value.place.zone != z) update { it.copy(place = it.place.copy(zone = z)) }
     }
 }
