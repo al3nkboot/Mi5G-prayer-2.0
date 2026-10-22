@@ -25,7 +25,8 @@
 ## المميزات
 
 - **في أي مكان:** حدّد موقعك عبر GPS لتحصل على المواقيت أينما كنت، مع اعتماد المنطقة الزمنية لجهازك.
-- **8 طرق حساب:** أم القرى، رابطة العالم الإسلامي، دبي، قطر، الكويت، الهيئة المصرية، كراتشي، أمريكا الشمالية (ISNA)، مع المذهب الحنفي في العصر، وقواعد خطوط العرض العليا، وتعديل الدقائق لكل صلاة.
+- **9 طرق حساب:** أم القرى، رابطة العالم الإسلامي، دبي، قطر، الكويت، الهيئة المصرية، كراتشي، أمريكا الشمالية (ISNA)، وعُمان (وزارة الأوقاف)، مع المذهب الحنفي في العصر، وقواعد خطوط العرض العليا، وتعديل الدقائق لكل صلاة.
+- طريقة عُمان مطابقة لتقويم وزارة الأوقاف لعام 2026 بفارق لا يتجاوز دقيقة واحدة.
 - **قائمة مدن بدون GPS:** 89 مدينة تشمل العواصم العربية وتفاصيل مدن عُمان.
 - **الأذان والتنبيهات:** أذان أو تنبيه أو صامت لكل صلاة، وتذكير قبل الأذان، وإمكانية اختيار صوت أذان من جهازك.
 - **صامت تلقائي وقت الصلاة:** يحوّل الجوال إلى صامت أو اهتزاز لمدة تختارها، ثم يعيده إلى وضعه السابق.
@@ -54,7 +55,8 @@
 **Mi5G Prayer** is an offline prayer-times app for Muslims anywhere, with a Qibla compass, adhkar, a home-screen widget and auto-silent: no ads, no tracking, no internet permission.
 
 - **Anywhere via GPS:** prayer times for your current location, using your phone's time zone.
-- **8 calculation methods:** Umm al-Qura, Muslim World League, Dubai, Qatar, Kuwait, Egyptian, Karachi and ISNA (North America), plus Hanafi Asr, high-latitude rules and per-prayer minute offsets.
+- **9 calculation methods:** Umm al-Qura, Muslim World League, Dubai, Qatar, Kuwait, Egyptian, Karachi, ISNA (North America) and Oman (Ministry of Awqaf), plus Hanafi Asr, high-latitude rules and per-prayer minute offsets.
+- The Oman method matches the Ministry of Awqaf 2026 calendar within ±1 minute ([accuracy](docs/accuracy.md)).
 - Manual city list (no GPS needed) of 89 cities: Arab capitals, plus detailed coverage of Oman.
 - Adhan, alerts and pre-prayer reminders per prayer; custom adhan sound.
 - Auto-silent during prayer, restoring your previous ringer mode afterwards.

@@ -8,13 +8,13 @@ App id `com.midroid.prayertimes` · v1.0.0 (10) · Category: Lifestyle · Contai
 
 **Short description** (77/80): مواقيت الصلاة في أي مكان بدون إنترنت، مع الأذان والقبلة والأذكار وأداة للشاشة
 
-**Full description** (1220/4000):
+**Full description** (1249/4000):
 
 ```
 مواقيتي تطبيق بسيط وهادئ لأوقات الصلاة للمسلمين في أي مكان في العالم، ويعمل بالكامل دون إنترنت.
 
 • في أي مكان: حدّد موقعك عبر GPS لتحصل على المواقيت أينما كنت، مع اعتماد المنطقة الزمنية لجهازك.
-• 8 طرق حساب: أم القرى، رابطة العالم الإسلامي، دبي، قطر، الكويت، مصر، كراتشي، أمريكا الشمالية (ISNA)؛ مع المذهب الحنفي في العصر، وقواعد خطوط العرض العليا، وتعديل الدقائق لكل صلاة.
+• 9 طرق حساب: أم القرى، رابطة العالم الإسلامي، دبي، قطر، الكويت، مصر، كراتشي، أمريكا الشمالية (ISNA)، وعُمان (وزارة الأوقاف)؛ مع المذهب الحنفي في العصر، وقواعد خطوط العرض العليا، وتعديل الدقائق لكل صلاة.
 • الصلاة القادمة مع عدّاد تنازلي كبير، ومواقيت اليوم الست مع تمييز الحالية والقادمة.
 • التاريخ الهجري (أم القرى) يتغيّر عند المغرب، مع تعديل ±يوم.
 • تنبيه لكل صلاة: إيقاف / صامت / صوت (نغمة، أذان مرفق، أو ملفك الصوتي)، مع تذكير اختياري قبل الصلاة وزر إيقاف.
@@ -27,7 +27,7 @@ App id `com.midroid.prayertimes` · v1.0.0 (10) · Category: Lifestyle · Contai
 
 الخصوصية: بدون إعلانات، بدون تتبع، وبدون إذن إنترنت. كل الحسابات تتم على جهازك.
 
-الأذان المرفق: تسجيل Gerard van de Bruinhorst (مركز الدراسات الأفريقية بلايدن)، مسجد علي مطن – هرجيسا 2019، ترخيص CC BY-SA 4.0، مع خفض الضجيج.
+الأذان المرفق: من قناة «بيت المسلم - Muslim House» على يوتيوب (youtube.com/watch?v=rp1FyMSxehE)، ترخيص يوتيوب القياسي، وذكر الناشر أنه «بدون حقوق».
 ```
 
 ## English (en-US)
@@ -36,13 +36,13 @@ App id `com.midroid.prayertimes` · v1.0.0 (10) · Category: Lifestyle · Contai
 
 **Short description** (76/80): Offline prayer times anywhere, with adhan alerts, Qibla, adhkar and a widget
 
-**Full description** (1398/4000):
+**Full description** (1424/4000):
 
 ```
 Mi5G Prayer is a calm, simple prayer-times app for Muslims anywhere in the world. It works completely offline.
 
 • Anywhere: use GPS to get prayer times wherever you are, with your phone's time zone.
-• 8 calculation methods: Umm al-Qura, Muslim World League, Dubai, Qatar, Kuwait, Egyptian, Karachi, ISNA (North America); Hanafi Asr, high-latitude rules and per-prayer minute adjustments.
+• 9 calculation methods: Umm al-Qura, Muslim World League, Dubai, Qatar, Kuwait, Egyptian, Karachi, ISNA (North America), Oman (Ministry of Awqaf); Hanafi Asr, high-latitude rules and per-prayer minute adjustments.
 • Next prayer with a big countdown; today's six times with current/next highlighted.
 • Hijri date (Umm al-Qura) that changes at Maghrib, with ±day adjustment.
 • Per-prayer alerts: Off / Silent / Sound (chime, bundled adhan or your own audio file), optional pre-prayer reminder, Stop button.
