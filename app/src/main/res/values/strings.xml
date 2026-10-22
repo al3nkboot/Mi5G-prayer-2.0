@@ -93,14 +93,14 @@
     <string name="file_lost">تعذّر الوصول إلى ملفك الصوتي، سيُستخدم صوت النغمة بدلاً منه.</string>
     <string name="reset_adj">تصفير التعديلات</string>
     <string name="widget_hint">أضف أداة «مواقيتي» من شاشة الهاتف الرئيسية (اضغط مطولاً ← الأدوات).</string>
-    <string name="adhan_note">الأذان الافتراضي: من قناة «بيت المسلم - Muslim House» على يوتيوب.</string>
+    <string name="adhan_note">الأذان الافتراضي: تسجيل من مسجد علي مطن في هرجيسا، جيرارد فان دي برونهورست / مركز الدراسات الأفريقية في لايدن (CC BY-SA 4.0).</string>
     <string name="credits_body">• حساب المواقيت: adhan-java 1.2.1 (Batoul Apps) — ترخيص MIT.\n• إحداثيات المدن العُمانية: GeoNames — CC BY 4.0.\n• التحقق من الأوقات: تقويم وزارة الأوقاف والشؤون الدينية (mara.gov.om).\n• النغمة: مولّدة من هذا المشروع — CC0.</string>
     <string name="about_title">حول</string>
     <string name="version_fmt">الإصدار %1$s</string>
     <string name="privacy_title">الخصوصية</string>
     <string name="privacy_body">لا يجمع التطبيق أي بيانات ولا يرسلها. لا يملك إذن الإنترنت، ولا إعلانات ولا تحليلات. الموقع التقريبي (إن سمحت به) يُستخدم على جهازك فقط لاختيار المدينة ولا يُحفظ إلا كإحداثيات في إعدادات التطبيق. ملفك الصوتي يُقرأ من جهازك فقط.</string>
     <string name="adhan_attr_title">تسجيل الأذان</string>
-    <string name="adhan_attr_body">الأذان الافتراضي: «أجمل صوت الآذان بدون حقوق» من قناة «بيت المسلم - Muslim House» على يوتيوب (نُشر 2022-03-27).\nالترخيص: ترخيص يوتيوب القياسي؛ ذكر الناشر في الوصف أنه «بدون حقوق» و«جميع الحقوق محفوظة لكل مسلم». أُدرج بناءً على اختيار صاحب التطبيق.\nمُعدَّل: استُخرج الصوت، وقُصّ الصمت، وضُبطت شدة الصوت.</string>
+    <string name="adhan_attr_body">الأذان الافتراضي: «Adhan (call to prayer) from the Ali Matan Mosque, Hargeisa» (2019)، تصوير جيرارد فان دي برونهورست / مركز الدراسات الأفريقية في لايدن، من ويكيميديا كومنز.\nالترخيص: CC BY-SA 4.0 (إذن موثّق لدى ويكيميديا VRT رقم 2019092710004895).\nمُعدَّل: استُخرج الصوت وحُوّل إلى أحادي، وخُفّض الضجيج، وضُبطت شدة الصوت. الملف المعدَّل مرخّص CC BY-SA 4.0.</string>
     <string name="source_link">المصدر: https://www.youtube.com/watch?v=rp1FyMSxehE</string>
     <string name="other_credits">مصادر أخرى</string>
     <string name="other_credits_body">• حساب المواقيت: adhan-java 1.2.1 (Batoul Apps) — ترخيص MIT.\n• إحداثيات المدن العُمانية: GeoNames — CC BY 4.0.\n• التحقق من الأوقات: تقويم وزارة الأوقاف والشؤون الدينية (mara.gov.om).\n• النغمة: مولّدة من هذا المشروع — CC0.</string>

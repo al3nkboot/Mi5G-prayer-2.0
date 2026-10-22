@@ -48,7 +48,8 @@ class AdhanService : Service() {
         player = Sounds.prepare(this, choice, s.customUri, attrs)?.second?.apply {
             setWakeMode(this@AdhanService, PowerManager.PARTIAL_WAKE_LOCK)
             setOnCompletionListener { stopAll() }
-            start()
+            setOnErrorListener { _, _, _ -> stopAll(); true }
+            runCatching { start() }.onFailure { stopAll() }
         }
         if (player == null) stopAll()
     }

@@ -20,8 +20,8 @@ android {
         applicationId = "com.midroid.prayertimes"
         minSdk = 26
         targetSdk = 35
-        versionCode = 14
-        versionName = "1.1.2"
+        versionCode = 15
+        versionName = "1.1.3"
     }
     signingConfigs {
         if (signingProps != null) create("app") {
