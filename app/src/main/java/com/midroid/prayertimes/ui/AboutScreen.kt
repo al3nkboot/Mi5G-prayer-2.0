@@ -19,6 +19,8 @@ import com.midroid.prayertimes.R
 
 const val ADHAN_URL = "https://www.youtube.com/watch?v=rp1FyMSxehE"
 const val CHANNEL_URL = "https://www.youtube.com/channel/UCox8SYPdFsv-ClZoyzIJR1w"
+const val PAYPAL_URL = "https://paypal.me/Midroid5G"
+const val DEVELOPER_X_URL = "https://x.com/midroid5G"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,6 +39,9 @@ fun AboutScreen(version: String, onBack: () -> Unit) {
                     Text(stringResource(R.string.version_fmt, version), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
+            Head(stringResource(R.string.support_title)); Body(stringResource(R.string.support_body))
+            Link("PayPal — https://paypal.me/Midroid5G (@Midroid5G)") { runCatching { uri.openUri(PAYPAL_URL) } }
+            Link("X (Twitter) — @midroid5G — https://x.com/midroid5G") { runCatching { uri.openUri(DEVELOPER_X_URL) } }
             Head(stringResource(R.string.privacy_title)); Body(stringResource(R.string.privacy_body))
             Head(stringResource(R.string.adhan_attr_title)); Body(stringResource(R.string.adhan_attr_body))
             Link(stringResource(R.string.source_link)) { uri.openUri(ADHAN_URL) }

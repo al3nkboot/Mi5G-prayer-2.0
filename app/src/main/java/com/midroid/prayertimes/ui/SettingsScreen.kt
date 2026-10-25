@@ -118,7 +118,9 @@ fun SettingsScreen(s: AppSettings, perms: Perms, update: ((AppSettings) -> AppSe
             Text(stringResource(R.string.about), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Text(stringResource(R.string.widget_hint), Modifier.padding(top = 12.dp), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             HorizontalDivider(Modifier.padding(top = 12.dp))
-            OutlinedButton(onClick = onAbout, modifier = Modifier.fillMaxWidth().padding(top = 12.dp).testTag("about")) { Text(stringResource(R.string.about_title)) }
+            val uriHandler = androidx.compose.ui.platform.LocalUriHandler.current
+            OutlinedButton(onClick = { runCatching { uriHandler.openUri(PAYPAL_URL) } }, modifier = Modifier.fillMaxWidth().padding(top = 12.dp).testTag("support_paypal")) { Text(stringResource(R.string.support_paypal_btn)) }
+            OutlinedButton(onClick = onAbout, modifier = Modifier.fillMaxWidth().padding(top = 8.dp).testTag("about")) { Text(stringResource(R.string.about_title)) }
             Spacer(Modifier.height(24.dp))
         }
     }

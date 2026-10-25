@@ -8,6 +8,8 @@
 
 [![Release](https://img.shields.io/github/v/release/al3nkboot/prayer-times)](https://github.com/al3nkboot/prayer-times/releases/latest)
 ![Android 8.0+](https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white)
+[![PayPal Support](https://img.shields.io/badge/PayPal-Midroid5G-00457C?logo=paypal&logoColor=white)](https://paypal.me/Midroid5G)
+[![X @midroid5G](https://img.shields.io/badge/X-%40midroid5G-000000?logo=x&logoColor=white)](https://x.com/midroid5G)
 
 [**⬇️ تحميل أحدث إصدار (APK)**](https://github.com/al3nkboot/prayer-times/releases/latest)
 
@@ -45,6 +47,13 @@
 
 التحديثات الجديدة تُثبَّت فوق الإصدار السابق دون فقدان إعداداتك.
 
+## 💙 دعم استمرارية تطوير التطبيق
+
+إذا أعجبك التطبيق واستفدت منه، يمكنك دعم المطور **أحمد الأسد (`@midroid5G`)** للمساهمة في استمرار تطوير التطبيق وتحديثه مجانًا وبدون إعلانات:
+
+- **PayPal:** [**paypal.me/Midroid5G**](https://paypal.me/Midroid5G) (`@Midroid5G`)
+- **حساب X (تويتر):** [**@midroid5G**](https://x.com/midroid5G)
+
 </div>
 
 ---
@@ -78,4 +87,4 @@ Signing keys are kept outside the repository. Developer notes: [docs/development
 
 Third-party sources and audio attribution: [CREDITS.md](CREDITS.md) · [Privacy policy](docs/privacy-policy.md)
 
-Made by [@midroid5G](https://x.com/midroid5G).
+Made by [@midroid5G](https://x.com/midroid5G) · 💙 Support development on [PayPal (@Midroid5G)](https://paypal.me/Midroid5G).

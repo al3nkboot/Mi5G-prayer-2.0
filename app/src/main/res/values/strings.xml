@@ -95,6 +95,9 @@
     <string name="widget_hint">أضف أداة «مواقيتي» من شاشة الهاتف الرئيسية (اضغط مطولاً ← الأدوات).</string>
     <string name="adhan_note">الأذان الافتراضي: من قناة «بيت المسلم - Muslim House» على يوتيوب.</string>
     <string name="credits_body">• حساب المواقيت: adhan-java 1.2.1 (Batoul Apps) — ترخيص MIT.\n• إحداثيات المدن العُمانية: GeoNames — CC BY 4.0.\n• التحقق من الأوقات: تقويم وزارة الأوقاف والشؤون الدينية (mara.gov.om).\n• النغمة: مولّدة من هذا المشروع — CC0.</string>
+    <string name="support_title">دعم استمرارية تطوير التطبيق</string>
+    <string name="support_body">إذا أعجبك التطبيق واستفدت منه، يمكنك دعم المطور أحمد الأسد (@midroid5G) للمساهمة في استمرار تطوير التطبيق وتحديثه مجانًا وبدون إعلانات:</string>
+    <string name="support_paypal_btn">💙 دعم المطور عبر PayPal (@Midroid5G)</string>
     <string name="about_title">حول</string>
     <string name="version_fmt">الإصدار %1$s</string>
     <string name="privacy_title">الخصوصية</string>
