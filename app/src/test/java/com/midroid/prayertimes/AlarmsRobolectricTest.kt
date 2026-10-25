@@ -39,6 +39,7 @@ class AlarmsRobolectricTest {
         assertFalse(Alarms.canExact(ctx))
         val list = Alarms.reschedule(ctx); Alarms.reschedule(ctx)
         assertEquals(list.size, shadowOf(am).scheduledAlarms.size)
+        assertTrue(list.isNotEmpty() && shadowOf(am).scheduledAlarms.all { it.isAllowWhileIdle }) // setAndAllowWhileIdle fallback
     }
 
     @Test fun settingsChangeAndBootReschedule() {
