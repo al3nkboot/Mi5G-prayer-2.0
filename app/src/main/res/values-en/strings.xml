@@ -101,7 +101,7 @@
     <string name="about_title">About</string>
     <string name="version_fmt">Version %1$s</string>
     <string name="privacy_title">Privacy</string>
-    <string name="privacy_body">The app collects and sends no data. It has no internet permission, no ads and no analytics. Approximate location (if you allow it) is used on your device only to pick the city and is stored only as coordinates in the app settings. Your own sound file is read on your device only.</string>
+    <string name="privacy_body">The app collects and sends no data. It has no internet permission, no ads and no analytics. Approximate location (if you allow it) is used on your device only to pick the city and is stored only as coordinates in the app settings. Your own sound file is read on your device only. The camera is optional for the augmented-reality Qibla view; nothing from it is captured or stored.</string>
     <string name="adhan_attr_title">Adhan recording</string>
     <string name="adhan_attr_body">Default adhan: “أجمل صوت الآذان بدون حقوق” from the YouTube channel “بيت المسلم - Muslim House” (published 2022-03-27).\nLicence: standard YouTube licence; the uploader’s description states it is “بدون حقوق” (“no rights”) and “جميع الحقوق محفوظة لكل مسلم” (“all rights reserved for every Muslim”). Included at the app owner’s choice.\nModified: audio extracted, silence trimmed, loudness normalised.</string>
     <string name="source_link">Source: https://www.youtube.com/watch?v=rp1FyMSxehE</string>
@@ -148,7 +148,7 @@
     <string name="zakat_below">Below nisab</string>
     <string name="zakat_note">A 2.5% figure for cash that has reached the nisab you enter and a lunar year. Not a fatwa, and it does not cover crops, livestock or debts.</string>
     <string name="qibla_compass">Compass</string>
-    <string name="qibla_sun">Sun</string>
+    <string name="qibla_sun">Sun &amp; moon</string>
     <string name="qibla_shadow">Shadow</string>
     <string name="qibla_side_right">the right of</string>
     <string name="qibla_side_left">the left of</string>
@@ -165,4 +165,27 @@
     <string name="routine_afternoon">Between Dhuhr and Asr.</string>
     <string name="routine_evening">After Asr until Maghrib: the evening adhkar.</string>
     <string name="routine_night">The night, until the last third.</string>
+
+    <string name="qibla_map">Map</string>
+    <string name="qibla_ar">Augmented reality</string>
+    <string name="qibla_map_line">Line to Makkah: %1$d° · %2$d km. The white dot is you.</string>
+    <string name="qibla_map_note">A local drawing from saved city coordinates, with no map tiles. Not a satellite image.</string>
+    <string name="qibla_ar_need">The camera shows the Qibla over what you see. Nothing is recorded or sent.</string>
+    <string name="qibla_ar_grant">Allow camera</string>
+    <string name="qibla_ar_no_camera">This device has no camera. Use the compass or the map.</string>
+    <string name="qibla_ar_note">Hold the phone up. The white ring is toward the Qibla. If the sensor drifts, move the phone in a figure-8.</string>
+    <string name="qibla_moon_line">The moon is at %1$d°, %3$d° to %2$s the Qibla. A local approximation.</string>
+    <string name="qibla_moon_down">The moon is below the horizon now.</string>
+    <string name="quran">Mushaf</string>
+    <string name="quran_note">Uthmani text as published by the Tanzil Project, unchanged. Not a page-for-page copy of a printed mushaf.</string>
+    <string name="quran_audio_note">No recorded recitation: audio is rights-restricted and large, and this app has no internet. No translation is bundled, so the text stays untouched.</string>
+    <string name="quran_credit">Source: Tanzil Project · tanzil.net</string>
+    <string name="quran_tahfeez">Hide for memorizing</string>
+    <string name="quran_show">Show the text</string>
+    <string name="adhkar_after">After salah</string>
+    <string name="adhkar_waking">Waking</string>
+    <string name="adhkar_listen">Listen</string>
+    <string name="adhkar_short">Shortened</string>
+    <string name="adhkar_full">Complete</string>
+    <string name="adhkar_extra_note">Selected hadith wordings in their familiar Arabic form, not a chapter of Hisn al-Muslim. The device voice reads the text; it is not a recitation.</string>
 </resources>

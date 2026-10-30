@@ -64,6 +64,7 @@ fun HomeScreen(
     onAdhkar: () -> Unit = {},
     onTasbih: () -> Unit = {},
     onZakat: () -> Unit = {},
+    onQuran: () -> Unit = {},
 ) {
     val st = remember(s, now.withSecond(0).withNano(0)) { PrayerEngine.now(s.place, now, s.calc) }
     val night = remember(s, now.withSecond(0).withNano(0)) { Night.around(s.place, now, s.calc) }
@@ -115,6 +116,10 @@ fun HomeScreen(
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             ToolCard(stringResource(R.string.tasbih), onTasbih, Modifier.weight(1f).testTag("tasbih"))
             ToolCard(stringResource(R.string.zakat), onZakat, Modifier.weight(1f).testTag("zakat"))
+        }
+        Spacer(Modifier.height(8.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            ToolCard(stringResource(R.string.quran), onQuran, Modifier.weight(1f).testTag("quran"))
         }
         Spacer(Modifier.height(12.dp))
         Prayer.entries.forEach { p -> PrayerRow(p, st, ar) }

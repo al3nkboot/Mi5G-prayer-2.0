@@ -15,6 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.midroid.prayertimes.R
 import com.midroid.prayertimes.domain.Place
 import com.midroid.prayertimes.domain.Qibla
+import com.midroid.prayertimes.domain.MoonPosition
 import com.midroid.prayertimes.domain.SunPosition
 import java.time.ZonedDateTime
 import kotlin.math.abs
@@ -44,7 +46,7 @@ import kotlin.math.sin
 
 data class Heading(val trueDeg: Double, val lowAccuracy: Boolean)
 
-private enum class QiblaMode { COMPASS, SUN, SHADOW }
+private enum class QiblaMode { COMPASS, MAP, AR, SHADOW, SUN }
 
 /** Test hook for screenshots: when set, sensors are bypassed. */
 object QiblaSensorOverride { @Volatile var heading: Heading? = null; @Volatile var forceNoSensor = false }
@@ -112,14 +114,25 @@ fun QiblaScreen(place: Place, onBack: () -> Unit) {
             Text(stringResource(R.string.qibla_bearing, target.roundToInt(), Qibla.distanceKm(place.lat, place.lon).roundToInt()),
                 style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
             Spacer(Modifier.height(12.dp))
-            TabRow(mode.ordinal) {
+            ScrollableTabRow(selectedTabIndex = mode.ordinal, edgePadding = 8.dp) {
                 Tab(mode == QiblaMode.COMPASS, { mode = QiblaMode.COMPASS }, text = { Text(stringResource(R.string.qibla_compass)) }, modifier = Modifier.testTag("qibla_compass"))
-                Tab(mode == QiblaMode.SUN, { mode = QiblaMode.SUN }, text = { Text(stringResource(R.string.qibla_sun)) }, modifier = Modifier.testTag("qibla_sun"))
+                Tab(mode == QiblaMode.MAP, { mode = QiblaMode.MAP }, text = { Text(stringResource(R.string.qibla_map)) }, modifier = Modifier.testTag("qibla_map_tab"))
+                Tab(mode == QiblaMode.AR, { mode = QiblaMode.AR }, text = { Text(stringResource(R.string.qibla_ar)) }, modifier = Modifier.testTag("qibla_ar_tab"))
                 Tab(mode == QiblaMode.SHADOW, { mode = QiblaMode.SHADOW }, text = { Text(stringResource(R.string.qibla_shadow)) }, modifier = Modifier.testTag("qibla_shadow"))
+                Tab(mode == QiblaMode.SUN, { mode = QiblaMode.SUN }, text = { Text(stringResource(R.string.qibla_sun)) }, modifier = Modifier.testTag("qibla_sun"))
             }
             Spacer(Modifier.height(16.dp))
-            if (mode != QiblaMode.COMPASS) {
+            if (mode == QiblaMode.MAP) {
+                QiblaMap(place, target, Modifier.fillMaxWidth())
+                return@Column
+            }
+            if (mode == QiblaMode.AR) {
+                QiblaAr(place, target, heading?.value, Modifier.fillMaxWidth())
+                return@Column
+            }
+            if (mode == QiblaMode.SUN || mode == QiblaMode.SHADOW) {
                 SolarMethod(mode, sun.up, sun.azimuthDeg, sun.shadowAzimuthDeg, target)
+                if (mode == QiblaMode.SUN) MoonLine(place, target)
                 return@Column
             }
             if (heading == null) {
@@ -171,6 +184,15 @@ private fun SolarMethod(mode: QiblaMode, up: Boolean, sunAz: Double, shadowAz: D
     Text(line, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center, fontWeight = FontWeight.SemiBold, modifier = Modifier.testTag("qibla_solar"))
     Spacer(Modifier.height(12.dp))
     Text(stringResource(R.string.qibla_sun_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
+}
+
+
+@Composable
+private fun MoonLine(place: Place, qibla: Double) {
+    val moon = remember(place) { MoonPosition.at(place.lat, place.lon, java.time.ZonedDateTime.now(place.zoneId)) }
+    val line = if (!moon.up) stringResource(R.string.qibla_moon_down)
+        else stringResource(R.string.qibla_moon_line, moon.azimuthDeg.roundToInt(), stringResource(sideRes(Qibla.delta(moon.azimuthDeg, qibla))), kotlin.math.abs(Qibla.delta(moon.azimuthDeg, qibla)).roundToInt())
+    Text(line, Modifier.padding(top = 12.dp).testTag("qibla_moon"), style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center)
 }
 
 private fun sideRes(delta: Double) = if (delta >= 0) R.string.qibla_side_right else R.string.qibla_side_left

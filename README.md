@@ -32,7 +32,8 @@
 - **الأذان والتنبيهات:** أذان أو تنبيه أو صامت لكل صلاة، وتذكير قبل الأذان، وإمكانية اختيار صوت أذان من جهازك.
 - **صامت تلقائي وقت الصلاة:** يحوّل الجوال إلى صامت أو اهتزاز لمدة تختارها، ثم يعيده إلى وضعه السابق.
 - **أذكار الصباح والمساء:** من «حصن المسلم» مع عدّاد للتكرار وتذكير اختياري.
-- **اتجاه القبلة:** بوصلة مع تصحيح الانحراف المغناطيسي.
+- **اتجاه القبلة:** بوصلة، ورسم خريطة محلي، وكاميرا للواقع المعزّز (لا يُسجَّل شيء)، والشمس والظل والقمر.
+- **مصحف نصي دون اتصال:** النص العثماني من مشروع تنزيل كما هو، مع إخفاء للحفظ. بلا تلاوة مسجّلة وبلا ترجمة مضمّنة.
 - **ودجت للشاشة الرئيسية:** بثلاثة أحجام، مع عدّاد تنازلي للصلاة القادمة.
 - **التاريخ الهجري** (أم القرى) مع تعديل ± يوم.
 - **عربي وإنجليزي** مع وضع فاتح وداكن.
@@ -44,8 +45,8 @@
 - شريط المواقيت مع تمييز الصلاة القادمة، ومنتصف الليل الشرعي، وبداية الثلث الأخير (من المغرب إلى الفجر، بلا إنترنت).
 - روتين اليوم والليل مربوط بأوقاتك، لا بنص منسوخ.
 - المسبحة على الجهاز، وحساب زكاة 2.5٪ تدخله أنت مع تنبيه أنه ليس فتوى.
-- القبلة: البوصلة كما هي، وطريقتا الشمس والظل حين تكون الشمس فوق الأفق. لا خريطة ولا واقع معزّز.
-- لا مصحف ولا تلاوة مسجّلة ولا مكافآت ولا جواهر: النص المطبوع والصوت حقوق، والجواهر تكسر وعد «بلا إعلانات».
+- القبلة: بوصلة، وخريطة من إحداثيات المدن بلا إنترنت، وواقع معزّز بالكاميرا دون تسجيل، والشمس والظل والقمر.
+- مصحف نصي عثماني من تنزيل، بلا تعديل، وليس صورة الصفحات المطبوعة. لا تلاوة مسجّلة ولا ترجمة مضمّنة ولا مكافآت.
 
 
 ## التثبيت
@@ -81,7 +82,7 @@
 
 ### 2.0 in this repository
 
-Prayer strip, Islamic midnight and the last third of the night, a day/night line tied to your times, an on-device tasbih, a 2.5% zakat figure you enter yourself (not a fatwa), and sun/shadow Qibla while the sun is up. No mushaf, recorded recitation, map, augmented reality, gems or rewards.
+Prayer strip, Islamic midnight and the last third of the night, a day/night line tied to your times, an on-device tasbih, a 2.5% zakat figure you enter yourself (not a fatwa), compass / offline map / camera Qibla, sun, shadow and moon, and an offline Uthmani mushaf (Tanzil, verbatim) with a hide-for-memorizing view. No recorded recitation, no bundled translation, no gems or rewards.
 
 
 **Download:** no 2.0 APK is published yet. The 1.x app stays at [prayer-times](https://github.com/al3nkboot/prayer-times/releases/latest). Android 8.0+.

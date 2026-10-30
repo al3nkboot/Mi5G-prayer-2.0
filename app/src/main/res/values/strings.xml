@@ -101,7 +101,7 @@
     <string name="about_title">حول</string>
     <string name="version_fmt">الإصدار %1$s</string>
     <string name="privacy_title">الخصوصية</string>
-    <string name="privacy_body">لا يجمع التطبيق أي بيانات ولا يرسلها. لا يملك إذن الإنترنت، ولا إعلانات ولا تحليلات. الموقع التقريبي (إن سمحت به) يُستخدم على جهازك فقط لاختيار المدينة ولا يُحفظ إلا كإحداثيات في إعدادات التطبيق. ملفك الصوتي يُقرأ من جهازك فقط.</string>
+    <string name="privacy_body">لا يجمع التطبيق أي بيانات ولا يرسلها. لا يملك إذن الإنترنت، ولا إعلانات ولا تحليلات. الموقع التقريبي (إن سمحت به) يُستخدم على جهازك فقط لاختيار المدينة ولا يُحفظ إلا كإحداثيات في إعدادات التطبيق. ملفك الصوتي يُقرأ من جهازك فقط. الكاميرا اختيارية لعرض القبلة في الواقع المعزّز، ولا يُلتقط منها شيء ولا يُحفظ.</string>
     <string name="adhan_attr_title">تسجيل الأذان</string>
     <string name="adhan_attr_body">الأذان الافتراضي: «أجمل صوت الآذان بدون حقوق» من قناة «بيت المسلم - Muslim House» على يوتيوب (نُشر 2022-03-27).\nالترخيص: ترخيص يوتيوب القياسي؛ ذكر الناشر في الوصف أنه «بدون حقوق» و«جميع الحقوق محفوظة لكل مسلم». أُدرج بناءً على اختيار صاحب التطبيق.\nمُعدَّل: استُخرج الصوت، وقُصّ الصمت، وضُبطت شدة الصوت.</string>
     <string name="source_link">المصدر: https://www.youtube.com/watch?v=rp1FyMSxehE</string>
@@ -148,7 +148,7 @@
     <string name="zakat_below">لم يبلغ النصاب</string>
     <string name="zakat_note">حساب 2.5٪ للمال النقدي إذا بلغ النصاب الذي تدخله وحال عليه الحول. ليس فتوى، ولا يشمل الزروع والأنعام والديون.</string>
     <string name="qibla_compass">البوصلة</string>
-    <string name="qibla_sun">الشمس</string>
+    <string name="qibla_sun">الشمس والقمر</string>
     <string name="qibla_shadow">الظل</string>
     <string name="qibla_side_right">يمين</string>
     <string name="qibla_side_left">يسار</string>
@@ -165,4 +165,27 @@
     <string name="routine_afternoon">ما بين الظهر والعصر.</string>
     <string name="routine_evening">بعد العصر حتى المغرب: أذكار المساء.</string>
     <string name="routine_night">الليل حتى الثلث الأخير.</string>
+
+    <string name="qibla_map">الخريطة</string>
+    <string name="qibla_ar">الواقع المعزّز</string>
+    <string name="qibla_map_line">الخط إلى مكة: %1$d° · %2$d كم. النقطة البيضاء موقعك.</string>
+    <string name="qibla_map_note">رسم محلي من إحداثيات المدن المحفوظة، بلا خرائط إنترنت. ليس صورة أقمار.</string>
+    <string name="qibla_ar_need">الكاميرا تُظهر اتجاه القبلة فوق ما تراه. لا يُسجَّل شيء ولا يُرسل.</string>
+    <string name="qibla_ar_grant">السماح بالكاميرا</string>
+    <string name="qibla_ar_no_camera">لا توجد كاميرا في هذا الجهاز. استخدم البوصلة أو الخريطة.</string>
+    <string name="qibla_ar_note">ارفع الهاتف. الدائرة البيضاء جهة القبلة. إن انحرف الحساس فحرّكه على شكل 8.</string>
+    <string name="qibla_moon_line">القمر عند %1$d°، على %2$s القبلة بـ %3$d°. تقريب محلي.</string>
+    <string name="qibla_moon_down">القمر تحت الأفق الآن.</string>
+    <string name="quran">المصحف</string>
+    <string name="quran_note">نص عثماني كما نشره مشروع تنزيل، بلا تعديل. ليس صورة المصحف المطبوع صفحة بصفحة.</string>
+    <string name="quran_audio_note">لا تلاوة مسجّلة: الصوت حقوق وحجم كبير، والتطبيق بلا إنترنت. لا ترجمة مضمّنة حتى لا يُمس النص.</string>
+    <string name="quran_credit">المصدر: Tanzil Project · tanzil.net</string>
+    <string name="quran_tahfeez">إخفاء للحفظ</string>
+    <string name="quran_show">إظهار النص</string>
+    <string name="adhkar_after">بعد الصلاة</string>
+    <string name="adhkar_waking">الاستيقاظ</string>
+    <string name="adhkar_listen">استماع</string>
+    <string name="adhkar_short">المختصر</string>
+    <string name="adhkar_full">الكامل</string>
+    <string name="adhkar_extra_note">أذكار مختارة من الحديث، بصيغتها المشهورة، وليست فصلاً من حصن المسلم. صوت الجهاز يقرأ النص ولا يغني عن التلاوة.</string>
 </resources>

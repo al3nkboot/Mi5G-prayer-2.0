@@ -44,3 +44,11 @@ was **removed** from the app in 1.0.1 and replaced by the default adhan above. I
 | Reference (تخريج) per dhikr | The book's footnotes as published in al-Maktaba al-Shamela, book 31307, pages 54–67 (https://shamela.ws/book/31307/54 …/67, fetched 2026-10-18) | Footnote copied verbatim; where the footnote also states the virtue, it is kept as in the book. No. 92 has two footnotes (ten times / once when lazy), both kept. |
 | Repeat counts | From the counts written in the text («ثلاث مرات»، «سبع مرات»، «مائة مرة»…) | The API's `REPEAT` field says 1 for no. 83 although the text says «سبع مرات»; the app uses 7. |
 | Morning/evening split | Per the book's own notes | Morning tab omits no. 97 («إذا أمسى»); evening tab omits nos. 93, 94, 95 («إذا أصبح»). |
+
+## Quran text (2.0) — `app/src/main/assets/quran-uthmani.txt`
+Bundled verbatim from the Tanzil download (`quranType=uthmani`, `outType=txt-2`), including the copyright block at the end of the file. The app does not edit the text.
+
+Tanzil Quran Text (Uthmani, Version 1.1). Copyright (C) 2007-2026 Tanzil Project. License: Creative Commons Attribution 3.0. Source and updates: https://tanzil.net/updates/
+
+## Extra adhkar — `app/src/main/assets/adhkar_extra.json`
+Short after-prayer and waking wordings in familiar Arabic, cited to Muslim or al-Bukhari. Not copied from Hisn al-Muslim. Device TTS reads them; no recorded audio is bundled.
