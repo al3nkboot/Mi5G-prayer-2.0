@@ -2,16 +2,15 @@
 
 <img src="docs/store/icon_512.png" width="112" alt="مواقيتي">
 
-# مواقيتي · Mi5G Prayer
+# مواقيتي 2.0 · Mi5G Prayer
 
 **مواقيت صلاة للمسلمين في أي مكان في العالم عبر GPS، مع القبلة والأذكار والودجت والصامت التلقائي. يعمل بدون إنترنت، بلا إعلانات ولا تتبع.**
 
-[![Release](https://img.shields.io/github/v/release/al3nkboot/prayer-times)](https://github.com/al3nkboot/prayer-times/releases/latest)
 ![Android 8.0+](https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white)
 [![PayPal Support](https://img.shields.io/badge/PayPal-Midroid5G-00457C?logo=paypal&logoColor=white)](https://paypal.me/Midroid5G)
 [![X @midroid5G](https://img.shields.io/badge/X-%40midroid5G-000000?logo=x&logoColor=white)](https://x.com/midroid5G)
 
-[**⬇️ تحميل أحدث إصدار (APK)**](https://github.com/al3nkboot/prayer-times/releases/latest)
+لا يوجد إصدار منشور في هذا المستودع بعد. إصدار 1.x يبقى في [prayer-times](https://github.com/al3nkboot/prayer-times).
 
 </div>
 
@@ -40,7 +39,7 @@
 - **المنطقة الزمنية:** مع الموقع التلقائي تُستخدم المنطقة الزمنية للجهاز وتتحدّث تلقائياً عند تغيّرها؛ المدن المختارة يدوياً تحتفظ بمنطقتها الزمنية.
 - **خصوصية تامة:** لا يطلب إذن الإنترنت، وتُحسب الأوقات على جهازك.
 
-## 2.0 على فرع مواقيتي-2.0
+## 2.0 في هذا المستودع
 
 - شريط المواقيت مع تمييز الصلاة القادمة، ومنتصف الليل الشرعي، وبداية الثلث الأخير (من المغرب إلى الفجر، بلا إنترنت).
 - روتين اليوم والليل مربوط بأوقاتك، لا بنص منسوخ.
@@ -51,11 +50,9 @@
 
 ## التثبيت
 
-1. حمّل ملف APK من [صفحة الإصدارات](https://github.com/al3nkboot/prayer-times/releases/latest).
-2. افتحه واسمح بالتثبيت من هذا المصدر.
-3. فعّل «المنبّهات الدقيقة» من داخل التطبيق ليصل الأذان في وقته بالضبط.
+لم يُنشر ملف APK لإصدار 2.0 بعد. التثبيت الحالي يبقى من [إصدارات 1.x](https://github.com/al3nkboot/prayer-times/releases/latest) حتى يُطلب نشر 2.0.
 
-التحديثات الجديدة تُثبَّت فوق الإصدار السابق دون فقدان إعداداتك.
+عند توفر ملف 2.0: افتحه واسمح بالتثبيت من هذا المصدر، ثم فعّل «المنبّهات الدقيقة» ليصل الأذان في وقته.
 
 ## 💙 دعم استمرارية تطوير التطبيق
 
@@ -82,12 +79,12 @@
 - Qibla compass, Hijri date (Umm al-Qura, ±day adjustment), and a responsive home-screen widget.
 - Arabic (RTL) and English, light and dark themes.
 
-### 2.0 on branch مواقيتي-2.0
+### 2.0 in this repository
 
 Prayer strip, Islamic midnight and the last third of the night, a day/night line tied to your times, an on-device tasbih, a 2.5% zakat figure you enter yourself (not a fatwa), and sun/shadow Qibla while the sun is up. No mushaf, recorded recitation, map, augmented reality, gems or rewards.
 
 
-**Download:** [latest release](https://github.com/al3nkboot/prayer-times/releases/latest) · Android 8.0+
+**Download:** no 2.0 APK is published yet. The 1.x app stays at [prayer-times](https://github.com/al3nkboot/prayer-times/releases/latest). Android 8.0+.
 
 ### Build
 
