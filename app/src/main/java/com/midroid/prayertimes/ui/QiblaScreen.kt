@@ -10,6 +10,8 @@ import android.os.Build
 import android.view.HapticFeedbackConstants
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
@@ -32,12 +34,17 @@ import androidx.compose.ui.unit.sp
 import com.midroid.prayertimes.R
 import com.midroid.prayertimes.domain.Place
 import com.midroid.prayertimes.domain.Qibla
+import com.midroid.prayertimes.domain.SunPosition
+import java.time.ZonedDateTime
+import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
 
 data class Heading(val trueDeg: Double, val lowAccuracy: Boolean)
+
+private enum class QiblaMode { COMPASS, SUN, SHADOW }
 
 /** Test hook for screenshots: when set, sensors are bypassed. */
 object QiblaSensorOverride { @Volatile var heading: Heading? = null; @Volatile var forceNoSensor = false }
@@ -57,7 +64,7 @@ fun rememberHeading(place: Place): State<Heading?>? {
     DisposableEffect(place) {
         val r = FloatArray(9); val o = FloatArray(3); val g = FloatArray(3); val m = FloatArray(3)
         var hasG = false; var hasM = false; var low = false
-        var sx = 0.0; var sy = 0.0 // low-pass on the unit circle
+        var sx = 0.0; var sy = 0.0
         fun emit(azimuthRad: Float) {
             val a = 0.15
             sx = (1 - a) * sx + a * cos(azimuthRad.toDouble()); sy = (1 - a) * sy + a * sin(azimuthRad.toDouble())
@@ -82,7 +89,7 @@ fun rememberHeading(place: Place): State<Heading?>? {
         }
         if (rot != null) sm.registerListener(l, rot, SensorManager.SENSOR_DELAY_UI)
         else { sm.registerListener(l, acc, SensorManager.SENSOR_DELAY_UI) }
-        if (mag != null) sm.registerListener(l, mag, SensorManager.SENSOR_DELAY_UI) // also gives accuracy status
+        if (mag != null) sm.registerListener(l, mag, SensorManager.SENSOR_DELAY_UI)
         onDispose { sm.unregisterListener(l) }
     }
     return state
@@ -94,15 +101,27 @@ fun QiblaScreen(place: Place, onBack: () -> Unit) {
     val target = remember(place) { Qibla.bearing(place.lat, place.lon) }
     val heading = rememberHeading(place)
     val view = LocalView.current
+    var mode by remember { mutableStateOf(QiblaMode.COMPASS) }
+    val sun = remember(place) { SunPosition.at(place.lat, place.lon, ZonedDateTime.now(place.zoneId)) }
     Scaffold(topBar = {
         TopAppBar(title = { Text(stringResource(R.string.qibla)) },
             navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back)) } })
     }) { pad ->
-        Column(Modifier.padding(pad).fillMaxSize().padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(Modifier.padding(pad).fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(placeName(place), style = MaterialTheme.typography.titleMedium)
             Text(stringResource(R.string.qibla_bearing, target.roundToInt(), Qibla.distanceKm(place.lat, place.lon).roundToInt()),
                 style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
+            Spacer(Modifier.height(12.dp))
+            TabRow(mode.ordinal) {
+                Tab(mode == QiblaMode.COMPASS, { mode = QiblaMode.COMPASS }, text = { Text(stringResource(R.string.qibla_compass)) }, modifier = Modifier.testTag("qibla_compass"))
+                Tab(mode == QiblaMode.SUN, { mode = QiblaMode.SUN }, text = { Text(stringResource(R.string.qibla_sun)) }, modifier = Modifier.testTag("qibla_sun"))
+                Tab(mode == QiblaMode.SHADOW, { mode = QiblaMode.SHADOW }, text = { Text(stringResource(R.string.qibla_shadow)) }, modifier = Modifier.testTag("qibla_shadow"))
+            }
             Spacer(Modifier.height(16.dp))
+            if (mode != QiblaMode.COMPASS) {
+                SolarMethod(mode, sun.up, sun.azimuthDeg, sun.shadowAzimuthDeg, target)
+                return@Column
+            }
             if (heading == null) {
                 Card(Modifier.fillMaxWidth().testTag("no_sensor")) {
                     Text(stringResource(R.string.qibla_no_sensor, target.roundToInt()), Modifier.padding(16.dp), style = MaterialTheme.typography.bodyLarge)
@@ -120,7 +139,7 @@ fun QiblaScreen(place: Place, onBack: () -> Unit) {
             Spacer(Modifier.height(12.dp))
             Text(
                 when { h == null -> stringResource(R.string.qibla_waiting); facing -> stringResource(R.string.qibla_facing)
-                    else -> stringResource(R.string.qibla_turn, kotlin.math.abs(Qibla.delta(target, h.trueDeg)).roundToInt()) },
+                    else -> stringResource(R.string.qibla_turn, abs(Qibla.delta(target, h.trueDeg)).roundToInt()) },
                 fontSize = 22.sp, fontWeight = FontWeight.Bold, modifier = Modifier.testTag("qibla_status"),
                 color = if (facing) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface)
             if (h?.lowAccuracy == true) {
@@ -134,13 +153,35 @@ fun QiblaScreen(place: Place, onBack: () -> Unit) {
 }
 
 @Composable
+private fun SolarMethod(mode: QiblaMode, up: Boolean, sunAz: Double, shadowAz: Double, qibla: Double) {
+    if (!up) {
+        Text(stringResource(R.string.qibla_sun_down), style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center, modifier = Modifier.testTag("qibla_sun_down"))
+        return
+    }
+    val mark = if (mode == QiblaMode.SUN) sunAz else shadowAz
+    val delta = Qibla.delta(mark, qibla)
+    val sunAligned = mode == QiblaMode.SUN && abs(delta) < 2.0
+    val shadowBehind = mode == QiblaMode.SHADOW && abs(abs(delta) - 180.0) < 2.0
+    val line = when {
+        sunAligned -> stringResource(R.string.qibla_sun_aligned)
+        shadowBehind -> stringResource(R.string.qibla_shadow_aligned)
+        mode == QiblaMode.SUN -> stringResource(R.string.qibla_sun_line, sunAz.roundToInt(), qibla.roundToInt(), stringResource(sideRes(delta)), abs(delta).roundToInt())
+        else -> stringResource(R.string.qibla_shadow_line, shadowAz.roundToInt(), stringResource(sideRes(delta)), abs(delta).roundToInt())
+    }
+    Text(line, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center, fontWeight = FontWeight.SemiBold, modifier = Modifier.testTag("qibla_solar"))
+    Spacer(Modifier.height(12.dp))
+    Text(stringResource(R.string.qibla_sun_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
+}
+
+private fun sideRes(delta: Double) = if (delta >= 0) R.string.qibla_side_right else R.string.qibla_side_left
+
+@Composable
 private fun Compass(heading: Double, target: Double, facing: Boolean, modifier: Modifier) {
     val c = MaterialTheme.colorScheme
     Canvas(modifier) {
         val r = size.minDimension / 2; val ctr = Offset(size.width / 2, size.height / 2)
         drawCircle(c.surface, r, ctr)
         drawCircle(if (facing) Gold else c.outline, r, ctr, style = Stroke(if (facing) 10f else 4f))
-        // fixed top marker = direction the phone points
         drawLine(c.primary, Offset(ctr.x, ctr.y - r - 4f), Offset(ctr.x, ctr.y - r + 34f), 8f)
         rotate(-heading.toFloat(), ctr) {
             for (i in 0 until 72) {
@@ -149,11 +190,9 @@ private fun Compass(heading: Double, target: Double, facing: Boolean, modifier: 
                 val e = Offset(ctr.x + (r - 12f - len) * sin(a).toFloat(), ctr.y - (r - 12f - len) * cos(a).toFloat())
                 drawLine(if (i == 0) Color(0xFFC0392B) else c.onSurfaceVariant, s, e, if (i % 18 == 0) 5f else 2f)
             }
-            // north triangle
             val n = Path().apply { moveTo(ctr.x, ctr.y - r + 50f); lineTo(ctr.x - 14f, ctr.y - r + 78f); lineTo(ctr.x + 14f, ctr.y - r + 78f); close() }
             drawPath(n, Color(0xFFC0392B))
             rotate(target.toFloat(), ctr) {
-                // qibla needle with original Kaaba-cube marker
                 drawLine(if (facing) Gold else c.primary, ctr, Offset(ctr.x, ctr.y - r + 96f), 10f)
                 val k = 26f; val top = ctr.y - r + 96f - k * 2
                 drawRect(Color(0xFF1B1C1A), Offset(ctr.x - k, top), androidx.compose.ui.geometry.Size(k * 2, k * 2))

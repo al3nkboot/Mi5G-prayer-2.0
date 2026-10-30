@@ -132,4 +132,37 @@
     <string name="open_settings">فتح الإعدادات</string>
     <string name="auto_silent_note">يبدأ بعد دقيقة من وقت الصلاة للفجر والظهر والعصر والمغرب والعشاء، ثم يعود الرنين كما كان. إن غيّرت وضع الرنين بنفسك خلال المدة فلن يغيّره التطبيق.</string>
     <string name="count_fmt">%1$d من %2$d</string>
+
+    <string name="after_named">%1$s بعد</string>
+    <string name="midnight">منتصف الليل</string>
+    <string name="last_third">الثلث الأخير</string>
+    <string name="tools">الأدوات</string>
+    <string name="tasbih">المسبحة</string>
+    <string name="tasbih_hint">المس الدائرة للعدّ. العدّ يبقى على هذا الجهاز فقط.</string>
+    <string name="tasbih_target">الهدف</string>
+    <string name="tasbih_done">اكتمل الهدف</string>
+    <string name="zakat">الزكاة</string>
+    <string name="zakat_wealth">المال</string>
+    <string name="zakat_nisab">النصاب</string>
+    <string name="zakat_due">الزكاة 2.5٪: %1$s</string>
+    <string name="zakat_below">لم يبلغ النصاب</string>
+    <string name="zakat_note">حساب 2.5٪ للمال النقدي إذا بلغ النصاب الذي تدخله وحال عليه الحول. ليس فتوى، ولا يشمل الزروع والأنعام والديون.</string>
+    <string name="qibla_compass">البوصلة</string>
+    <string name="qibla_sun">الشمس</string>
+    <string name="qibla_shadow">الظل</string>
+    <string name="qibla_side_right">يمين</string>
+    <string name="qibla_side_left">يسار</string>
+    <string name="qibla_sun_line">الشمس الآن عند %1$d°. القبلة عند %2$d°. الشمس على %3$s القبلة بـ %4$d°.</string>
+    <string name="qibla_shadow_line">ظل العصا القائمة يشير إلى %1$d°، على %2$s اتجاه القبلة بـ %3$d°.</string>
+    <string name="qibla_sun_aligned">الشمس في اتجاه القبلة تقريباً.</string>
+    <string name="qibla_shadow_aligned">الظل في عكس اتجاه القبلة تقريباً: اجعل الظل خلفك.</string>
+    <string name="qibla_sun_down">الشمس تحت الأفق. طريقتا الشمس والظل غير متاحتين الآن.</string>
+    <string name="qibla_sun_note">حساب محلي من موقع الشمس، بلا إنترنت. ليس بديلاً عن البوصلة تحت الغيم أو قرب الزوال، حيث يتغير الاتجاه بسرعة.</string>
+    <string name="routine_title">اليوم والليل</string>
+    <string name="routine_last_third">الثلث الأخير. وقت مناسب لقيام الليل والوتر.</string>
+    <string name="routine_morning">بعد الفجر حتى الشروق: أذكار الصباح.</string>
+    <string name="routine_forenoon">ما بين الشروق والظهر.</string>
+    <string name="routine_afternoon">ما بين الظهر والعصر.</string>
+    <string name="routine_evening">بعد العصر حتى المغرب: أذكار المساء.</string>
+    <string name="routine_night">الليل حتى الثلث الأخير.</string>
 </resources>

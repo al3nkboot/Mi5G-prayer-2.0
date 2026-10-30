@@ -132,4 +132,37 @@
     <string name="open_settings">Open settings</string>
     <string name="auto_silent_note">Starts one minute after Fajr, Dhuhr, Asr, Maghrib and Isha, then restores the ringer as it was. If you change the ringer yourself meanwhile, the app leaves it alone.</string>
     <string name="count_fmt">%1$d of %2$d</string>
+
+    <string name="after_named">%1$s after</string>
+    <string name="midnight">Midnight</string>
+    <string name="last_third">Last third of the night</string>
+    <string name="tools">Tools</string>
+    <string name="tasbih">Tasbih</string>
+    <string name="tasbih_hint">Tap the circle to count. The count stays on this device only.</string>
+    <string name="tasbih_target">Target</string>
+    <string name="tasbih_done">Target reached</string>
+    <string name="zakat">Zakat</string>
+    <string name="zakat_wealth">Wealth</string>
+    <string name="zakat_nisab">Nisab</string>
+    <string name="zakat_due">Zakat at 2.5%%: %1$s</string>
+    <string name="zakat_below">Below nisab</string>
+    <string name="zakat_note">A 2.5% figure for cash that has reached the nisab you enter and a lunar year. Not a fatwa, and it does not cover crops, livestock or debts.</string>
+    <string name="qibla_compass">Compass</string>
+    <string name="qibla_sun">Sun</string>
+    <string name="qibla_shadow">Shadow</string>
+    <string name="qibla_side_right">the right of</string>
+    <string name="qibla_side_left">the left of</string>
+    <string name="qibla_sun_line">The sun is at %1$d°. Qibla is %2$d°. The sun is %4$d° to %3$s the Qibla.</string>
+    <string name="qibla_shadow_line">A vertical stick shadow points to %1$d°, %3$d° to %2$s the Qibla.</string>
+    <string name="qibla_sun_aligned">The sun is nearly on the Qibla bearing.</string>
+    <string name="qibla_shadow_aligned">The shadow is nearly opposite the Qibla: keep the shadow behind you.</string>
+    <string name="qibla_sun_down">The sun is below the horizon. The sun and shadow methods are not available now.</string>
+    <string name="qibla_sun_note">A local sun-position calculation, with no internet. Not a substitute for the compass under cloud or near solar noon, when the bearing changes quickly.</string>
+    <string name="routine_title">Day and night</string>
+    <string name="routine_last_third">The last third of the night. A suitable time for night prayer and witr.</string>
+    <string name="routine_morning">After Fajr until sunrise: the morning adhkar.</string>
+    <string name="routine_forenoon">Between sunrise and Dhuhr.</string>
+    <string name="routine_afternoon">Between Dhuhr and Asr.</string>
+    <string name="routine_evening">After Asr until Maghrib: the evening adhkar.</string>
+    <string name="routine_night">The night, until the last third.</string>
 </resources>

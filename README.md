@@ -40,6 +40,15 @@
 - **المنطقة الزمنية:** مع الموقع التلقائي تُستخدم المنطقة الزمنية للجهاز وتتحدّث تلقائياً عند تغيّرها؛ المدن المختارة يدوياً تحتفظ بمنطقتها الزمنية.
 - **خصوصية تامة:** لا يطلب إذن الإنترنت، وتُحسب الأوقات على جهازك.
 
+## 2.0 على فرع مواقيتي-2.0
+
+- شريط المواقيت مع تمييز الصلاة القادمة، ومنتصف الليل الشرعي، وبداية الثلث الأخير (من المغرب إلى الفجر، بلا إنترنت).
+- روتين اليوم والليل مربوط بأوقاتك، لا بنص منسوخ.
+- المسبحة على الجهاز، وحساب زكاة 2.5٪ تدخله أنت مع تنبيه أنه ليس فتوى.
+- القبلة: البوصلة كما هي، وطريقتا الشمس والظل حين تكون الشمس فوق الأفق. لا خريطة ولا واقع معزّز.
+- لا مصحف ولا تلاوة مسجّلة ولا مكافآت ولا جواهر: النص المطبوع والصوت حقوق، والجواهر تكسر وعد «بلا إعلانات».
+
+
 ## التثبيت
 
 1. حمّل ملف APK من [صفحة الإصدارات](https://github.com/al3nkboot/prayer-times/releases/latest).
@@ -72,6 +81,11 @@
 - Morning and evening adhkar from Hisn al-Muslim with counters and reminders.
 - Qibla compass, Hijri date (Umm al-Qura, ±day adjustment), and a responsive home-screen widget.
 - Arabic (RTL) and English, light and dark themes.
+
+### 2.0 on branch مواقيتي-2.0
+
+Prayer strip, Islamic midnight and the last third of the night, a day/night line tied to your times, an on-device tasbih, a 2.5% zakat figure you enter yourself (not a fatwa), and sun/shadow Qibla while the sun is up. No mushaf, recorded recitation, map, augmented reality, gems or rewards.
+
 
 **Download:** [latest release](https://github.com/al3nkboot/prayer-times/releases/latest) · Android 8.0+
 

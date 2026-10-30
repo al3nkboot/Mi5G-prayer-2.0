@@ -4,6 +4,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -28,15 +29,20 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.midroid.prayertimes.R
 import com.midroid.prayertimes.data.AppSettings
+import com.midroid.prayertimes.domain.DayPhase
 import com.midroid.prayertimes.domain.Hijri
+import com.midroid.prayertimes.domain.Night
 import com.midroid.prayertimes.domain.NowState
 import com.midroid.prayertimes.domain.Prayer
 import com.midroid.prayertimes.domain.PrayerEngine
+import com.midroid.prayertimes.domain.Routine
 import java.time.Duration
 import java.time.ZonedDateTime
 import kotlin.math.PI
@@ -46,11 +52,25 @@ import kotlin.math.sin
 data class Perms(val notifications: Boolean, val exact: Boolean, val dnd: Boolean = true)
 
 @Composable
-fun HomeScreen(s: AppSettings, now: ZonedDateTime, perms: Perms, onCity: () -> Unit, onSettings: () -> Unit, onExact: () -> Unit, onGrantNotif: () -> Unit, onQibla: () -> Unit = {}, onAdhkar: () -> Unit = {}) {
+fun HomeScreen(
+    s: AppSettings,
+    now: ZonedDateTime,
+    perms: Perms,
+    onCity: () -> Unit,
+    onSettings: () -> Unit,
+    onExact: () -> Unit,
+    onGrantNotif: () -> Unit,
+    onQibla: () -> Unit = {},
+    onAdhkar: () -> Unit = {},
+    onTasbih: () -> Unit = {},
+    onZakat: () -> Unit = {},
+) {
     val st = remember(s, now.withSecond(0).withNano(0)) { PrayerEngine.now(s.place, now, s.calc) }
+    val night = remember(s, now.withSecond(0).withNano(0)) { Night.around(s.place, now, s.calc) }
     val remaining = Duration.between(now, st.nextAt)
     val ar = isArabic()
     val local = now.withZoneSameInstant(s.place.zoneId)
+    val phase = Routine.phase(local, st.day[Prayer.FAJR], st.day[Prayer.SUNRISE], st.day[Prayer.DHUHR], st.day[Prayer.ASR], st.day[Prayer.MAGHRIB], night.lastThird, night.fajr)
     Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).systemBarsPadding().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp)) {
         Row(Modifier.fillMaxWidth().padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
             Row(Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).clickable(onClick = onCity).padding(8.dp).testTag("city"), verticalAlignment = Alignment.CenterVertically) {
@@ -74,8 +94,30 @@ fun HomeScreen(s: AppSettings, now: ZonedDateTime, perms: Perms, onCity: () -> U
             Text(Hijri.format(Hijri.at(s.place, now, s.calc, s.hijriAdjust), ar), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold)
         }
         Spacer(Modifier.height(10.dp))
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            Prayer.entries.forEach { p -> PrayerChip(p, st, ar) }
+        }
+        Spacer(Modifier.height(8.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            NightChip(stringResource(R.string.midnight), formatTime(night.midnight, ar), Modifier.weight(1f).testTag("midnight"))
+            NightChip(stringResource(R.string.last_third), formatTime(night.lastThird, ar), Modifier.weight(1f).testTag("last_third"))
+        }
+        Spacer(Modifier.height(10.dp))
+        RoutineCard(phase)
+        Spacer(Modifier.height(10.dp))
+        Text(stringResource(R.string.tools), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+        Spacer(Modifier.height(8.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            ToolCard(stringResource(R.string.qibla), onQibla, Modifier.weight(1f).testTag("tool_qibla"))
+            ToolCard(stringResource(R.string.adhkar_title), onAdhkar, Modifier.weight(1f).testTag("adhkar"))
+        }
+        Spacer(Modifier.height(8.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            ToolCard(stringResource(R.string.tasbih), onTasbih, Modifier.weight(1f).testTag("tasbih"))
+            ToolCard(stringResource(R.string.zakat), onZakat, Modifier.weight(1f).testTag("zakat"))
+        }
+        Spacer(Modifier.height(12.dp))
         Prayer.entries.forEach { p -> PrayerRow(p, st, ar) }
-        OutlinedButton(onClick = onAdhkar, modifier = Modifier.fillMaxWidth().padding(top = 10.dp).testTag("adhkar")) { Text(stringResource(R.string.adhkar_title)) }
         Spacer(Modifier.height(12.dp))
         Text(methodName(s.calc.method), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.align(Alignment.CenterHorizontally))
         Spacer(Modifier.height(16.dp))
@@ -87,14 +129,60 @@ private fun HeroCard(st: NowState, remaining: Duration, local: ZonedDateTime) {
     val nextName = prayerName(st.next, st.nextAt.toLocalDate())
     Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(28.dp)).background(Brush.linearGradient(listOf(Teal, TealLight))).padding(20.dp)) {
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(stringResource(R.string.next_prayer), color = Color.White.copy(alpha = .75f), style = MaterialTheme.typography.labelLarge)
-            Text(nextName, color = Gold, fontSize = 30.sp, fontWeight = FontWeight.Bold)
+            Text(stringResource(R.string.after_named, nextName), color = Color.White.copy(alpha = .85f), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
             Text(PrayerEngine.formatCountdown(remaining), color = Color.White, fontSize = 52.sp, fontWeight = FontWeight.Light,
                 fontFamily = FontFamily.Monospace, style = LocalTextStyle.current.copy(textDirection = TextDirection.Ltr), modifier = Modifier.testTag("countdown"))
-            Text(stringResource(R.string.remaining, nextName) + " · " + formatTime(st.nextAt, isArabic()), color = Color.White.copy(alpha = .8f), style = MaterialTheme.typography.bodyMedium)
+            Text(formatTime(st.nextAt, isArabic()), color = Gold, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(12.dp))
             SunArc(st, local, Modifier.fillMaxWidth().height(70.dp))
         }
+    }
+}
+
+@Composable
+private fun PrayerChip(p: Prayer, st: NowState, ar: Boolean) {
+    val isNext = st.next == p && st.nextAt.toLocalDate() == st.day.date
+    val bg = if (isNext) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
+    val fg = if (isNext) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
+    Column(
+        Modifier.width(78.dp).clip(RoundedCornerShape(16.dp)).background(bg).padding(vertical = 10.dp, horizontal = 4.dp).testTag("chip_${p.name}"),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(prayerName(p, st.day.date), color = fg, fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center)
+        Text(formatTime(st.day[p], ar), color = fg, fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1)
+    }
+}
+
+@Composable
+private fun NightChip(label: String, time: String, modifier: Modifier) {
+    Column(modifier.clip(RoundedCornerShape(16.dp)).background(MaterialTheme.colorScheme.surface).padding(horizontal = 12.dp, vertical = 10.dp)) {
+        Text(label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+        Text(time, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+    }
+}
+
+@Composable
+private fun RoutineCard(phase: DayPhase) {
+    val text = stringResource(when (phase) {
+        DayPhase.LAST_THIRD -> R.string.routine_last_third
+        DayPhase.MORNING_ADHKAR -> R.string.routine_morning
+        DayPhase.FORENOON -> R.string.routine_forenoon
+        DayPhase.AFTERNOON -> R.string.routine_afternoon
+        DayPhase.EVENING_ADHKAR -> R.string.routine_evening
+        DayPhase.NIGHT -> R.string.routine_night
+    })
+    Card(Modifier.fillMaxWidth().testTag("routine")) {
+        Column(Modifier.padding(14.dp)) {
+            Text(stringResource(R.string.routine_title), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.secondary)
+            Text(text, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 4.dp))
+        }
+    }
+}
+
+@Composable
+private fun ToolCard(label: String, onClick: () -> Unit, modifier: Modifier) {
+    Card(modifier.clickable(onClick = onClick)) {
+        Text(label, Modifier.padding(horizontal = 12.dp, vertical = 16.dp), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold, maxLines = 2)
     }
 }
 
