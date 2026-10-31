@@ -10,7 +10,7 @@
 [![PayPal Support](https://img.shields.io/badge/PayPal-Midroid5G-00457C?logo=paypal&logoColor=white)](https://paypal.me/Midroid5G)
 [![X @midroid5G](https://img.shields.io/badge/X-%40midroid5G-000000?logo=x&logoColor=white)](https://x.com/midroid5G)
 
-لا يوجد إصدار منشور في هذا المستودع بعد. إصدار 1.x يبقى في [prayer-times](https://github.com/al3nkboot/prayer-times).
+**[⬇️ تحميل أحدث إصدار (APK)](https://github.com/al3nkboot/Mi5G-prayer-2.0/releases/latest)**
 
 </div>
 
@@ -26,34 +26,31 @@
 ## المميزات
 
 - **في أي مكان:** حدّد موقعك عبر GPS لتحصل على المواقيت أينما كنت، مع اعتماد المنطقة الزمنية لجهازك.
-- **9 طرق حساب:** أم القرى، رابطة العالم الإسلامي، دبي، قطر، الكويت، الهيئة المصرية، كراتشي، أمريكا الشمالية (ISNA)، وعُمان (وزارة الأوقاف)، مع المذهب الحنفي في العصر، وقواعد خطوط العرض العليا، وتعديل الدقائق لكل صلاة.
+- **طرق حساب متعددة:** أم القرى، رابطة العالم الإسلامي، دبي، قطر، الكويت، مصر (الهيئة المصرية العامة للمساحة)، كراتشي، أمريكا الشمالية (ISNA)، وعُمان (وزارة الأوقاف)، مع المذهب الحنفي في العصر، وقواعد خطوط العرض العليا، وتعديل الدقائق لكل صلاة.
 - طريقة عُمان مطابقة لتقويم وزارة الأوقاف لعام 2026 بفارق لا يتجاوز دقيقة واحدة.
 - **قائمة مدن بدون GPS:** 89 مدينة تشمل العواصم العربية وتفاصيل مدن عُمان.
 - **الأذان والتنبيهات:** أذان أو تنبيه أو صامت لكل صلاة، وتذكير قبل الأذان، وإمكانية اختيار صوت أذان من جهازك.
 - **صامت تلقائي وقت الصلاة:** يحوّل الجوال إلى صامت أو اهتزاز لمدة تختارها، ثم يعيده إلى وضعه السابق.
 - **أذكار الصباح والمساء:** من «حصن المسلم» مع عدّاد للتكرار وتذكير اختياري.
-- **اتجاه القبلة:** بوصلة، ورسم خريطة محلي، وكاميرا للواقع المعزّز (لا يُسجَّل شيء)، والشمس والظل والقمر.
-- **مصحف نصي دون اتصال:** النص العثماني من مشروع تنزيل كما هو، مع إخفاء للحفظ. بلا تلاوة مسجّلة وبلا ترجمة مضمّنة.
+- **اتجاه القبلة:** بوصلة، وكاميرا للواقع المعزّز (لا يُسجَّل شيء)، والشمس والظل والقمر.
 - **ودجت للشاشة الرئيسية:** بثلاثة أحجام، مع عدّاد تنازلي للصلاة القادمة.
+- **إحداثيات يدوية:** أدخل خط العرض والطول لموقعك بدقة.
 - **التاريخ الهجري** (أم القرى) مع تعديل ± يوم.
 - **عربي وإنجليزي** مع وضع فاتح وداكن.
 - **المنطقة الزمنية:** مع الموقع التلقائي تُستخدم المنطقة الزمنية للجهاز وتتحدّث تلقائياً عند تغيّرها؛ المدن المختارة يدوياً تحتفظ بمنطقتها الزمنية.
 - **خصوصية تامة:** لا يطلب إذن الإنترنت، وتُحسب الأوقات على جهازك.
 
-## 2.0 في هذا المستودع
+## الجديد في 2.0
 
 - شريط المواقيت مع تمييز الصلاة القادمة، ومنتصف الليل الشرعي، وبداية الثلث الأخير (من المغرب إلى الفجر، بلا إنترنت).
 - روتين اليوم والليل مربوط بأوقاتك، لا بنص منسوخ.
 - المسبحة على الجهاز، وحساب زكاة 2.5٪ تدخله أنت مع تنبيه أنه ليس فتوى.
-- القبلة: بوصلة، وخريطة من إحداثيات المدن بلا إنترنت، وواقع معزّز بالكاميرا دون تسجيل، والشمس والظل والقمر.
-- مصحف نصي عثماني من تنزيل، بلا تعديل، وليس صورة الصفحات المطبوعة. لا تلاوة مسجّلة ولا ترجمة مضمّنة ولا مكافآت.
+- القبلة: بوصلة، وواقع معزّز بالكاميرا دون تسجيل، والشمس والظل والقمر.
 
 
 ## التثبيت
 
-لم يُنشر ملف APK لإصدار 2.0 بعد. التثبيت الحالي يبقى من [إصدارات 1.x](https://github.com/al3nkboot/prayer-times/releases/latest) حتى يُطلب نشر 2.0.
-
-عند توفر ملف 2.0: افتحه واسمح بالتثبيت من هذا المصدر، ثم فعّل «المنبّهات الدقيقة» ليصل الأذان في وقته.
+حمّل ملف APK من [صفحة الإصدارات](https://github.com/al3nkboot/Mi5G-prayer-2.0/releases/latest)، ثم افتحه واسمح بالتثبيت من هذا المصدر، ثم فعّل «المنبّهات الدقيقة» ليصل الأذان في وقته.
 
 ## 💙 دعم استمرارية تطوير التطبيق
 
@@ -71,21 +68,22 @@
 **Mi5G Prayer** is an offline prayer-times app for Muslims anywhere, with a Qibla compass, adhkar, a home-screen widget and auto-silent: no ads, no tracking, no internet permission.
 
 - **Anywhere via GPS:** prayer times for your current location, using your phone's time zone.
-- **9 calculation methods:** Umm al-Qura, Muslim World League, Dubai, Qatar, Kuwait, Egyptian, Karachi, ISNA (North America) and Oman (Ministry of Awqaf), plus Hanafi Asr, high-latitude rules and per-prayer minute offsets.
+- **Multiple calculation methods:** Umm al-Qura, Muslim World League, Dubai, Qatar, Kuwait, Egypt (Egyptian General Survey Authority), Karachi, ISNA (North America) and Oman (Ministry of Awqaf), plus Hanafi Asr, high-latitude rules and per-prayer minute offsets.
 - The Oman method matches the Ministry of Awqaf 2026 calendar within ±1 minute ([accuracy](docs/accuracy.md)).
 - Manual city list (no GPS needed) of 89 cities: Arab capitals, plus detailed coverage of Oman.
 - Adhan, alerts and pre-prayer reminders per prayer; custom adhan sound.
 - Auto-silent during prayer, restoring your previous ringer mode afterwards.
 - Morning and evening adhkar from Hisn al-Muslim with counters and reminders.
+- Manual latitude/longitude entry.
 - Qibla compass, Hijri date (Umm al-Qura, ±day adjustment), and a responsive home-screen widget.
 - Arabic (RTL) and English, light and dark themes.
 
-### 2.0 in this repository
+### What's new in 2.0
 
-Prayer strip, Islamic midnight and the last third of the night, a day/night line tied to your times, an on-device tasbih, a 2.5% zakat figure you enter yourself (not a fatwa), compass / offline map / camera Qibla, sun, shadow and moon, and an offline Uthmani mushaf (Tanzil, verbatim) with a hide-for-memorizing view. No recorded recitation, no bundled translation, no gems or rewards.
+Prayer strip, Islamic midnight and the last third of the night, a day/night line tied to your times, an on-device tasbih, a 2.5% zakat figure you enter yourself (not a fatwa), compass and camera Qibla, sun, shadow and moon. No gems or rewards.
 
 
-**Download:** no 2.0 APK is published yet. The 1.x app stays at [prayer-times](https://github.com/al3nkboot/prayer-times/releases/latest). Android 8.0+.
+**Download:** [latest APK](https://github.com/al3nkboot/Mi5G-prayer-2.0/releases/latest). Android 8.0+.
 
 ### Build
 
