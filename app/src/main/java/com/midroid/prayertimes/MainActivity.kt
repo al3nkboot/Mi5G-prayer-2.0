@@ -35,7 +35,7 @@ import com.midroid.prayertimes.ui.SettingsScreen
 import kotlinx.coroutines.delay
 import java.time.ZonedDateTime
 
-enum class Screen { HOME, CITY, SETTINGS, EXACT, QIBLA, ABOUT, ADHKAR, TASBIH, ZAKAT, QURAN }
+enum class Screen { HOME, CITY, SETTINGS, EXACT, QIBLA, ABOUT, ADHKAR, TASBIH, ZAKAT }
 
 class MainActivity : AppCompatActivity() {
     /** adhkar tab requested by a reminder notification, consumed by the composition */
@@ -86,10 +86,9 @@ class MainActivity : AppCompatActivity() {
                     when (screen) {
                         Screen.HOME -> HomeScreen(s, now, perms, onCity = { screen = Screen.CITY }, onSettings = { screen = Screen.SETTINGS },
                             onExact = openExact, onGrantNotif = askNotif, onQibla = { screen = Screen.QIBLA }, onAdhkar = { screen = Screen.ADHKAR },
-                            onTasbih = { screen = Screen.TASBIH }, onZakat = { screen = Screen.ZAKAT }, onQuran = { screen = Screen.QURAN })
+                            onTasbih = { screen = Screen.TASBIH }, onZakat = { screen = Screen.ZAKAT })
                         Screen.TASBIH -> com.midroid.prayertimes.ui.TasbihScreen { screen = Screen.HOME }
                         Screen.ZAKAT -> com.midroid.prayertimes.ui.ZakatScreen { screen = Screen.HOME }
-                        Screen.QURAN -> com.midroid.prayertimes.ui.QuranScreen { screen = Screen.HOME }
                         Screen.SETTINGS -> SettingsScreen(s, perms, repo::update, onExact = { screen = Screen.EXACT }, onGrantNotif = askNotif, onAbout = { screen = Screen.ABOUT }, onDnd = openDnd) { screen = Screen.HOME }
                         Screen.ADHKAR -> com.midroid.prayertimes.ui.AdhkarScreen(adhkarTab, { adhkarTab = it }) { screen = Screen.HOME }
                         Screen.ABOUT -> com.midroid.prayertimes.ui.AboutScreen(BuildConfig.VERSION_NAME) { screen = Screen.SETTINGS }

@@ -166,22 +166,13 @@
     <string name="routine_evening">بعد العصر حتى المغرب: أذكار المساء.</string>
     <string name="routine_night">الليل حتى الثلث الأخير.</string>
 
-    <string name="qibla_map">الخريطة</string>
     <string name="qibla_ar">الواقع المعزّز</string>
-    <string name="qibla_map_line">الخط إلى مكة: %1$d° · %2$d كم. النقطة البيضاء موقعك.</string>
-    <string name="qibla_map_note">رسم محلي من إحداثيات المدن المحفوظة، بلا خرائط إنترنت. ليس صورة أقمار.</string>
     <string name="qibla_ar_need">الكاميرا تُظهر اتجاه القبلة فوق ما تراه. لا يُسجَّل شيء ولا يُرسل.</string>
     <string name="qibla_ar_grant">السماح بالكاميرا</string>
     <string name="qibla_ar_no_camera">لا توجد كاميرا في هذا الجهاز. استخدم البوصلة أو الخريطة.</string>
     <string name="qibla_ar_note">ارفع الهاتف. الدائرة البيضاء جهة القبلة. إن انحرف الحساس فحرّكه على شكل 8.</string>
     <string name="qibla_moon_line">القمر عند %1$d°، على %2$s القبلة بـ %3$d°. تقريب محلي.</string>
     <string name="qibla_moon_down">القمر تحت الأفق الآن.</string>
-    <string name="quran">المصحف</string>
-    <string name="quran_note">نص عثماني كما نشره مشروع تنزيل، بلا تعديل. ليس صورة المصحف المطبوع صفحة بصفحة.</string>
-    <string name="quran_audio_note">لا تلاوة مسجّلة: الصوت حقوق وحجم كبير، والتطبيق بلا إنترنت. لا ترجمة مضمّنة حتى لا يُمس النص.</string>
-    <string name="quran_credit">المصدر: Tanzil Project · tanzil.net</string>
-    <string name="quran_tahfeez">إخفاء للحفظ</string>
-    <string name="quran_show">إظهار النص</string>
     <string name="adhkar_after">بعد الصلاة</string>
     <string name="adhkar_waking">الاستيقاظ</string>
     <string name="adhkar_listen">استماع</string>

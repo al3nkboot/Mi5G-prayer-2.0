@@ -4,7 +4,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -64,7 +63,6 @@ fun HomeScreen(
     onAdhkar: () -> Unit = {},
     onTasbih: () -> Unit = {},
     onZakat: () -> Unit = {},
-    onQuran: () -> Unit = {},
 ) {
     val st = remember(s, now.withSecond(0).withNano(0)) { PrayerEngine.now(s.place, now, s.calc) }
     val night = remember(s, now.withSecond(0).withNano(0)) { Night.around(s.place, now, s.calc) }
@@ -95,15 +93,6 @@ fun HomeScreen(
             Text(Hijri.format(Hijri.at(s.place, now, s.calc, s.hijriAdjust), ar), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.SemiBold)
         }
         Spacer(Modifier.height(10.dp))
-        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            Prayer.entries.forEach { p -> PrayerChip(p, st, ar) }
-        }
-        Spacer(Modifier.height(8.dp))
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            NightChip(stringResource(R.string.midnight), formatTime(night.midnight, ar), Modifier.weight(1f).testTag("midnight"))
-            NightChip(stringResource(R.string.last_third), formatTime(night.lastThird, ar), Modifier.weight(1f).testTag("last_third"))
-        }
-        Spacer(Modifier.height(10.dp))
         RoutineCard(phase)
         Spacer(Modifier.height(10.dp))
         Text(stringResource(R.string.tools), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
@@ -117,12 +106,10 @@ fun HomeScreen(
             ToolCard(stringResource(R.string.tasbih), onTasbih, Modifier.weight(1f).testTag("tasbih"))
             ToolCard(stringResource(R.string.zakat), onZakat, Modifier.weight(1f).testTag("zakat"))
         }
-        Spacer(Modifier.height(8.dp))
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            ToolCard(stringResource(R.string.quran), onQuran, Modifier.weight(1f).testTag("quran"))
-        }
         Spacer(Modifier.height(12.dp))
         Prayer.entries.forEach { p -> PrayerRow(p, st, ar) }
+        Spacer(Modifier.height(6.dp))
+        NightRow(stringResource(R.string.midnight), formatTime(night.midnight, ar), stringResource(R.string.last_third), formatTime(night.lastThird, ar))
         Spacer(Modifier.height(12.dp))
         Text(methodName(s.calc.method), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.align(Alignment.CenterHorizontally))
         Spacer(Modifier.height(16.dp))
@@ -145,24 +132,17 @@ private fun HeroCard(st: NowState, remaining: Duration, local: ZonedDateTime) {
 }
 
 @Composable
-private fun PrayerChip(p: Prayer, st: NowState, ar: Boolean) {
-    val isNext = st.next == p && st.nextAt.toLocalDate() == st.day.date
-    val bg = if (isNext) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
-    val fg = if (isNext) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
-    Column(
-        Modifier.width(78.dp).clip(RoundedCornerShape(16.dp)).background(bg).padding(vertical = 10.dp, horizontal = 4.dp).testTag("chip_${p.name}"),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(prayerName(p, st.day.date), color = fg, fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center)
-        Text(formatTime(st.day[p], ar), color = fg, fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1)
-    }
-}
-
-@Composable
-private fun NightChip(label: String, time: String, modifier: Modifier) {
-    Column(modifier.clip(RoundedCornerShape(16.dp)).background(MaterialTheme.colorScheme.surface).padding(horizontal = 12.dp, vertical = 10.dp)) {
-        Text(label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
-        Text(time, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+private fun NightRow(l1: String, t1: String, l2: String, t2: String) {
+    val c = MaterialTheme.colorScheme
+    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(c.surface).padding(horizontal = 16.dp, vertical = 8.dp).testTag("night_row"),
+        verticalAlignment = Alignment.CenterVertically) {
+        Text(l1, style = MaterialTheme.typography.labelMedium, color = c.onSurfaceVariant, modifier = Modifier.testTag("midnight"))
+        Spacer(Modifier.width(6.dp))
+        Text(t1, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.SemiBold)
+        Spacer(Modifier.weight(1f))
+        Text(l2, style = MaterialTheme.typography.labelMedium, color = c.onSurfaceVariant, modifier = Modifier.testTag("last_third"))
+        Spacer(Modifier.width(6.dp))
+        Text(t2, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.SemiBold)
     }
 }
 

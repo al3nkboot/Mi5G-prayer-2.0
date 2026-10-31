@@ -166,22 +166,13 @@
     <string name="routine_evening">After Asr until Maghrib: the evening adhkar.</string>
     <string name="routine_night">The night, until the last third.</string>
 
-    <string name="qibla_map">Map</string>
     <string name="qibla_ar">Augmented reality</string>
-    <string name="qibla_map_line">Line to Makkah: %1$d° · %2$d km. The white dot is you.</string>
-    <string name="qibla_map_note">A local drawing from saved city coordinates, with no map tiles. Not a satellite image.</string>
     <string name="qibla_ar_need">The camera shows the Qibla over what you see. Nothing is recorded or sent.</string>
     <string name="qibla_ar_grant">Allow camera</string>
     <string name="qibla_ar_no_camera">This device has no camera. Use the compass or the map.</string>
     <string name="qibla_ar_note">Hold the phone up. The white ring is toward the Qibla. If the sensor drifts, move the phone in a figure-8.</string>
     <string name="qibla_moon_line">The moon is at %1$d°, %3$d° to %2$s the Qibla. A local approximation.</string>
     <string name="qibla_moon_down">The moon is below the horizon now.</string>
-    <string name="quran">Mushaf</string>
-    <string name="quran_note">Uthmani text as published by the Tanzil Project, unchanged. Not a page-for-page copy of a printed mushaf.</string>
-    <string name="quran_audio_note">No recorded recitation: audio is rights-restricted and large, and this app has no internet. No translation is bundled, so the text stays untouched.</string>
-    <string name="quran_credit">Source: Tanzil Project · tanzil.net</string>
-    <string name="quran_tahfeez">Hide for memorizing</string>
-    <string name="quran_show">Show the text</string>
     <string name="adhkar_after">After salah</string>
     <string name="adhkar_waking">Waking</string>
     <string name="adhkar_listen">Listen</string>

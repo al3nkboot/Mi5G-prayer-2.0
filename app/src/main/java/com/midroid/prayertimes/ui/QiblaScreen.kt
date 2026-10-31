@@ -46,7 +46,7 @@ import kotlin.math.sin
 
 data class Heading(val trueDeg: Double, val lowAccuracy: Boolean)
 
-private enum class QiblaMode { COMPASS, MAP, AR, SHADOW, SUN }
+private enum class QiblaMode { COMPASS, AR, SHADOW, SUN }
 
 /** Test hook for screenshots: when set, sensors are bypassed. */
 object QiblaSensorOverride { @Volatile var heading: Heading? = null; @Volatile var forceNoSensor = false }
@@ -116,16 +116,11 @@ fun QiblaScreen(place: Place, onBack: () -> Unit) {
             Spacer(Modifier.height(12.dp))
             ScrollableTabRow(selectedTabIndex = mode.ordinal, edgePadding = 8.dp) {
                 Tab(mode == QiblaMode.COMPASS, { mode = QiblaMode.COMPASS }, text = { Text(stringResource(R.string.qibla_compass)) }, modifier = Modifier.testTag("qibla_compass"))
-                Tab(mode == QiblaMode.MAP, { mode = QiblaMode.MAP }, text = { Text(stringResource(R.string.qibla_map)) }, modifier = Modifier.testTag("qibla_map_tab"))
                 Tab(mode == QiblaMode.AR, { mode = QiblaMode.AR }, text = { Text(stringResource(R.string.qibla_ar)) }, modifier = Modifier.testTag("qibla_ar_tab"))
                 Tab(mode == QiblaMode.SHADOW, { mode = QiblaMode.SHADOW }, text = { Text(stringResource(R.string.qibla_shadow)) }, modifier = Modifier.testTag("qibla_shadow"))
                 Tab(mode == QiblaMode.SUN, { mode = QiblaMode.SUN }, text = { Text(stringResource(R.string.qibla_sun)) }, modifier = Modifier.testTag("qibla_sun"))
             }
             Spacer(Modifier.height(16.dp))
-            if (mode == QiblaMode.MAP) {
-                QiblaMap(place, target, Modifier.fillMaxWidth())
-                return@Column
-            }
             if (mode == QiblaMode.AR) {
                 QiblaAr(place, target, heading?.value, Modifier.fillMaxWidth())
                 return@Column
