@@ -21,7 +21,7 @@ import com.midroid.prayertimes.domain.Place
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CityScreen(current: Place, status: String?, onPick: (Place) -> Unit, onLocate: () -> Unit, onBack: () -> Unit) {
+fun CityScreen(current: Place, status: String?, onPick: (Place) -> Unit, onLocate: () -> Unit, onBack: () -> Unit, manualActive: Boolean = false, onManual: () -> Unit = {}) {
     var q by remember { mutableStateOf("") }
     val list = remember(q) {
         val t = q.trim().lowercase()
@@ -37,6 +37,8 @@ fun CityScreen(current: Place, status: String?, onPick: (Place) -> Unit, onLocat
             FilledTonalButton(onClick = onLocate, modifier = Modifier.fillMaxWidth().padding(16.dp, 8.dp)) {
                 Icon(Icons.Filled.LocationOn, null); Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.use_location))
             }
+            OutlinedButton(onClick = onManual, modifier = Modifier.fillMaxWidth().padding(16.dp, 0.dp).testTag("manual")) { Text(stringResource(R.string.manual_title)) }
+            if (manualActive) Text(stringResource(R.string.manual_active), Modifier.padding(16.dp, 4.dp), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
             if (status != null) Text(status, Modifier.padding(horizontal = 16.dp), color = MaterialTheme.colorScheme.secondary, style = MaterialTheme.typography.bodySmall)
             LazyColumn(Modifier.fillMaxSize()) {
                 items(list, key = { it.id }) { p ->

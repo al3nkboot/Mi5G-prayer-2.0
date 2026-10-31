@@ -2,6 +2,8 @@ package com.midroid.prayertimes.ui
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -121,5 +123,29 @@ class ScreenshotsAdhkarTest : ShotsBase() {
         rule.onNodeWithTag("adhkar_am").performScrollTo().performClick()
         rule.onNodeWithTag("adhkar_pm").performScrollTo().performClick()
         rule.onNodeWithTag("auto_silent").performScrollTo(); shot("21_settings_auto_silent_ar")
+    }
+}
+
+@RunWith(AndroidJUnit4::class) @GraphicsMode(GraphicsMode.Mode.NATIVE)
+@Config(sdk = [35], qualifiers = "ar-w393dp-h852dp-xhdpi")
+class ScreenshotsEgyptManualTest : ShotsBase() {
+    @Test fun render() {
+        theme(ThemeMode.LIGHT)
+        rule.onNodeWithTag("settings").performClick()
+        rule.onNodeWithText("مصر – الهيئة المصرية العامة للمساحة").performScrollTo().performClick(); shot("23_method_picker_egypt_ar")
+        rule.activityRule.scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
+        rule.onNodeWithTag("city").performClick()
+        rule.onNodeWithTag("manual").performClick()
+        rule.onNodeWithTag("manual_lat").performTextInput("30.0444")
+        rule.onNodeWithTag("manual_lon").performTextInput("31.2357")
+        rule.onNodeWithTag("manual_name").performTextInput("القاهرة – البيت")
+        rule.onNodeWithTag("manual_device_zone").performClick()
+        rule.onNodeWithTag("manual_zone").performTextClearance(); rule.onNodeWithTag("manual_zone").performTextInput("Africa/Cairo")
+        shot("24_manual_coords_ar")
+        rule.onNodeWithTag("manual_lat").performTextClearance(); rule.onNodeWithTag("manual_lat").performTextInput("95")
+        rule.onNodeWithTag("manual_save").performScrollTo().performClick(); rule.onNodeWithTag("manual_lat").performScrollTo(); shot("25_manual_coords_error_ar")
+        rule.onNodeWithTag("manual_lat").performTextClearance(); rule.onNodeWithTag("manual_lat").performTextInput("30.0444")
+        rule.onNodeWithTag("manual_save").performScrollTo().performClick(); shot("26_home_manual_cairo_ar")
+        (rule.activity.application as com.midroid.prayertimes.PrayerApp).settings.setManual(null, true)
     }
 }

@@ -41,7 +41,7 @@
     <string name="m_dubai">Dubai</string>
     <string name="m_qatar">Qatar</string>
     <string name="m_kuwait">Kuwait</string>
-    <string name="m_egypt">Egyptian General Authority of Survey</string>
+    <string name="m_egypt">Egypt – Egyptian General Authority of Survey</string>
     <string name="m_karachi">Univ. of Islamic Sciences, Karachi</string>
     <string name="m_isna">North America (ISNA)</string>
     <string name="about">No ads, no tracking, no internet. Times are calculated on your device.</string>
@@ -179,4 +179,20 @@
     <string name="adhkar_short">Shortened</string>
     <string name="adhkar_full">Complete</string>
     <string name="adhkar_extra_note">Selected hadith wordings in their familiar Arabic form, not a chapter of Hisn al-Muslim. The device voice reads the text; it is not a recitation.</string>
+    <string name="manual_title">Enter coordinates manually</string>
+    <string name="manual_note">These coordinates are used instead of your location and the chosen city until you clear them. No internet needed.</string>
+    <string name="manual_lat">Latitude</string>
+    <string name="manual_lat_hint">-90 to 90, e.g. 30.0444</string>
+    <string name="manual_lat_err">Latitude must be a number between -90 and 90</string>
+    <string name="manual_lon">Longitude</string>
+    <string name="manual_lon_hint">-180 to 180, e.g. 31.2357</string>
+    <string name="manual_lon_err">Longitude must be a number between -180 and 180</string>
+    <string name="manual_name">Place name (optional)</string>
+    <string name="manual_device_zone">Use device time zone (%1$s)</string>
+    <string name="manual_zone">Time zone</string>
+    <string name="manual_zone_hint">e.g. Africa/Cairo</string>
+    <string name="manual_zone_err">Unknown time zone</string>
+    <string name="manual_save">Save and use</string>
+    <string name="manual_clear">Clear manual coordinates</string>
+    <string name="manual_active">Manual coordinates are on and override the city and location. Clear them under “Enter coordinates manually”.</string>
 </resources>

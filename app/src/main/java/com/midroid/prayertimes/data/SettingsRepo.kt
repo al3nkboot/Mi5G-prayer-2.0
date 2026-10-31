@@ -18,6 +18,10 @@ enum class SoundChoice { CHIME, ADHAN, CUSTOM }
 data class AppSettings(
     val calc: CalcSettings = CalcSettings(),
     val place: Place = Cities.default,
+    /** Manual coordinates; when set they override [place] (GPS or city) until cleared. */
+    val manual: Place? = null,
+    /** manual place follows the device time zone */
+    val manualDeviceZone: Boolean = true,
     val hijriAdjust: Int = 0,
     val theme: ThemeMode = ThemeMode.SYSTEM,
     /** index = Prayer.ordinal; sunrise off by default */
@@ -67,12 +71,17 @@ class SettingsRepo(context: Context) {
                 sp.getFloat("gps_lat", 0f).toDouble(), sp.getFloat("gps_lon", 0f).toDouble(), java.time.ZoneId.systemDefault().id)
             else Cities.byId(id)
         } ?: Cities.default
-        return AppSettings(
+        val mDev = sp.getBoolean("manual_dev_zone", true)
+        val manual = if (sp.getBoolean("manual_on", false)) Place(com.midroid.prayertimes.domain.ManualCoords.ID,
+            sp.getString("manual_ar", "")!!, sp.getString("manual_en", "")!!,
+            java.lang.Double.longBitsToDouble(sp.getLong("manual_lat", 0)), java.lang.Double.longBitsToDouble(sp.getLong("manual_lon", 0)),
+            if (mDev) java.time.ZoneId.systemDefault().id else (sp.getString("manual_zone", null)?.takeIf { z -> runCatching { java.time.ZoneId.of(z) }.isSuccess } ?: java.time.ZoneId.systemDefault().id)) else null
+        return AppSettings(manual = manual, manualDeviceZone = mDev,
             calc = CalcSettings(
                 method = enumOr("method", Method.OMAN), asr = enumOr("asr", Asr.SHAFI), highLat = enumOr("highlat", HighLat.NONE),
                 adjustments = List(6) { sp.getInt("adj_$it", 0) },
             ),
-            place = place, hijriAdjust = sp.getInt("hijri_adj", 0), theme = enumOr("theme", ThemeMode.SYSTEM),
+            place = manual ?: place, hijriAdjust = sp.getInt("hijri_adj", 0), theme = enumOr("theme", ThemeMode.SYSTEM),
             alerts = List(6) { i -> sp.getString("alert_$i", null)?.let { v -> AlertMode.entries.firstOrNull { it.name == v } } ?: AppSettings.DEFAULT_ALERTS[i] },
             reminderMinutes = sp.getInt("reminder_min", 0),
             sounds = List(6) { i -> enumOr("sound_$i", SoundChoice.ADHAN) },
@@ -85,31 +94,54 @@ class SettingsRepo(context: Context) {
 
     companion object { const val SCHEMA = 2 }
 
+    /** Set (or with null, clear) manual coordinates. Clearing returns to the saved GPS/city place. */
+    fun setManual(p: Place?, deviceZone: Boolean) = update { it.copy(manual = p, manualDeviceZone = deviceZone, place = p ?: basePlace()) }
+
+    private fun basePlace(): Place = sp.getString("place_id", null)?.let { id ->
+        if (id == "gps") Place("gps", sp.getString("gps_ar", "")!!, sp.getString("gps_en", "")!!,
+            sp.getFloat("gps_lat", 0f).toDouble(), sp.getFloat("gps_lon", 0f).toDouble(), java.time.ZoneId.systemDefault().id)
+        else Cities.byId(id)
+    } ?: Cities.default
+
     fun update(f: (AppSettings) -> AppSettings) {
-        val n = f(_state.value)
+        val r = f(_state.value)
+        // manual coordinates win over a GPS fix or a picked city until cleared
+        val n = if (r.manual != null && r.place != r.manual) {
+            if (r.place.id != com.midroid.prayertimes.domain.ManualCoords.ID) savePlace(r.place)
+            r.copy(place = r.manual)
+        } else r
         sp.edit().apply {
+            putBoolean("manual_on", n.manual != null); putBoolean("manual_dev_zone", n.manualDeviceZone)
+            n.manual?.let { m -> putString("manual_ar", m.nameAr); putString("manual_en", m.nameEn)
+                putLong("manual_lat", java.lang.Double.doubleToRawLongBits(m.lat)); putLong("manual_lon", java.lang.Double.doubleToRawLongBits(m.lon)); putString("manual_zone", m.zone) }
             putString("method", n.calc.method.name); putString("asr", n.calc.asr.name); putString("highlat", n.calc.highLat.name)
             n.calc.adjustments.forEachIndexed { i, v -> putInt("adj_$i", v) }
             putInt("hijri_adj", n.hijriAdjust); putString("theme", n.theme.name)
-            putString("place_id", n.place.id)
             n.alerts.forEachIndexed { i, v -> putString("alert_$i", v.name) }
             putInt("reminder_min", n.reminderMinutes)
             n.sounds.forEachIndexed { i, v -> putString("sound_$i", v.name) }
             putString("custom_uri", n.customUri); putString("custom_name", n.customName)
             putBoolean("auto_silent", n.autoSilent); putInt("silent_min", n.silentMinutes); putBoolean("silent_vibrate", n.silentVibrate)
             putBoolean("adhkar_am", n.adhkarAm); putInt("adhkar_am_off", n.adhkarAmOffset); putBoolean("adhkar_pm", n.adhkarPm); putInt("adhkar_pm_off", n.adhkarPmOffset)
-            if (n.place.id == "gps") {
-                putString("gps_ar", n.place.nameAr); putString("gps_en", n.place.nameEn)
-                putFloat("gps_lat", n.place.lat.toFloat()); putFloat("gps_lon", n.place.lon.toFloat()); putString("gps_zone", n.place.zone)
-            }
         }.apply()
+        if (n.place.id != com.midroid.prayertimes.domain.ManualCoords.ID) savePlace(n.place)
         _state.value = n
         onChange?.invoke(n)
     }
 
+    private fun savePlace(p: Place) = sp.edit().apply {
+        putString("place_id", p.id)
+        if (p.id == "gps") {
+            putString("gps_ar", p.nameAr); putString("gps_en", p.nameEn)
+            putFloat("gps_lat", p.lat.toFloat()); putFloat("gps_lon", p.lon.toFloat()); putString("gps_zone", p.zone)
+        }
+    }.apply()
+
     /** GPS place follows the device time zone (called on TIMEZONE_CHANGED); manual cities keep their own zone. */
     fun syncGpsZone() {
         val z = java.time.ZoneId.systemDefault().id
-        if (_state.value.place.id == "gps" && _state.value.place.zone != z) update { it.copy(place = it.place.copy(zone = z)) }
+        val st = _state.value
+        if (st.manual != null) { if (st.manualDeviceZone && st.manual.zone != z) st.manual.copy(zone = z).let { m -> update { it.copy(manual = m, place = m) } } }
+        else if (st.place.id == "gps" && st.place.zone != z) update { it.copy(place = it.place.copy(zone = z)) }
     }
 }

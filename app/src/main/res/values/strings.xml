@@ -41,7 +41,7 @@
     <string name="m_dubai">دبي</string>
     <string name="m_qatar">قطر</string>
     <string name="m_kuwait">الكويت</string>
-    <string name="m_egypt">الهيئة المصرية العامة للمساحة</string>
+    <string name="m_egypt">مصر – الهيئة المصرية العامة للمساحة</string>
     <string name="m_karachi">جامعة العلوم الإسلامية، كراتشي</string>
     <string name="m_isna">أمريكا الشمالية (ISNA)</string>
     <string name="about">بدون إعلانات، بدون تتبع، بدون إنترنت. تُحسب الأوقات على جهازك.</string>
@@ -179,4 +179,20 @@
     <string name="adhkar_short">المختصر</string>
     <string name="adhkar_full">الكامل</string>
     <string name="adhkar_extra_note">أذكار مختارة من الحديث، بصيغتها المشهورة، وليست فصلاً من حصن المسلم. صوت الجهاز يقرأ النص ولا يغني عن التلاوة.</string>
+    <string name="manual_title">إدخال الإحداثيات يدويًا</string>
+    <string name="manual_note">تُستخدم هذه الإحداثيات بدل الموقع الحالي والمدينة المختارة حتى تمسحها. لا يحتاج ذلك إلى إنترنت.</string>
+    <string name="manual_lat">خط العرض</string>
+    <string name="manual_lat_hint">من ‎-90 إلى 90، مثل 30.0444</string>
+    <string name="manual_lat_err">خط العرض يجب أن يكون رقمًا بين ‎-90 و 90</string>
+    <string name="manual_lon">خط الطول</string>
+    <string name="manual_lon_hint">من ‎-180 إلى 180، مثل 31.2357</string>
+    <string name="manual_lon_err">خط الطول يجب أن يكون رقمًا بين ‎-180 و 180</string>
+    <string name="manual_name">اسم المكان (اختياري)</string>
+    <string name="manual_device_zone">استخدام المنطقة الزمنية للجهاز (%1$s)</string>
+    <string name="manual_zone">المنطقة الزمنية</string>
+    <string name="manual_zone_hint">مثل Africa/Cairo</string>
+    <string name="manual_zone_err">منطقة زمنية غير معروفة</string>
+    <string name="manual_save">حفظ واستخدام</string>
+    <string name="manual_clear">مسح الإحداثيات اليدوية</string>
+    <string name="manual_active">الإحداثيات اليدوية مفعّلة وتتقدم على المدينة والموقع. امسحها من «إدخال الإحداثيات يدويًا».</string>
 </resources>

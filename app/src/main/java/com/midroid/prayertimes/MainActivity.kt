@@ -35,7 +35,7 @@ import com.midroid.prayertimes.ui.SettingsScreen
 import kotlinx.coroutines.delay
 import java.time.ZonedDateTime
 
-enum class Screen { HOME, CITY, SETTINGS, EXACT, QIBLA, ABOUT, ADHKAR, TASBIH, ZAKAT }
+enum class Screen { HOME, CITY, SETTINGS, EXACT, QIBLA, ABOUT, ADHKAR, TASBIH, ZAKAT, MANUAL }
 
 class MainActivity : AppCompatActivity() {
     /** adhkar tab requested by a reminder notification, consumed by the composition */
@@ -94,7 +94,8 @@ class MainActivity : AppCompatActivity() {
                         Screen.ABOUT -> com.midroid.prayertimes.ui.AboutScreen(BuildConfig.VERSION_NAME) { screen = Screen.SETTINGS }
                         Screen.QIBLA -> com.midroid.prayertimes.ui.QiblaScreen(s.place) { screen = Screen.HOME }
                         Screen.EXACT -> ExactAlarmScreen(perms.exact, onOpenSettings = openExact) { screen = Screen.HOME }
-                        Screen.CITY -> CityRoute(s.place, onDone = { screen = Screen.HOME }, pick = { p -> repo.update { it.copy(place = p) } })
+                        Screen.CITY -> CityRoute(s.place, onDone = { screen = Screen.HOME }, pick = { p -> repo.update { it.copy(place = p) } }, manualActive = s.manual != null, onManual = { screen = Screen.MANUAL })
+                        Screen.MANUAL -> com.midroid.prayertimes.ui.ManualCoordsScreen(s.manual, s.manualDeviceZone, onSave = { p, dev -> repo.setManual(p, dev) }) { screen = Screen.HOME }
                     }
                 }
             }
@@ -109,7 +110,7 @@ class MainActivity : AppCompatActivity() {
 }
 
 @Composable
-private fun CityRoute(current: com.midroid.prayertimes.domain.Place, onDone: () -> Unit, pick: (com.midroid.prayertimes.domain.Place) -> Unit) {
+private fun CityRoute(current: com.midroid.prayertimes.domain.Place, onDone: () -> Unit, pick: (com.midroid.prayertimes.domain.Place) -> Unit, manualActive: Boolean = false, onManual: () -> Unit = {}) {
     val ctx = LocalContext.current
     var status by remember { mutableStateOf<String?>(null) }
     val locating = stringResource(R.string.locating); val failed = stringResource(R.string.location_failed); val denied = stringResource(R.string.location_denied)
@@ -120,7 +121,7 @@ private fun CityRoute(current: com.midroid.prayertimes.domain.Place, onDone: () 
         }
     }
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { ok -> if (ok) locate() else status = denied }
-    CityScreen(current, status, onPick = { pick(it); onDone() }, onBack = onDone, onLocate = {
+    CityScreen(current, status, onPick = { pick(it); onDone() }, onBack = onDone, manualActive = manualActive, onManual = onManual, onLocate = {
         if (ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) locate()
         else launcher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
     })
