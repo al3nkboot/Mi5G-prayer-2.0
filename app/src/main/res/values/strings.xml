@@ -117,6 +117,9 @@
     <string name="repeat_fmt">التكرار: %1$d</string>
     <string name="count_tap">عدّ</string>
     <string name="dhikr_source">حصن المسلم، رقم %1$d. التخريج: %2$s</string>
+    <string name="dhikr_source_no">حصن المسلم، رقم %1$d</string>
+    <string name="dhikr_ref_show">المصدر</string>
+    <string name="dhikr_ref_hide">إخفاء المصدر</string>
     <string name="adhkar_credit">المصدر: «حصن المسلم من أذكار الكتاب والسنة» لسعيد بن علي بن وهف القحطاني، باب ٢٧ (أذكار الصباح والمساء). النص من hisnmuslim.com والتخريج من حواشي الكتاب (المكتبة الشاملة).</string>
     <string name="adhkar_am_toggle">تذكير بأذكار الصباح</string>
     <string name="adhkar_pm_toggle">تذكير بأذكار المساء</string>
@@ -175,7 +178,7 @@
     <string name="qibla_moon_down">القمر تحت الأفق الآن.</string>
     <string name="adhkar_after">بعد الصلاة</string>
     <string name="adhkar_waking">الاستيقاظ</string>
-    <string name="adhkar_listen">استماع</string>
+    <string name="adhkar_listen">استمع</string>
     <string name="adhkar_short">المختصر</string>
     <string name="adhkar_full">الكامل</string>
     <string name="adhkar_extra_note">أذكار مختارة من الحديث، بصيغتها المشهورة، وليست فصلاً من حصن المسلم. صوت الجهاز يقرأ النص ولا يغني عن التلاوة.</string>
