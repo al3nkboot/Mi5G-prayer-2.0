@@ -117,6 +117,9 @@
     <string name="repeat_fmt">Repeat: %1$d</string>
     <string name="count_tap">Count</string>
     <string name="dhikr_source">Hisn al-Muslim no. %1$d. Reference: %2$s</string>
+    <string name="dhikr_source_no">Hisn al-Muslim no. %1$d</string>
+    <string name="dhikr_ref_show">Source</string>
+    <string name="dhikr_ref_hide">Hide source</string>
     <string name="adhkar_credit">Source: “Hisn al-Muslim” by Sa‘id ibn Ali ibn Wahf al-Qahtani, chapter 27 (morning &amp; evening adhkar). Text from hisnmuslim.com, references from the book\'s footnotes (al-Maktaba al-Shamela).</string>
     <string name="adhkar_am_toggle">Morning adhkar reminder</string>
     <string name="adhkar_pm_toggle">Evening adhkar reminder</string>
@@ -173,8 +176,8 @@
     <string name="qibla_ar_note">Hold the phone up. The white ring is toward the Qibla. If the sensor drifts, move the phone in a figure-8.</string>
     <string name="qibla_moon_line">The moon is at %1$d°, %3$d° to %2$s the Qibla. A local approximation.</string>
     <string name="qibla_moon_down">The moon is below the horizon now.</string>
-    <string name="adhkar_after">After salah</string>
-    <string name="adhkar_waking">Waking</string>
+    <string name="adhkar_after">After prayer</string>
+    <string name="adhkar_waking">On waking</string>
     <string name="adhkar_listen">Listen</string>
     <string name="adhkar_short">Shortened</string>
     <string name="adhkar_full">Complete</string>

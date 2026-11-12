@@ -115,14 +115,30 @@ class ScreenshotsAdhkarTest : ShotsBase() {
         theme(ThemeMode.LIGHT)
         rule.onNodeWithTag("adhkar").performScrollTo(); shot("22_home_adhkar_button_ar")
         rule.onNodeWithTag("adhkar").performClick()
-        rule.onNodeWithTag("count_76").performClick(); shot("19_adhkar_morning_ar")
+        rule.onNodeWithTag("count_76").performClick()
+        rule.onNodeWithTag("ref_toggle_75").performClick(); shot("19_adhkar_morning_ar")
+        theme(ThemeMode.DARK); shot("19b_adhkar_morning_ar_dark")
+        theme(ThemeMode.LIGHT)
         rule.onNodeWithTag("tab_1").performClick(); shot("20_adhkar_evening_ar")
+        rule.onNodeWithTag("tab_2").performClick(); shot("20b_adhkar_after_ar")
+        rule.onNodeWithTag("tab_3").performClick(); shot("20c_adhkar_waking_ar")
         rule.activity.runOnUiThread { rule.activity.onBackPressedDispatcher.onBackPressed() }
         rule.onNodeWithTag("settings").performClick()
         rule.onNodeWithTag("auto_silent").performScrollTo().performClick()
         rule.onNodeWithTag("adhkar_am").performScrollTo().performClick()
         rule.onNodeWithTag("adhkar_pm").performScrollTo().performClick()
         rule.onNodeWithTag("auto_silent").performScrollTo(); shot("21_settings_auto_silent_ar")
+    }
+}
+
+@RunWith(AndroidJUnit4::class) @GraphicsMode(GraphicsMode.Mode.NATIVE)
+@Config(sdk = [35], qualifiers = "en-w393dp-h852dp-xhdpi")
+class ScreenshotsAdhkarEnTest : ShotsBase() {
+    @Test fun render() {
+        theme(ThemeMode.DARK)
+        rule.onNodeWithTag("adhkar").performScrollTo().performClick()
+        rule.onNodeWithTag("ref_toggle_75").performClick(); shot("19d_adhkar_morning_en_dark")
+        rule.onNodeWithTag("tab_3").performClick(); shot("20d_adhkar_waking_en_dark")
     }
 }
 
