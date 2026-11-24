@@ -165,3 +165,16 @@ class ScreenshotsEgyptManualTest : ShotsBase() {
         (rule.activity.application as com.midroid.prayertimes.PrayerApp).settings.setManual(null, true)
     }
 }
+
+@RunWith(AndroidJUnit4::class) @GraphicsMode(GraphicsMode.Mode.NATIVE)
+@Config(sdk = [35], qualifiers = "ar-w393dp-h852dp-xhdpi")
+class ScreenshotsGoldTest : ShotsBase() {
+    @Test fun render() {
+        theme(ThemeMode.GOLD); shot("30_home_ar_gold")
+        rule.onNodeWithTag("row_ISHA").performScrollTo(); shot("31_home_ar_gold_times")
+        rule.onNodeWithTag("row_countdown").assertExists()
+        rule.onNodeWithTag("settings").performScrollTo()
+        rule.onNodeWithTag("settings").performClick()
+        rule.onNodeWithText("ذهبي داكن").performScrollTo(); shot("32_settings_theme_ar_gold")
+    }
+}

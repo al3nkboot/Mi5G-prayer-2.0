@@ -70,7 +70,10 @@ fun HomeScreen(
     val ar = isArabic()
     val local = now.withZoneSameInstant(s.place.zoneId)
     val phase = Routine.phase(local, st.day[Prayer.FAJR], st.day[Prayer.SUNRISE], st.day[Prayer.DHUHR], st.day[Prayer.ASR], st.day[Prayer.MAGHRIB], night.lastThird, night.fajr)
-    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).systemBarsPadding().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp)) {
+    val gold = LocalGoldTheme.current
+    val bg = if (gold) Modifier.background(Brush.radialGradient(listOf(Color(0xFF2E2416), GoldBg), Offset(540f, 0f), 1400f))
+        else Modifier.background(MaterialTheme.colorScheme.background)
+    Column(Modifier.fillMaxSize().then(bg).systemBarsPadding().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp)) {
         Row(Modifier.fillMaxWidth().padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
             Row(Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).clickable(onClick = onCity).padding(8.dp).testTag("city"), verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Filled.LocationOn, null, tint = MaterialTheme.colorScheme.secondary)
@@ -107,7 +110,7 @@ fun HomeScreen(
             ToolCard(stringResource(R.string.zakat), onZakat, Modifier.weight(1f).testTag("zakat"))
         }
         Spacer(Modifier.height(12.dp))
-        Prayer.entries.forEach { p -> PrayerRow(p, st, ar) }
+        Prayer.entries.forEach { p -> if (gold) GoldPrayerRow(p, st, ar, remaining) else PrayerRow(p, st, ar) }
         Spacer(Modifier.height(6.dp))
         NightRow(stringResource(R.string.midnight), formatTime(night.midnight, ar), stringResource(R.string.last_third), formatTime(night.lastThird, ar))
         Spacer(Modifier.height(12.dp))
@@ -119,7 +122,10 @@ fun HomeScreen(
 @Composable
 private fun HeroCard(st: NowState, remaining: Duration, local: ZonedDateTime) {
     val nextName = prayerName(st.next, st.nextAt.toLocalDate())
-    Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(28.dp)).background(Brush.linearGradient(listOf(Teal, TealLight))).padding(20.dp)) {
+    val gold = LocalGoldTheme.current
+    val shape = RoundedCornerShape(28.dp)
+    val m = Modifier.fillMaxWidth().clip(shape).background(Brush.linearGradient(if (gold) prayerCover(st.next) else listOf(Teal, TealLight)))
+    Box((if (gold) m.background(Color.Black.copy(alpha = .3f)).border(1.dp, GoldAccent.copy(alpha = .6f), shape) else m).padding(20.dp)) {
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(stringResource(R.string.after_named, nextName), color = Color.White.copy(alpha = .85f), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
             Text(PrayerEngine.formatCountdown(remaining), color = Color.White, fontSize = 52.sp, fontWeight = FontWeight.Light,
@@ -214,5 +220,32 @@ private fun PrayerRow(p: Prayer, st: NowState, ar: Boolean) {
         }
         Spacer(Modifier.weight(1f))
         Text(formatTime(st.day[p], ar), style = MaterialTheme.typography.titleMedium, fontWeight = if (isCurrent || isNext) FontWeight.Bold else FontWeight.Medium)
+    }
+}
+
+/** Dark gold theme row: timeline dot/line on the start side, time-of-day gradient cover, gold border + countdown when highlighted. */
+@Composable
+private fun GoldPrayerRow(p: Prayer, st: NowState, ar: Boolean, remaining: Duration) {
+    val isCurrent = st.current == p && p != Prayer.SUNRISE
+    val isNext = st.next == p && st.nextAt.toLocalDate() == st.day.date
+    val hot = isCurrent || isNext
+    val shape = RoundedCornerShape(22.dp)
+    Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min).testTag("row_${p.name}"), verticalAlignment = Alignment.CenterVertically) {
+        Box(Modifier.width(22.dp).fillMaxHeight(), contentAlignment = Alignment.Center) {
+            Box(Modifier.width(2.dp).fillMaxHeight().background(GoldHairline))
+            Box(Modifier.size(if (hot) 12.dp else 8.dp).clip(CircleShape).background(if (hot) GoldAccent else GoldHairline))
+        }
+        Spacer(Modifier.width(6.dp))
+        Row(Modifier.weight(1f).padding(vertical = 5.dp).clip(shape).background(Brush.linearGradient(prayerCover(p)))
+            .background(Color.Black.copy(alpha = .32f)).border(if (hot) 2.dp else 1.dp, if (hot) GoldAccent else Color.White.copy(alpha = .12f), shape)
+            .padding(horizontal = 16.dp, vertical = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier.weight(1f)) {
+                Text(prayerName(p, st.day.date), style = MaterialTheme.typography.titleMedium, color = Color.White)
+                if (isNext) Text(stringResource(R.string.next_label) + "  " + PrayerEngine.formatCountdown(remaining), style = MaterialTheme.typography.labelMedium,
+                    color = GoldAccent, modifier = Modifier.testTag("row_countdown"))
+                else if (isCurrent) Text(stringResource(R.string.now_label), style = MaterialTheme.typography.labelMedium, color = GoldAccent)
+            }
+            Text(formatTime(st.day[p], ar), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, color = Color.White)
+        }
     }
 }

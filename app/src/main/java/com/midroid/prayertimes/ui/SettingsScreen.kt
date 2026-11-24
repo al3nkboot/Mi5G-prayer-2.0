@@ -112,7 +112,7 @@ fun SettingsScreen(s: AppSettings, perms: Perms, update: ((AppSettings) -> AppSe
                 }
             }
             Section(stringResource(R.string.theme))
-            listOf(ThemeMode.SYSTEM to R.string.theme_system, ThemeMode.LIGHT to R.string.theme_light, ThemeMode.DARK to R.string.theme_dark)
+            listOf(ThemeMode.SYSTEM to R.string.theme_system, ThemeMode.LIGHT to R.string.theme_light, ThemeMode.DARK to R.string.theme_dark, ThemeMode.GOLD to R.string.theme_gold)
                 .forEach { (t, r) -> Choice(stringResource(r), s.theme == t) { update { it.copy(theme = t) } } }
             Spacer(Modifier.height(16.dp))
             Text(stringResource(R.string.about), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
