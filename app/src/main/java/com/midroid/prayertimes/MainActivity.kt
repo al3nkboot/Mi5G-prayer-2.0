@@ -80,6 +80,8 @@ class MainActivity : AppCompatActivity() {
                 Unit
             }
             val openDnd = { runCatching { startActivity(Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)) }; Unit }
+            // dark gold is always dark: keep light status/nav bar icons even when the system is in light mode
+            LaunchedEffect(s.theme) { if (s.theme == com.midroid.prayertimes.data.ThemeMode.GOLD) enableEdgeToEdge(androidx.activity.SystemBarStyle.dark(0), androidx.activity.SystemBarStyle.dark(0)) else enableEdgeToEdge() }
             PrayerTheme(s.theme) {
                 Surface {
                     BackHandler(screen != Screen.HOME) { screen = Screen.HOME }

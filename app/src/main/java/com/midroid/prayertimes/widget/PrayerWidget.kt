@@ -113,7 +113,7 @@ class PrayerWidget : GlanceAppWidget() {
         fun col(day: Long, night: Long) = when (theme) {
             ThemeMode.SYSTEM -> ColorProvider(day = Color(day), night = Color(night))
             ThemeMode.LIGHT -> ColorProvider(day = Color(day), night = Color(day))
-            ThemeMode.DARK -> ColorProvider(day = Color(night), night = Color(night))
+            ThemeMode.DARK, ThemeMode.GOLD -> ColorProvider(day = Color(night), night = Color(night))
         }
         val bg = col(0xFFFFFCF5, 0xFF152424)
         val fg = col(0xFF1B1C1A, 0xFFE3E6E3)
@@ -124,7 +124,7 @@ class PrayerWidget : GlanceAppWidget() {
         val size = LocalSize.current
         val wide = size.width >= WIDE.width && size.height >= WIDE.height
         val tall = wide && size.height >= TALL.height
-        val cdColor = when (theme) { ThemeMode.LIGHT -> 0xFF0F4C4A.toInt(); ThemeMode.DARK -> 0xFF7FD3C6.toInt(); else -> null }
+        val cdColor = when (theme) { ThemeMode.LIGHT -> 0xFF0F4C4A.toInt(); ThemeMode.DARK, ThemeMode.GOLD -> 0xFF7FD3C6.toInt(); else -> null }
         // RemoteViews are inflated in the launcher: force the app's direction via a container view
         AndroidRemoteViews(RemoteViews(ctx.packageName, if (d.rtl) R.layout.widget_root_rtl else R.layout.widget_root_ltr), R.id.widget_root,
             GlanceModifier.fillMaxSize()) {

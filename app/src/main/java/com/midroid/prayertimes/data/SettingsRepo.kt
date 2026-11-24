@@ -10,7 +10,7 @@ import com.midroid.prayertimes.domain.Place
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-enum class ThemeMode { SYSTEM, LIGHT, DARK }
+enum class ThemeMode { SYSTEM, LIGHT, DARK, GOLD }
 
 /** Sound for an audible alert: bundled chime, bundled adhan recording, or the user's own file (SAF uri). */
 enum class SoundChoice { CHIME, ADHAN, CUSTOM }
